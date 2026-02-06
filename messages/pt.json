@@ -1,0 +1,39 @@
+{
+    "HomePage": {
+        "title": "E-PRO",
+        "signIn": "Entrar",
+        "getStarted": "Começar",
+        "heroTitle": "Segurança Inteligente",
+        "heroSubtitle": "ERP para",
+        "heroDescription": "Sistema completo para empresas de Monitoramento, Rastreamento e Portaria Virtual. Automação total do operacional ao financeiro.",
+        "startTrial": "Teste Grátis",
+        "watchDemo": "Ver Demo",
+        "stats": {
+            "revenue": "Faturamento Mensal",
+            "leases": "Postos Ativos",
+            "occupancy": "Tempo de Resposta"
+        },
+        "features": {
+            "billing": "Faturamento Recorrente",
+            "billingDesc": "Boletos automáticos e gestão de inadimplência.",
+            "portal": "Portaria Virtual",
+            "portalDesc": "Controle de acesso e visitantes em nuvem.",
+            "maintenance": "Ordens de Serviço",
+            "maintenanceDesc": "Gestão de técnicos e instalação mobile.",
+            "reports": "Monitoramento 24h",
+            "reportsDesc": "Integração com centrais de alarme e CFTV."
+        },
+        "nav": {
+            "dashboard": "Painel",
+            "properties": "Clientes",
+            "finance": "Financeiro",
+            "settings": "Configurações"
+        }
+    },
+    "Theme": {
+        "light": "Claro",
+        "dark": "Escuro",
+        "system": "Sistema",
+        "toggle": "Alternar tema"
+    }
+}

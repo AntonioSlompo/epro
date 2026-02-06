@@ -1,0 +1,39 @@
+{
+    "HomePage": {
+        "title": "E-PRO",
+        "signIn": "Sign In",
+        "getStarted": "Get Started",
+        "heroTitle": "Smart Security",
+        "heroSubtitle": "ERP for",
+        "heroDescription": "Complete system for Monitoring, Tracking, and Virtual Concierge companies. Total automation from operations to finance.",
+        "startTrial": "Start Free Trial",
+        "watchDemo": "Watch Demo",
+        "stats": {
+            "revenue": "Monthly Revenue",
+            "leases": "Active Sites",
+            "occupancy": "Response Time"
+        },
+        "features": {
+            "billing": "Recurring Billing",
+            "billingDesc": "Automated invoices and delinquency management.",
+            "portal": "Virtual Concierge",
+            "portalDesc": "Cloud-based access control and visitor management.",
+            "maintenance": "Service Orders",
+            "maintenanceDesc": "Mobile technician management and installation.",
+            "reports": "24/7 Monitoring",
+            "reportsDesc": "Integration with alarm centers and CCTV."
+        },
+        "nav": {
+            "dashboard": "Dashboard",
+            "properties": "Clients",
+            "finance": "Finance",
+            "settings": "Settings"
+        }
+    },
+    "Theme": {
+        "light": "Light",
+        "dark": "Dark",
+        "system": "System",
+        "toggle": "Toggle theme"
+    }
+}
