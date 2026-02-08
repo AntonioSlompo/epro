@@ -30,10 +30,135 @@
             "settings": "Settings"
         }
     },
+    "Dashboard": {
+        "title": "Overview",
+        "nav": {
+            "dashboard": "Dashboard",
+            "users": "Users",
+            "suppliers": "Suppliers",
+            "clients": "Clients",
+            "finance": "Finance",
+            "settings": "Settings"
+        },
+        "stats": {
+            "activeUsers": "Active Users",
+            "revenue": "Monthly Revenue",
+            "alerts": "Active Alerts",
+            "occupancy": "Occupancy Rate",
+            "lastMonth": "since last month"
+        },
+        "recentActivity": "Recent Activity",
+        "systemHealth": "System Health",
+        "context": {
+            "operational": "Operational",
+            "maintenance": "Asset Maintenance",
+            "commercial": "Commercial & Contracts",
+            "financial": "Financial",
+            "hr": "HR & Rosters",
+            "operationalDesc": "Complete unit management, access control, event monitoring, and real-time patrols.",
+            "maintenanceDesc": "Integral management of Service Orders (S.O.), lending asset control, and automation of preventive maintenance.",
+            "commercialDesc": "Recurring revenue management (SaaS), contract control with automatic adjustments (IGP-M/IPCA), and specialized CRM with sales funnel and technical inspections.",
+            "financialDesc": "Recurring billing integrated with contracts, automatic invoice generation, cash flow, and delinquency management with automatic blocking.",
+            "hrDesc": "Complete management of complex rosters (12x36), post allocation, and validity control of training and certifications (NRs)."
+        }
+    },
+    "UserMenu": {
+        "profile": "Profile",
+        "billing": "Billing",
+        "settings": "Settings",
+        "logout": "Log out"
+    },
+    "LoginPage": {
+        "title": "Access System",
+        "subtitle": "Enter your credentials to access the secure portal",
+        "emailLabel": "Email",
+        "emailPlaceholder": "name@example.com",
+        "passwordLabel": "Password",
+        "passwordPlaceholder": "••••••••",
+        "forgotPassword": "Forgot password?",
+        "signIn": "Sign In",
+        "authenticating": "Authenticating...",
+        "orContinue": "Or continue with",
+        "contactAdmin": "Contact Admin",
+        "noAccount": "Don't have an account?"
+    },
     "Theme": {
         "light": "Light",
         "dark": "Dark",
         "system": "System",
         "toggle": "Toggle theme"
+    },
+    "Common": {
+        "actions": "Actions",
+        "edit": "Edit",
+        "delete": "Delete",
+        "save": "Save",
+        "cancel": "Cancel",
+        "create": "Create",
+        "saving": "Saving...",
+        "saveChanges": "Save Changes",
+        "confirmDelete": "Are you sure you want to delete?",
+        "noResults": "No results found.",
+        "copyId": "Copy ID",
+        "name": "Name",
+        "email": "Email",
+        "phone": "Phone",
+        "address": "Address",
+        "city": "City",
+        "zip": "Zip Code",
+        "password": "Password",
+        "active": "Active",
+        "inactive": "Inactive",
+        "status": {
+            "active": "Active",
+            "inactive": "Inactive"
+        },
+        "success": "Success",
+        "error": "Error"
+    },
+    "Users": {
+        "title": "Users",
+        "description": "Manage system users and access.",
+        "addUser": "Add User",
+        "createTitle": "Create User",
+        "createDesc": "Add a new user to the system.",
+        "editTitle": "Edit User",
+        "editDesc": "Edit details for",
+        "form": {
+            "nameLabel": "Name",
+            "namePlaceholder": "Full Name",
+            "emailLabel": "Email",
+            "emailPlaceholder": "email@example.com",
+            "passwordLabel": "Password",
+            "passwordPlaceholder": "******",
+            "passwordHint": "(Leave blank to keep current)",
+            "activeLabel": "Active User",
+            "activeDesc": "This user can log in to the system.",
+            "createPayload": "Create User"
+        }
+    },
+    "Suppliers": {
+        "title": "Suppliers",
+        "description": "Manage your suppliers and their details.",
+        "addSupplier": "Add Supplier",
+        "createTitle": "Create Supplier",
+        "createDesc": "Add a new supplier to the system.",
+        "editTitle": "Edit Supplier",
+        "editDesc": "Edit details for",
+        "form": {
+            "nameLabel": "Name",
+            "namePlaceholder": "Supplier Name",
+            "emailLabel": "Email",
+            "emailPlaceholder": "email@example.com",
+            "phoneLabel": "Phone",
+            "phonePlaceholder": "(555) 555-5555",
+            "addressLabel": "Address",
+            "addressPlaceholder": "123 Main St",
+            "cityLabel": "City",
+            "cityPlaceholder": "City",
+            "zipLabel": "Zip Code",
+            "zipPlaceholder": "12345",
+            "createPayload": "Create Supplier"
+        }
     }
 }

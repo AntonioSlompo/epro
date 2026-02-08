@@ -2,38 +2,163 @@
     "HomePage": {
         "title": "E-PRO",
         "signIn": "Iniciar Sesión",
-        "getStarted": "Empezar",
+        "getStarted": "Comenzar",
         "heroTitle": "Seguridad Inteligente",
         "heroSubtitle": "ERP para",
-        "heroDescription": "Sistema completo para empresas de Monitoreo, Rastreo y Portería Virtual. Automatización total desde operaciones hasta finanzas.",
+        "heroDescription": "Sistema completo para empresas de Monitoreo, Rastreo y Portería Virtual. Automatización total desde lo operativo hasta lo financiero.",
         "startTrial": "Prueba Gratis",
         "watchDemo": "Ver Demo",
         "stats": {
             "revenue": "Facturación Mensual",
-            "leases": "Puestos Activos",
-            "occupancy": "Tiempo Respuesta"
+            "leases": "Sitios Activos",
+            "occupancy": "Tiempo de Respuesta"
         },
         "features": {
             "billing": "Facturación Recurrente",
             "billingDesc": "Facturas automáticas y gestión de morosidad.",
             "portal": "Portería Virtual",
-            "portalDesc": "Control de acceso y visitantes en la nube.",
+            "portalDesc": "Control de acceso y gestión de visitantes en la nube.",
             "maintenance": "Órdenes de Servicio",
             "maintenanceDesc": "Gestión de técnicos e instalación móvil.",
-            "reports": "Monitoreo 24h",
+            "reports": "Monitoreo 24/7",
             "reportsDesc": "Integración con centrales de alarma y CCTV."
         },
         "nav": {
             "dashboard": "Tablero",
             "properties": "Clientes",
             "finance": "Finanzas",
-            "settings": "Ajustes"
+            "settings": "Configuración"
         }
+    },
+    "Dashboard": {
+        "title": "Visión General",
+        "nav": {
+            "dashboard": "Tablero",
+            "users": "Usuarios",
+            "suppliers": "Proveedores",
+            "clients": "Clientes",
+            "finance": "Finanzas",
+            "settings": "Configuración"
+        },
+        "stats": {
+            "activeUsers": "Usuarios Activos",
+            "revenue": "Ingresos Mensuales",
+            "alerts": "Alertas Activas",
+            "occupancy": "Tasa de Ocupación",
+            "lastMonth": "desde el mes pasado"
+        },
+        "recentActivity": "Actividad Reciente",
+        "systemHealth": "Estado del Sistema",
+        "context": {
+            "operational": "Operacional",
+            "maintenance": "Mantenimiento de Activos",
+            "commercial": "Comercial y Contratos",
+            "financial": "Financiero",
+            "hr": "Recursos Humanos y Escalas",
+            "operationalDesc": "Gestión completa de unidades, control de acceso, monitoreo de eventos y rondas en tiempo real.",
+            "maintenanceDesc": "Gestión integral de Órdenes de Servicio (O.S.), control de activos en comodato y automatización de mantenimientos preventivos.",
+            "commercialDesc": "Gestión de ingresos recurrentes (SaaS), control de contratos con ajustes automáticos (IGP-M/IPCA) y CRM especializado con embudo de ventas e inspecciones técnicas.",
+            "financialDesc": "Facturación recurrente integrada a contratos, emisión automática de facturas, flujo de caja y gestión de morosidad con bloqueo automático.",
+            "hrDesc": "Gestión completa de escalas complejas (12x36), asignación de puestos y control de validez de entrenamientos y certificaciones (NRs)."
+        }
+    },
+    "UserMenu": {
+        "profile": "Perfil",
+        "billing": "Facturación",
+        "settings": "Configuración",
+        "logout": "Cerrar Sesión"
+    },
+    "LoginPage": {
+        "title": "Acceder al Sistema",
+        "subtitle": "Ingrese sus credenciales para acceder al portal seguro",
+        "emailLabel": "Correo electrónico",
+        "emailPlaceholder": "nombre@ejemplo.com",
+        "passwordLabel": "Contraseña",
+        "passwordPlaceholder": "••••••••",
+        "forgotPassword": "¿Olvidó su contraseña?",
+        "signIn": "Iniciar Sesión",
+        "authenticating": "Autenticando...",
+        "orContinue": "O continuar con",
+        "contactAdmin": "Contactar Admin",
+        "noAccount": "¿No tiene una cuenta?"
     },
     "Theme": {
         "light": "Claro",
         "dark": "Oscuro",
         "system": "Sistema",
-        "toggle": "Alternar tema"
+        "toggle": "Cambiar tema"
+    },
+    "Common": {
+        "actions": "Acciones",
+        "edit": "Editar",
+        "delete": "Eliminar",
+        "save": "Guardar",
+        "cancel": "Cancelar",
+        "create": "Crear",
+        "saving": "Guardando...",
+        "saveChanges": "Guardar Cambios",
+        "confirmDelete": "¿Está seguro de que desea eliminar?",
+        "noResults": "No se encontraron resultados.",
+        "copyId": "Copiar ID",
+        "name": "Nombre",
+        "email": "Correo electrónico",
+        "phone": "Teléfono",
+        "address": "Dirección",
+        "city": "Ciudad",
+        "zip": "Código Postal",
+        "password": "Contraseña",
+        "active": "Activo",
+        "inactive": "Inactivo",
+        "status": {
+            "active": "Activo",
+            "inactive": "Inactivo"
+        },
+        "success": "Éxito",
+        "error": "Error"
+    },
+    "Users": {
+        "title": "Usuarios",
+        "description": "Administrar usuarios y acceso al sistema.",
+        "addUser": "Agregar Usuario",
+        "createTitle": "Crear Usuario",
+        "createDesc": "Agregar un nuevo usuario al sistema.",
+        "editTitle": "Editar Usuario",
+        "editDesc": "Editar detalles para",
+        "form": {
+            "nameLabel": "Nombre",
+            "namePlaceholder": "Nombre Completo",
+            "emailLabel": "Correo electrónico",
+            "emailPlaceholder": "email@ejemplo.com",
+            "passwordLabel": "Contraseña",
+            "passwordPlaceholder": "******",
+            "passwordHint": "(Dejar en blanco para mantener actual)",
+            "activeLabel": "Usuario Activo",
+            "activeDesc": "Este usuario puede iniciar sesión en el sistema.",
+            "createPayload": "Crear Usuario"
+        }
+    },
+    "Suppliers": {
+        "title": "Proveedores",
+        "description": "Administrar sus proveedores y detalles.",
+        "addSupplier": "Agregar Proveedor",
+        "createTitle": "Crear Proveedor",
+        "createDesc": "Agregar un nuevo proveedor al sistema.",
+        "editTitle": "Editar Proveedor",
+        "editDesc": "Editar detalles para",
+        "form": {
+            "nameLabel": "Nombre",
+            "namePlaceholder": "Nombre del Proveedor",
+            "emailLabel": "Correo electrónico",
+            "emailPlaceholder": "email@ejemplo.com",
+            "phoneLabel": "Teléfono",
+            "phonePlaceholder": "(555) 555-5555",
+            "addressLabel": "Dirección",
+            "addressPlaceholder": "Calle Principal 123",
+            "cityLabel": "Ciudad",
+            "cityPlaceholder": "Ciudad",
+            "zipLabel": "Código Postal",
+            "zipPlaceholder": "12345",
+            "createPayload": "Crear Proveedor"
+        }
     }
 }

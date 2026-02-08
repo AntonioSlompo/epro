@@ -30,10 +30,135 @@
             "settings": "Configurações"
         }
     },
+    "Dashboard": {
+        "title": "Visão Geral",
+        "nav": {
+            "dashboard": "Painel",
+            "users": "Usuários",
+            "suppliers": "Fornecedores",
+            "clients": "Clientes",
+            "finance": "Financeiro",
+            "settings": "Configurações"
+        },
+        "stats": {
+            "activeUsers": "Usuários Ativos",
+            "revenue": "Receita Mensal",
+            "alerts": "Alertas Ativos",
+            "occupancy": "Taxa de Ocupação",
+            "lastMonth": "desde o mês passado"
+        },
+        "recentActivity": "Atividade Recente",
+        "systemHealth": "Saúde do Sistema",
+        "context": {
+            "operational": "Operacional",
+            "maintenance": "Manutenção de Ativos",
+            "commercial": "Comercial e Contratos",
+            "financial": "Financeiro",
+            "hr": "Recursos Humanos e Escalas",
+            "operationalDesc": "Gestão completa de unidades, controle de acesso, monitoramento de eventos e rondas em tempo real.",
+            "maintenanceDesc": "Gestão integral de Ordens de Serviço (O.S.), controle de ativos em comodato e automação de manutenções preventivas e revisões.",
+            "commercialDesc": "Gestão de receita recorrente (SaaS), controle de contratos com reajustes automáticos (IGP-M/IPCA) e CRM especializado com funil de vendas e vistorias técnicas.",
+            "financialDesc": "Faturamento recorrente integrado aos contratos, emissão automática de boletos/NF, fluxo de caixa e gestão de inadimplência com bloqueio automático.",
+            "hrDesc": "Gestão completa de escalas complexas (12x36), alocação de postos e controle de validade de treinamentos e certificações (NRs)."
+        }
+    },
+    "UserMenu": {
+        "profile": "Perfil",
+        "billing": "Faturamento",
+        "settings": "Configurações",
+        "logout": "Sair"
+    },
+    "LoginPage": {
+        "title": "Acessar o sistema",
+        "subtitle": "Insira suas credenciais para acessar o portal seguro",
+        "emailLabel": "E-mail",
+        "emailPlaceholder": "nome@exemplo.com",
+        "passwordLabel": "Senha",
+        "passwordPlaceholder": "••••••••",
+        "forgotPassword": "Esqueceu a senha?",
+        "signIn": "Entrar",
+        "authenticating": "Autenticando...",
+        "orContinue": "Ou continue com",
+        "contactAdmin": "Contate o Administrador",
+        "noAccount": "Não tem uma conta?"
+    },
     "Theme": {
         "light": "Claro",
         "dark": "Escuro",
         "system": "Sistema",
         "toggle": "Alternar tema"
+    },
+    "Common": {
+        "actions": "Ações",
+        "edit": "Editar",
+        "delete": "Excluir",
+        "save": "Salvar",
+        "cancel": "Cancelar",
+        "create": "Criar",
+        "saving": "Salvando...",
+        "saveChanges": "Salvar Alterações",
+        "confirmDelete": "Tem certeza de que deseja excluir?",
+        "noResults": "Nenhum resultado encontrado.",
+        "copyId": "Copiar ID",
+        "name": "Nome",
+        "email": "E-mail",
+        "phone": "Telefone",
+        "address": "Endereço",
+        "city": "Cidade",
+        "zip": "CEP",
+        "password": "Senha",
+        "active": "Ativo",
+        "inactive": "Inativo",
+        "status": {
+            "active": "Ativo",
+            "inactive": "Inativo"
+        },
+        "success": "Sucesso",
+        "error": "Erro"
+    },
+    "Users": {
+        "title": "Usuários",
+        "description": "Gerencie usuários e acesso ao sistema.",
+        "addUser": "Adicionar Usuário",
+        "createTitle": "Criar Usuário",
+        "createDesc": "Adicione um novo usuário ao sistema.",
+        "editTitle": "Editar Usuário",
+        "editDesc": "Editar detalhes para",
+        "form": {
+            "nameLabel": "Nome",
+            "namePlaceholder": "Nome Completo",
+            "emailLabel": "E-mail",
+            "emailPlaceholder": "email@exemplo.com",
+            "passwordLabel": "Senha",
+            "passwordPlaceholder": "******",
+            "passwordHint": "(Deixe em branco para manter a atual)",
+            "activeLabel": "Usuário Ativo",
+            "activeDesc": "Este usuário pode fazer login no sistema.",
+            "createPayload": "Criar Usuário"
+        }
+    },
+    "Suppliers": {
+        "title": "Fornecedores",
+        "description": "Gerencie seus fornecedores e detalhes.",
+        "addSupplier": "Adicionar Fornecedor",
+        "createTitle": "Criar Fornecedor",
+        "createDesc": "Adicione um novo fornecedor ao sistema.",
+        "editTitle": "Editar Fornecedor",
+        "editDesc": "Editar detalhes para",
+        "form": {
+            "nameLabel": "Nome",
+            "namePlaceholder": "Nome do Fornecedor",
+            "emailLabel": "E-mail",
+            "emailPlaceholder": "email@exemplo.com",
+            "phoneLabel": "Telefone",
+            "phonePlaceholder": "(00) 00000-0000",
+            "addressLabel": "Endereço",
+            "addressPlaceholder": "Rua Exemplo, 123",
+            "cityLabel": "Cidade",
+            "cityPlaceholder": "Sua Cidade",
+            "zipLabel": "CEP",
+            "zipPlaceholder": "00000-000",
+            "createPayload": "Criar Fornecedor"
+        }
     }
 }

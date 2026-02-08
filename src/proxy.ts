@@ -1,9 +1,17 @@
 import createMiddleware from 'next-intl/middleware';
 import { routing } from './i18n/routing';
 
-export default createMiddleware(routing);
+export default function middleware(request: any) {
+    console.log("Middleware hitting (via Proxy):", request.nextUrl.pathname);
+    const handle = createMiddleware(routing);
+    const response = handle(request);
+    console.log("Middleware response status:", response.status);
+    return response;
+}
 
 export const config = {
-    // Match only internationalized pathnames
-    matcher: ['/', '/(pt|en|es)/:path*']
+    // Match all pathnames except for
+    // - … if they start with `/api`, `/_next` or `/_vercel`
+    // - … the ones containing a dot (e.g. `favicon.ico`)
+    matcher: ['/((?!api|_next|_vercel|.*\\..*).*)']
 };
