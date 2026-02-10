@@ -38,6 +38,11 @@
             "suppliers": "Proveedores",
             "clients": "Clientes",
             "finance": "Finanzas",
+            "playground": "Playground",
+            "documentDemo": "Prueba Documentos",
+            "addressDemo": "Prueba Dirección",
+            "moneyDemo": "Prueba Monetaria",
+            "fileUploadDemo": "Prueba Subida",
             "settings": "Configuración"
         },
         "stats": {
@@ -160,5 +165,63 @@
             "zipPlaceholder": "12345",
             "createPayload": "Crear Proveedor"
         }
+    },
+    "AddressComponent": {
+        "zipLabel": "Código Postal",
+        "zipPlaceholder": "Código Postal",
+        "streetLabel": "Calle",
+        "streetPlaceholder": "Calle...",
+        "numberLabel": "Número",
+        "numberPlaceholder": "123",
+        "complementLabel": "Complemento",
+        "complementPlaceholder": "Apto 101",
+        "neighborhoodLabel": "Barrio",
+        "neighborhoodPlaceholder": "Centro",
+        "cityLabel": "Ciudad",
+        "cityPlaceholder": "Ciudad",
+        "stateLabel": "Estado",
+        "statePlaceholder": "Estado",
+        "latitudeLabel": "Latitud",
+        "longitudeLabel": "Longitud"
+    },
+    "DocumentComponent": {
+        "documentTypeLabel": "Tipo de Persona",
+        "documentLabel": "Documento (CPF/CNPJ)",
+        "legalNameLabel": "Razón Social",
+        "legalNamePlaceholder": "Razón Social Ltda",
+        "tradeNameLabel": "Nombre Fantasía",
+        "tradeNamePlaceholder": "Nombre Comercial",
+        "stateRegistrationLabel": "Inscripción Estatal",
+        "stateRegistrationPlaceholder": "Exento o número",
+        "cpfSearchDisabled": "Búsqueda automática no disponible para CPF",
+        "searchCnpj": "Buscar datos del CNPJ"
+    },
+    "DocumentDemo": {
+        "title": "Demostración de Componentes",
+        "description": "Probando el componente CNPJ/CPF con relleno automático de dirección.",
+        "cardTitle": "Prueba de Registro",
+        "cardDescription": "Ingrese un CNPJ para completar automáticamente los datos de la empresa y la dirección.",
+        "businessDataSection": "Datos de la Empresa",
+        "addressDataSection": "Datos de Dirección",
+        "submitButton": "Enviar Formulario"
+    },
+    "MoneyDemo": {
+        "title": "Entrada Monetaria",
+        "description": "Componente para ingresar valores monetarios con formato automático.",
+        "cardTitle": "Prueba de Valor",
+        "cardDescription": "Ingrese un valor para ver el formato en tiempo real.",
+        "label": "Precio",
+        "placeholder": "R$ 0,00",
+        "helperText": "Valor bruto (float)",
+        "submit": "Enviar"
+    },
+    "FileUploadDemo": {
+        "title": "Subida de Archivos",
+        "description": "Componente Drag & Drop para subir múltiples archivos.",
+        "cardTitle": "Prueba de Subida",
+        "cardDescription": "Arrastre archivos o haga clic para seleccionar (Imágenes y PDF).",
+        "noFilesError": "Seleccione al menos un archivo.",
+        "uploadSuccess": "Archivos listos para enviar",
+        "submit": "Enviar Archivos"
     }
 }

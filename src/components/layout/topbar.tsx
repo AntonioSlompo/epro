@@ -96,13 +96,15 @@ export function Topbar({ user }: TopbarProps) {
                 {!isDashboard && (
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                            <Button variant="outline" className="h-9 gap-2 border-primary/20 bg-primary/5 hover:bg-primary/10 transition-colors">
-                                <LayoutGrid className="h-4 w-4" />
-                                <span className="hidden md:inline-block">Contextos</span>
+                            <Button variant="outline" className="w-[28rem] justify-between h-9 gap-2 border-primary/20 bg-primary/5 hover:bg-primary/10 transition-colors">
+                                <div className="flex items-center gap-2">
+                                    <LayoutGrid className="h-4 w-4" />
+                                    <span className="hidden md:inline-block">Contextos</span>
+                                </div>
                                 <ChevronDown className="h-3 w-3 opacity-50" />
                             </Button>
                         </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end" className="w-56 bg-background/95 backdrop-blur-sm border-border">
+                        <DropdownMenuContent align="end" className="w-[28rem] bg-background/95 backdrop-blur-sm border-border">
                             <DropdownMenuLabel>Navegar por Contexto</DropdownMenuLabel>
                             <DropdownMenuSeparator />
                             {contexts.map((ctx, index) => (

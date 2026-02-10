@@ -38,6 +38,11 @@
             "suppliers": "Fornecedores",
             "clients": "Clientes",
             "finance": "Financeiro",
+            "playground": "Playground",
+            "documentDemo": "Teste Documentos",
+            "addressDemo": "Teste Endereço",
+            "moneyDemo": "Teste Monetário",
+            "fileUploadDemo": "Teste Upload",
             "settings": "Configurações"
         },
         "stats": {
@@ -160,5 +165,63 @@
             "zipPlaceholder": "00000-000",
             "createPayload": "Criar Fornecedor"
         }
+    },
+    "AddressComponent": {
+        "zipLabel": "CEP",
+        "zipPlaceholder": "00000-000",
+        "streetLabel": "Rua",
+        "streetPlaceholder": "Rua...",
+        "numberLabel": "Número",
+        "numberPlaceholder": "123",
+        "complementLabel": "Complemento",
+        "complementPlaceholder": "Apto 101",
+        "neighborhoodLabel": "Bairro",
+        "neighborhoodPlaceholder": "Centro",
+        "cityLabel": "Cidade",
+        "cityPlaceholder": "Cidade",
+        "stateLabel": "Estado",
+        "statePlaceholder": "UF",
+        "latitudeLabel": "Latitude",
+        "longitudeLabel": "Longitude"
+    },
+    "DocumentComponent": {
+        "documentTypeLabel": "Tipo de Pessoa",
+        "documentLabel": "Documento (CPF/CNPJ)",
+        "legalNameLabel": "Razão Social",
+        "legalNamePlaceholder": "Razão Social Ltda",
+        "tradeNameLabel": "Nome Fantasia",
+        "tradeNamePlaceholder": "Nome Comercial",
+        "stateRegistrationLabel": "Inscrição Estadual",
+        "stateRegistrationPlaceholder": "Isento ou número",
+        "cpfSearchDisabled": "Busca automática indisponível para CPF",
+        "searchCnpj": "Buscar dados do CNPJ"
+    },
+    "DocumentDemo": {
+        "title": "Demonstração de Componentes",
+        "description": "Testando o componente CNPJ/CPF com preenchimento automático de endereço.",
+        "cardTitle": "Teste de Cadastro",
+        "cardDescription": "Digite um CNPJ para preencher automaticamente os dados da empresa e endereço.",
+        "businessDataSection": "Dados da Empresa",
+        "addressDataSection": "Endereço",
+        "submitButton": "Enviar Formulário"
+    },
+    "MoneyDemo": {
+        "title": "Input Monetário",
+        "description": "Componente para entrada de valores monetários com formatação automática.",
+        "cardTitle": "Teste de Valor",
+        "cardDescription": "Digite um valor para ver a formatação em tempo real.",
+        "label": "Preço",
+        "placeholder": "R$ 0,00",
+        "helperText": "Valor bruto (float)",
+        "submit": "Enviar"
+    },
+    "FileUploadDemo": {
+        "title": "Upload de Arquivos",
+        "description": "Componente Drag & Drop para upload de múltiplos arquivos.",
+        "cardTitle": "Teste de Upload",
+        "cardDescription": "Arraste arquivos ou clique para selecionar (Imagens e PDF).",
+        "noFilesError": "Selecione pelo menos um arquivo.",
+        "uploadSuccess": "Arquivos prontos para envio",
+        "submit": "Enviar Arquivos"
     }
 }

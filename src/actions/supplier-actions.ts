@@ -64,7 +64,8 @@ export async function updateSupplier(id: string, data: SupplierFormValues) {
     }
 
     try {
-        await prisma.supplier.update({ where: { id }, data: result.data });
+        const { id: _, ...updateData } = result.data;
+        await prisma.supplier.update({ where: { id }, data: updateData });
         revalidatePath('/suppliers');
         revalidatePath(`/suppliers/${id}`);
         return { success: true };

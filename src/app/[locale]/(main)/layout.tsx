@@ -10,7 +10,7 @@ export default async function DashboardLayout({
     const user = await getCurrentUser()
 
     return (
-        <div className="flex flex-col min-h-screen bg-background relative overflow-hidden">
+        <div className="flex flex-col h-screen bg-background relative overflow-hidden">
             {/* Background Grid for Dashboard (Optional to keep consistent or reduce noise) */}
             <div className="fixed inset-0 z-0 h-full w-full bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:4rem_4rem] pointer-events-none" />
 

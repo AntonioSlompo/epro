@@ -61,7 +61,7 @@
   /* Glass White */
   --card-foreground: oklch(0.12 0.04 260);
 
-  --popover: oklch(1 0 0 / 0.8);
+  --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.12 0.04 260);
 
   --primary: oklch(0.45 0.28 260);
@@ -146,7 +146,7 @@
   /* Glass Navy */
   --card-foreground: oklch(0.95 0.02 260);
 
-  --popover: oklch(0.10 0.05 260 / 0.8);
+  --popover: oklch(0.10 0.05 260);
   --popover-foreground: oklch(0.95 0.02 260);
 
   --primary: oklch(0.60 0.25 260);

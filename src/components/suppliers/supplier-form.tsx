@@ -19,6 +19,8 @@ import { Input } from "@/components/ui/input"
 import { Card, CardContent } from "@/components/ui/card"
 import { createSupplier, updateSupplier } from "@/actions/supplier-actions"
 import { SupplierFormValues, supplierSchema } from "@/schemas/supplier-schema"
+import { DocumentForm } from "@/components/common/document-form"
+import { AddressForm } from "@/components/common/address-form"
 
 interface SupplierFormProps {
     initialData?: SupplierFormValues & { id?: string }
@@ -36,12 +38,23 @@ export function SupplierForm({ initialData, mode }: SupplierFormProps) {
         resolver: zodResolver(supplierSchema),
         defaultValues: initialData || {
             name: "",
+            tradeName: "",
+            document: "",
+            documentType: "CNPJ",
+            stateRegistration: "",
             email: "",
             phone: "",
             active: true,
-            address: "",
-            city: "",
+            // Address defaults
             zip: "",
+            street: "",
+            number: "",
+            complement: "",
+            neighborhood: "",
+            city: "",
+            state: "",
+            latitude: undefined,
+            longitude: undefined,
         },
     })
 
@@ -75,90 +88,45 @@ export function SupplierForm({ initialData, mode }: SupplierFormProps) {
                             </div>
                         )}
 
-                        <div className="grid gap-6 md:grid-cols-2">
-                            <FormField
-                                control={form.control}
-                                name="name"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>{t("nameLabel")}</FormLabel>
-                                        <FormControl>
-                                            <Input placeholder={t("namePlaceholder")} {...field} />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
+                        <div className="space-y-6">
+                            {/* Document and Business Info */}
+                            <DocumentForm legalNameField="name" />
 
-                            <FormField
-                                control={form.control}
-                                name="email"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>{t("emailLabel")}</FormLabel>
-                                        <FormControl>
-                                            <Input placeholder={t("emailPlaceholder")} {...field} />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
+                            <div className="grid gap-6 md:grid-cols-2">
+                                <FormField
+                                    control={form.control}
+                                    name="email"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>{t("emailLabel")}</FormLabel>
+                                            <FormControl>
+                                                <Input placeholder={t("emailPlaceholder")} {...field} />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
 
-                            <FormField
-                                control={form.control}
-                                name="phone"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>{t("phoneLabel")}</FormLabel>
-                                        <FormControl>
-                                            <Input placeholder={t("phonePlaceholder")} {...field} />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
+                                <FormField
+                                    control={form.control}
+                                    name="phone"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>{t("phoneLabel")}</FormLabel>
+                                            <FormControl>
+                                                <Input placeholder={t("phonePlaceholder")} {...field} />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                            </div>
 
-                            <FormField
-                                control={form.control}
-                                name="address"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>{t("addressLabel")}</FormLabel>
-                                        <FormControl>
-                                            <Input placeholder={t("addressPlaceholder")} {...field} />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-
-                            <FormField
-                                control={form.control}
-                                name="city"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>{t("cityLabel")}</FormLabel>
-                                        <FormControl>
-                                            <Input placeholder={t("cityPlaceholder")} {...field} />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-
-                            <FormField
-                                control={form.control}
-                                name="zip"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>{t("zipLabel")}</FormLabel>
-                                        <FormControl>
-                                            <Input placeholder={t("zipPlaceholder")} {...field} />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
+                            {/* Address Info */}
+                            <div className="border-t pt-6">
+                                <h3 className="text-lg font-medium mb-4">{tCommon("address")}</h3>
+                                <AddressForm />
+                            </div>
                         </div>
 
                         <div className="flex justify-end gap-4">

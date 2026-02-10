@@ -19,14 +19,27 @@ model User {
 }
 
 model Supplier {
-  id        String   @id @default(cuid())
-  name      String
-  email     String?
-  phone     String?
-  active    Boolean  @default(true)
-  address   String?
-  city      String?
-  zip       String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id                String   @id @default(cuid())
+  name              String   // Razão Social (Legal Name)
+  tradeName         String?  // Nome Fantasia
+  documentType      String   @default("CNPJ") // CPF or CNPJ
+  document          String   @unique // The actual number
+  stateRegistration String?
+  email             String?
+  phone             String?
+  active            Boolean  @default(true)
+  
+  // Address Fields
+  zip               String?
+  street            String?
+  number            String?
+  complement        String?
+  neighborhood      String?
+  city              String?
+  state             String?
+  latitude          Float?
+  longitude         Float?
+
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
 }

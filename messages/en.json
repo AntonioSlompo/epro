@@ -38,6 +38,11 @@
             "suppliers": "Suppliers",
             "clients": "Clients",
             "finance": "Finance",
+            "playground": "Playground",
+            "documentDemo": "Document Test",
+            "addressDemo": "Address Test",
+            "moneyDemo": "Money Test",
+            "fileUploadDemo": "Upload Test",
             "settings": "Settings"
         },
         "stats": {
@@ -160,5 +165,63 @@
             "zipPlaceholder": "12345",
             "createPayload": "Create Supplier"
         }
+    },
+    "AddressComponent": {
+        "zipLabel": "Zip Code",
+        "zipPlaceholder": "Zip Code",
+        "streetLabel": "Street",
+        "streetPlaceholder": "Street...",
+        "numberLabel": "Number",
+        "numberPlaceholder": "123",
+        "complementLabel": "Complement",
+        "complementPlaceholder": "Apt 101",
+        "neighborhoodLabel": "Neighborhood",
+        "neighborhoodPlaceholder": "Downtown",
+        "cityLabel": "City",
+        "cityPlaceholder": "City",
+        "stateLabel": "State",
+        "statePlaceholder": "State",
+        "latitudeLabel": "Latitude",
+        "longitudeLabel": "Longitude"
+    },
+    "DocumentComponent": {
+        "documentTypeLabel": "Person Type",
+        "documentLabel": "Document (CPF/CNPJ)",
+        "legalNameLabel": "Legal Name",
+        "legalNamePlaceholder": "Legal Name LLC",
+        "tradeNameLabel": "Trade Name",
+        "tradeNamePlaceholder": "Trade Name",
+        "stateRegistrationLabel": "State Registration",
+        "stateRegistrationPlaceholder": "Exempt or number",
+        "cpfSearchDisabled": "Automatic search unavailable for CPF",
+        "searchCnpj": "Search CNPJ data"
+    },
+    "DocumentDemo": {
+        "title": "Component Demo",
+        "description": "Testing the CNPJ/CPF component with automatic address filling.",
+        "cardTitle": "Register Test",
+        "cardDescription": "Enter a CNPJ to auto-fill business data and address.",
+        "businessDataSection": "Business Data",
+        "addressDataSection": "Address Data",
+        "submitButton": "Submit Form"
+    },
+    "MoneyDemo": {
+        "title": "Money Input",
+        "description": "Component for entering monetary values with automatic formatting.",
+        "cardTitle": "Value Test",
+        "cardDescription": "Enter a value to see real-time formatting.",
+        "label": "Price",
+        "placeholder": "R$ 0.00",
+        "helperText": "Raw value (float)",
+        "submit": "Submit"
+    },
+    "FileUploadDemo": {
+        "title": "File Upload",
+        "description": "Drag & Drop component for multiple file uploads.",
+        "cardTitle": "Upload Test",
+        "cardDescription": "Drag files or click to select (Images and PDF).",
+        "noFilesError": "Please select at least one file.",
+        "uploadSuccess": "Files ready for upload",
+        "submit": "Upload Files"
     }
 }

@@ -11,7 +11,8 @@ import {
     Menu,
     X,
     ChevronLeft,
-    ChevronRight
+    ChevronRight,
+    ChevronDown
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
@@ -24,11 +25,31 @@ export function Sidebar() {
     const [isMobileOpen, setIsMobileOpen] = useState(false)
     const [isCollapsed, setIsCollapsed] = useState(false)
 
+    const [expandedItems, setExpandedItems] = useState<string[]>(['Playground'])
+
+    const toggleExpand = (label: string) => {
+        setExpandedItems(prev =>
+            prev.includes(label)
+                ? prev.filter(item => item !== label)
+                : [...prev, label]
+        )
+    }
+
     const navItems = [
         { href: "/dashboard", icon: LayoutDashboard, label: t('dashboard') },
         { href: "/users", icon: Users, label: t('users') },
         { href: "/suppliers", icon: Users, label: t('suppliers') },
         { href: "/finance", icon: DollarSign, label: t('finance') },
+        {
+            label: t('playground'),
+            icon: Shield,
+            children: [
+                { href: "/document-demo", label: t('documentDemo') },
+                { href: "/address-demo", label: t('addressDemo') },
+                { href: "/money-demo", label: t('moneyDemo') },
+                { href: "/file-upload-demo", label: t('fileUploadDemo') },
+            ]
+        },
         { href: "/settings", icon: Settings, label: t('settings') },
     ]
 
@@ -54,7 +75,60 @@ export function Sidebar() {
 
                     {/* Navigation */}
                     <nav className="flex-1 px-3 py-6 space-y-2">
-                        {navItems.map((item) => {
+                        {navItems.map((item, index) => {
+                            if (item.children) {
+                                const isExpanded = expandedItems.includes(item.label)
+                                const isActive = item.children.some(child => pathname === child.href)
+
+                                return (
+                                    <div key={index} className="space-y-1">
+                                        <button
+                                            onClick={() => toggleExpand(item.label)}
+                                            className={cn(
+                                                "w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200 group relative select-none",
+                                                isActive ? "text-primary" : "text-muted-foreground hover:text-foreground hover:bg-white/5",
+                                                isCollapsed && "justify-center px-2"
+                                            )}
+                                        >
+                                            <item.icon className={cn(
+                                                "h-5 w-5 transition-colors shrink-0",
+                                                isActive ? "text-primary" : "text-muted-foreground group-hover:text-primary"
+                                            )} />
+                                            {!isCollapsed && (
+                                                <>
+                                                    <span className="font-medium truncate flex-1 text-left">
+                                                        {item.label}
+                                                    </span>
+                                                    {isExpanded ? <ChevronDown className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
+                                                </>
+                                            )}
+                                        </button>
+
+                                        {!isCollapsed && isExpanded && (
+                                            <div className="pl-11 pr-2 space-y-1">
+                                                {item.children.map((child) => {
+                                                    const isChildActive = pathname === child.href
+                                                    return (
+                                                        <Link
+                                                            key={child.href}
+                                                            href={child.href}
+                                                            className={cn(
+                                                                "block py-2 px-3 text-sm rounded-md transition-colors",
+                                                                isChildActive
+                                                                    ? "bg-primary/10 text-primary font-medium"
+                                                                    : "text-muted-foreground hover:text-foreground hover:bg-white/5"
+                                                            )}
+                                                        >
+                                                            {child.label}
+                                                        </Link>
+                                                    )
+                                                })}
+                                            </div>
+                                        )}
+                                    </div>
+                                )
+                            }
+
                             const isActive = pathname === item.href || pathname.startsWith(`${item.href}/`)
                             return (
                                 <Link
