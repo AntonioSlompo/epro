@@ -33,10 +33,10 @@
     "Dashboard": {
         "title": "Visão Geral",
         "nav": {
-            "dashboard": "Painel",
+            "dashboard": "Dashboard",
             "users": "Usuários",
             "suppliers": "Fornecedores",
-            "clients": "Clientes",
+            "companies": "Empresas",
             "finance": "Financeiro",
             "playground": "Playground",
             "documentDemo": "Teste Documentos",
@@ -204,6 +204,37 @@
         "businessDataSection": "Dados da Empresa",
         "addressDataSection": "Endereço",
         "submitButton": "Enviar Formulário"
+    },
+    "Companies": {
+        "title": "Empresas",
+        "description": "Gerencie as empresas (tenants) do sistema.",
+        "newCompany": "Nova Empresa",
+        "name": "Razão Social",
+        "status": "Status",
+        "form": {
+            "basicInfo": "Informações Básicas",
+            "contactInfo": "Contato",
+            "settings": "Configurações",
+            "slugHelp": "Identificador único para URL (ex: minha-empresa). Gerado automaticamente.",
+            "email": "E-mail",
+            "phone": "Telefone",
+            "distributionModel": "Modelo de Distribuição",
+            "modelFree": "Livre",
+            "modelRestricted": "Restrito",
+            "portalMode": "Modo do Portal",
+            "modeListing": "Listagem",
+            "modeCatalog": "Catálogo",
+            "enableCommission": "Controle de Comissões",
+            "enableCommissionDesc": "Habilita o gerenciamento de comissões para esta empresa."
+        },
+        "new": {
+            "title": "Nova Empresa",
+            "description": "Cadastre uma nova empresa no sistema."
+        },
+        "edit": {
+            "title": "Editar Empresa",
+            "description": "Alterar informações da empresa."
+        }
     },
     "MoneyDemo": {
         "title": "Input Monetário",

@@ -39,6 +39,7 @@ export function Sidebar() {
         { href: "/dashboard", icon: LayoutDashboard, label: t('dashboard') },
         { href: "/users", icon: Users, label: t('users') },
         { href: "/suppliers", icon: Users, label: t('suppliers') },
+        { href: "/companies", icon: Shield, label: t('companies') },
         { href: "/finance", icon: DollarSign, label: t('finance') },
         {
             label: t('playground'),

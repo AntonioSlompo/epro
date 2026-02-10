@@ -43,3 +43,59 @@ model Supplier {
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
 }
+
+model Plan {
+  id                    String    @id @default(cuid())
+  name                  String
+  description           String?
+  price                 Decimal?
+  features              Json?
+  active                Boolean   @default(true)
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+  
+  companies             Company[]
+}
+
+model Company {
+  id                      String    @id @default(cuid())
+  name                    String    // Razão Social
+  slug                    String    @unique
+  tradeName               String?   // Nome Fantasia
+  cnpj                    String?   @unique
+  logoUrl                 String?
+  email                   String?
+  phone                   String?
+  mobile                  String?
+  whatsapp                String?
+  website                 String?
+  
+  // Address
+  cep                     String?
+  address                 String?
+  number                  String?
+  complement              String?
+  neighborhood            String?
+  city                    String?
+  state                   String?
+  ibge                    String?
+
+  active                  Boolean   @default(true)
+  createdAt               DateTime  @default(now())
+  updatedAt               DateTime  @updatedAt
+
+  // Subscription / Plan
+  planId                  String?
+  plan                    Plan?     @relation(fields: [planId], references: [id])
+  stripeCustomerId        String?
+  subscriptionExpiresAt   DateTime?
+  subscriptionStatus      String    @default("ACTIVE") // ACTIVE, INACTIVE, CANCELED, PAST_DUE
+  
+  // Settings & Config
+  logoData                Bytes?    // bytea
+  logoMimeType            String?
+  distributionModel       String    @default("LIVRE") // LIVRE, RESTRITO
+  enableCommissionControl Boolean   @default(true)
+  portalConfig            Json?     // store portal preferences
+  portalMode              String    @default("LISTING") // LISTING, CATALOG
+}

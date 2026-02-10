@@ -36,6 +36,7 @@
             "dashboard": "Tablero",
             "users": "Usuarios",
             "suppliers": "Proveedores",
+            "companies": "Empresas",
             "clients": "Clientes",
             "finance": "Finanzas",
             "playground": "Playground",
@@ -204,6 +205,37 @@
         "businessDataSection": "Datos de la Empresa",
         "addressDataSection": "Datos de Dirección",
         "submitButton": "Enviar Formulario"
+    },
+    "Companies": {
+        "title": "Empresas",
+        "description": "Gestionar empresas del sistema (inquilinos).",
+        "newCompany": "Nueva Empresa",
+        "name": "Razón Social",
+        "status": "Estado",
+        "form": {
+            "basicInfo": "Información Básica",
+            "contactInfo": "Contacto",
+            "settings": "Configuración",
+            "slugHelp": "Identificador único para URL (ej: mi-empresa). Generado automáticamente.",
+            "email": "Correo electrónico",
+            "phone": "Teléfono",
+            "distributionModel": "Modelo de Distribución",
+            "modelFree": "Libre",
+            "modelRestricted": "Restringido",
+            "portalMode": "Modo del Portal",
+            "modeListing": "Listado",
+            "modeCatalog": "Catálogo",
+            "enableCommission": "Control de Comisiones",
+            "enableCommissionDesc": "Habilita la gestión de comisiones para esta empresa."
+        },
+        "new": {
+            "title": "Nueva Empresa",
+            "description": "Registrar una nueva empresa en el sistema."
+        },
+        "edit": {
+            "title": "Editar Empresa",
+            "description": "Actualizar información de la empresa."
+        }
     },
     "MoneyDemo": {
         "title": "Entrada Monetaria",

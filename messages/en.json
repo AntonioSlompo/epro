@@ -36,7 +36,7 @@
             "dashboard": "Dashboard",
             "users": "Users",
             "suppliers": "Suppliers",
-            "clients": "Clients",
+            "companies": "Companies",
             "finance": "Finance",
             "playground": "Playground",
             "documentDemo": "Document Test",
@@ -204,6 +204,37 @@
         "businessDataSection": "Business Data",
         "addressDataSection": "Address Data",
         "submitButton": "Submit Form"
+    },
+    "Companies": {
+        "title": "Companies",
+        "description": "Manage system companies (tenants).",
+        "newCompany": "New Company",
+        "name": "Legal Name",
+        "status": "Status",
+        "form": {
+            "basicInfo": "Basic Information",
+            "contactInfo": "Contact",
+            "settings": "Settings",
+            "slugHelp": "Unique identifier for URL (e.g., my-company). Auto-generated.",
+            "email": "Email",
+            "phone": "Phone",
+            "distributionModel": "Distribution Model",
+            "modelFree": "Free",
+            "modelRestricted": "Restricted",
+            "portalMode": "Portal Mode",
+            "modeListing": "Listing",
+            "modeCatalog": "Catalog",
+            "enableCommission": "Commission Control",
+            "enableCommissionDesc": "Enables commission management for this company."
+        },
+        "new": {
+            "title": "New Company",
+            "description": "Register a new company in the system."
+        },
+        "edit": {
+            "title": "Edit Company",
+            "description": "Update company information."
+        }
     },
     "MoneyDemo": {
         "title": "Money Input",

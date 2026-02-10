@@ -25,13 +25,15 @@ interface DocumentFormProps {
     tradeNameField?: string;
     documentField?: string;
     stateRegistrationField?: string;
+    onLegalNameChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export function DocumentForm({
     legalNameField = 'legalName',
     tradeNameField = 'tradeName',
     documentField = 'document',
-    stateRegistrationField = 'stateRegistration'
+    stateRegistrationField = 'stateRegistration',
+    onLegalNameChange
 }: DocumentFormProps) {
     const { control, setValue, watch } = useFormContext();
     const t = useTranslations("DocumentComponent");
