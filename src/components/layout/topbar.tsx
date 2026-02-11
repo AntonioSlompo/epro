@@ -5,12 +5,7 @@ import {
     Bell,
     Shield,
     User,
-    Wrench,
-    FileText,
-    DollarSign,
-    Users,
     ChevronDown,
-    LayoutGrid
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { ModeToggle } from "@/components/mode-toggle"
@@ -38,42 +33,11 @@ interface TopbarProps {
 
 export function Topbar({ user }: TopbarProps) {
     const t = useTranslations("UserMenu")
-    const tContext = useTranslations("Dashboard.context")
+
     const pathname = usePathname()
     const isDashboard = pathname === '/dashboard'
 
-    const contexts = [
-        {
-            title: tContext('operational'),
-            icon: Shield,
-            color: "text-blue-500",
-            bg: "bg-blue-500/10",
-        },
-        {
-            title: tContext('maintenance'),
-            icon: Wrench,
-            color: "text-orange-500",
-            bg: "bg-orange-500/10",
-        },
-        {
-            title: tContext('commercial'),
-            icon: FileText,
-            color: "text-purple-500",
-            bg: "bg-purple-500/10",
-        },
-        {
-            title: tContext('financial'),
-            icon: DollarSign,
-            color: "text-green-500",
-            bg: "bg-green-500/10",
-        },
-        {
-            title: tContext('hr'),
-            icon: Users,
-            color: "text-pink-500",
-            bg: "bg-pink-500/10",
-        }
-    ]
+
 
     return (
         <header className="h-16 w-full glass-panel flex items-center justify-between px-6 z-30 relative rounded-none border-x-0 border-t-0">
@@ -93,31 +57,6 @@ export function Topbar({ user }: TopbarProps) {
             {/* Right: Actions */}
             <div className="flex items-center gap-4 ml-auto">
                 {/* Context Dropdown (Hidden on Dashboard) */}
-                {!isDashboard && (
-                    <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                            <Button variant="outline" className="w-[28rem] justify-between h-9 gap-2 border-primary/20 bg-primary/5 hover:bg-primary/10 transition-colors">
-                                <div className="flex items-center gap-2">
-                                    <LayoutGrid className="h-4 w-4" />
-                                    <span className="hidden md:inline-block">Contextos</span>
-                                </div>
-                                <ChevronDown className="h-3 w-3 opacity-50" />
-                            </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end" className="w-[28rem] bg-background/95 backdrop-blur-sm border-border">
-                            <DropdownMenuLabel>Navegar por Contexto</DropdownMenuLabel>
-                            <DropdownMenuSeparator />
-                            {contexts.map((ctx, index) => (
-                                <DropdownMenuItem key={index} className="gap-3 cursor-pointer">
-                                    <div className={`p-1.5 rounded-md ${ctx.bg}`}>
-                                        <ctx.icon className={`h-4 w-4 ${ctx.color}`} />
-                                    </div>
-                                    <span>{ctx.title}</span>
-                                </DropdownMenuItem>
-                            ))}
-                        </DropdownMenuContent>
-                    </DropdownMenu>
-                )}
                 <LanguageToggle />
                 <DensityToggle />
                 <ModeToggle />

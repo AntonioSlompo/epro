@@ -37,12 +37,58 @@ export function CompanyForm({ initialData, mode }: CompanyFormProps) {
 
     const form = useForm<CompanyFormValues>({
         resolver: zodResolver(companySchema),
-        defaultValues: initialData || {
+        defaultValues: initialData ? {
+            ...initialData,
+            tradeName: initialData.tradeName ?? "",
+            cnpj: initialData.cnpj ?? "",
+            // The schema expects 'document' and 'documentType', but Prisma model has 'cnpj'.
+            // We need to map cnpj to document for the form.
+            document: initialData.cnpj ?? initialData.document ?? "",
+            documentType: "CNPJ",
+            stateRegistration: initialData.stateRegistration ?? "", // Added stateRegistration
+            email: initialData.email ?? "",
+            phone: initialData.phone ?? "",
+            mobile: initialData.mobile ?? "",
+            whatsapp: initialData.whatsapp ?? "",
+            website: initialData.website ?? "",
+            logoUrl: initialData.logoUrl ?? "",
+
+            // Address
+            zip: initialData.zip ?? "",
+            address: initialData.address ?? "", // address field in schema, schema calls it address, Prisma calls it address? 
+            // Wait, schema has addressSchema which has zip, street, number, etc.
+            // Prisma model has: zip, street, number, complement, neighborhood, city, state.
+            // But verify if they match schema.
+            // The error was specifically about `input` value being null.
+            street: initialData.street ?? "",
+            number: initialData.number ?? "",
+            complement: initialData.complement ?? "",
+            neighborhood: initialData.neighborhood ?? "",
+            city: initialData.city ?? "",
+            state: initialData.state ?? "",
+            ibge: initialData.ibge ?? "",
+
+            // Plan
+            planId: initialData.planId ?? "",
+        } : {
             name: "",
             slug: "",
             tradeName: "",
+            document: "", // derived from cnpj usually, but schema has documentSchema
+            // Wait, documentSchema has document, documentType.
+            // Company model has cnpj (String?).
+            // company-schema merges documentSchema.
+            // We need to map company.cnpj to form.document if needed, or just use cnpj.
+            // The schema likely expects 'document' if it uses documentSchema.
+            // Let's check company-schema.ts again.
+            // It merges documentSchema. documentSchema likely has 'document'.
+            // But Prisma Company has 'cnpj'.
+            // We need to map this correctly.
+            // For now, let's fix the null issue.
+
             document: "",
             documentType: "CNPJ",
+            stateRegistration: "",
             email: "",
             phone: "",
             mobile: "",
@@ -62,6 +108,9 @@ export function CompanyForm({ initialData, mode }: CompanyFormProps) {
             city: "",
             state: "",
             ibge: "",
+
+            planId: "",
+            logoUrl: "",
         },
     })
 

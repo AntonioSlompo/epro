@@ -12,15 +12,26 @@ import {
     X,
     ChevronLeft,
     ChevronRight,
-    ChevronDown
+    ChevronDown,
+    LayoutGrid
 } from "lucide-react"
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger
+} from "@/components/ui/dropdown-menu"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { useState } from "react"
 import { ModeToggle } from "@/components/mode-toggle"
+import { useDashboard } from "@/context/dashboard-context"
 
 export function Sidebar() {
     const t = useTranslations("Dashboard.nav")
+    const { contexts, selectedContext, setSelectedContext } = useDashboard()
     const pathname = usePathname()
     const [isMobileOpen, setIsMobileOpen] = useState(false)
     const [isCollapsed, setIsCollapsed] = useState(false)
@@ -34,6 +45,8 @@ export function Sidebar() {
                 : [...prev, label]
         )
     }
+
+
 
     const navItems = [
         { href: "/dashboard", icon: LayoutDashboard, label: t('dashboard') },
@@ -73,6 +86,52 @@ export function Sidebar() {
                 isCollapsed ? "w-20" : "w-64"
             )}>
                 <div className="flex flex-col h-full pt-4">
+
+                    {/* Context Switcher - Hidden on Dashboard with transition */}
+                    <div className={cn(
+                        "px-3 transition-all duration-300 ease-in-out overflow-hidden",
+                        isCollapsed && "px-2",
+                        pathname === '/dashboard' ? "max-h-0 opacity-0 mb-0" : "max-h-20 opacity-100 mb-2"
+                    )}>
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <Button
+                                    variant="outline"
+                                    className={cn(
+                                        "w-full justify-between h-10 gap-2 border-primary/20 bg-primary/5 hover:bg-primary/10 transition-all",
+                                        isCollapsed && "justify-center px-0 bg-transparent border-transparent hover:bg-white/5"
+                                    )}
+                                >
+                                    <div className="flex items-center gap-2">
+                                        <selectedContext.icon className={cn("h-4 w-4", selectedContext.color)} />
+                                        {!isCollapsed && (
+                                            <span className="truncate">{selectedContext.title}</span>
+                                        )}
+                                    </div>
+                                    {!isCollapsed && <ChevronDown className="h-3 w-3 opacity-50" />}
+                                </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="start" className="w-[14rem] bg-background/95 backdrop-blur-sm border-border ml-2">
+                                <DropdownMenuLabel>Navegar por Contexto</DropdownMenuLabel>
+                                <DropdownMenuSeparator />
+                                {contexts.map((ctx, index) => (
+                                    <DropdownMenuItem
+                                        key={index}
+                                        className="gap-3 cursor-pointer"
+                                        onClick={() => setSelectedContext(ctx)}
+                                    >
+                                        <div className={`p-1.5 rounded-md ${ctx.bg}`}>
+                                            <ctx.icon className={`h-4 w-4 ${ctx.color}`} />
+                                        </div>
+                                        <span>{ctx.title}</span>
+                                        {selectedContext.title === ctx.title && (
+                                            <div className="ml-auto w-1.5 h-1.5 rounded-full bg-primary" />
+                                        )}
+                                    </DropdownMenuItem>
+                                ))}
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+                    </div>
 
                     {/* Navigation */}
                     <nav className="flex-1 px-3 py-6 space-y-2">
