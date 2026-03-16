@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { documentSchema, addressSchema } from "./supplier-schema";
+import { documentSchema, addressSchema } from "./common-schema";
 
 // Helper for optional fields that might come as empty strings from forms
 const optionalString = z.string().optional().or(z.literal(""));
@@ -25,6 +25,7 @@ export const companySchema = z.object({
     active: z.boolean().default(true),
 
     logoUrl: optionalString,
+    logoBase64: z.string().optional(),
 })
     .merge(documentSchema) // Adds cnpj, stateRegistration, etc.
     .merge(addressSchema); // Adds zip, street, etc.

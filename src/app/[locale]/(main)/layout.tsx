@@ -1,6 +1,6 @@
 import { Sidebar } from "@/components/layout/sidebar"
 import { Topbar } from "@/components/layout/topbar"
-import { getCurrentUser } from "@/actions/auth-actions"
+import { getCurrentUser, getTenant } from "@/actions/auth-actions"
 import { DashboardProvider } from "@/context/dashboard-context"
 
 export default async function DashboardLayout({
@@ -9,6 +9,7 @@ export default async function DashboardLayout({
     children: React.ReactNode
 }) {
     const user = await getCurrentUser()
+    const currentTenantId = await getTenant()
 
     return (
         <div className="flex flex-col h-screen bg-background relative overflow-hidden">
@@ -19,7 +20,7 @@ export default async function DashboardLayout({
                 <Topbar user={user} />
 
                 <div className="flex-1 flex overflow-hidden relative z-10">
-                    <Sidebar />
+                    <Sidebar user={user} currentTenantId={currentTenantId} />
                     <main className="flex-1 flex flex-col p-6 overflow-y-auto">
                         <div className="w-full flex-1 flex flex-col space-y-6">
                             {children}

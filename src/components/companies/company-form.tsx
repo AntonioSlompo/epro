@@ -1,6 +1,6 @@
 "use client"
 
-import { useTransition } from "react"
+import { useTransition, useState, useRef } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { companySchema, CompanyFormValues } from "@/schemas/company-schema"
@@ -23,6 +23,7 @@ import { DocumentForm } from "@/components/common/document-form"
 import { AddressForm } from "@/components/common/address-form"
 import { Switch } from "@/components/ui/switch"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Camera, Building2, MapPin, Phone, Settings } from "lucide-react"
 
 interface CompanyFormProps {
     initialData?: CompanyFormValues
@@ -34,59 +35,39 @@ export function CompanyForm({ initialData, mode }: CompanyFormProps) {
     const tCommon = useTranslations("Common")
     const router = useRouter()
     const [isPending, startTransition] = useTransition()
+    const [preview, setPreview] = useState<string | null>((initialData as any)?.logoBase64 ?? (initialData as any)?.logoUrl ?? null)
+    const fileInputRef = useRef<HTMLInputElement>(null)
 
-    const form = useForm<CompanyFormValues>({
+    const form = useForm({
         resolver: zodResolver(companySchema),
-        defaultValues: initialData ? {
+        defaultValues: (initialData ? {
             ...initialData,
             tradeName: initialData.tradeName ?? "",
-            cnpj: initialData.cnpj ?? "",
-            // The schema expects 'document' and 'documentType', but Prisma model has 'cnpj'.
-            // We need to map cnpj to document for the form.
-            document: initialData.cnpj ?? initialData.document ?? "",
+            document: (initialData as any).cnpj ?? initialData.document ?? "",
             documentType: "CNPJ",
-            stateRegistration: initialData.stateRegistration ?? "", // Added stateRegistration
+            stateRegistration: initialData.stateRegistration ?? "",
             email: initialData.email ?? "",
             phone: initialData.phone ?? "",
-            mobile: initialData.mobile ?? "",
-            whatsapp: initialData.whatsapp ?? "",
-            website: initialData.website ?? "",
-            logoUrl: initialData.logoUrl ?? "",
+            mobile: (initialData as any).mobile ?? "",
+            whatsapp: (initialData as any).whatsapp ?? "",
+            website: (initialData as any).website ?? "",
+            logoUrl: (initialData as any).logoUrl ?? "",
+            logoBase64: (initialData as any).logoBase64 ?? "",
 
-            // Address
-            zip: initialData.zip ?? "",
-            address: initialData.address ?? "", // address field in schema, schema calls it address, Prisma calls it address? 
-            // Wait, schema has addressSchema which has zip, street, number, etc.
-            // Prisma model has: zip, street, number, complement, neighborhood, city, state.
-            // But verify if they match schema.
-            // The error was specifically about `input` value being null.
-            street: initialData.street ?? "",
+            zip: (initialData as any).cep ?? initialData.zip ?? "",
+            street: (initialData as any).address ?? initialData.street ?? "",
             number: initialData.number ?? "",
             complement: initialData.complement ?? "",
             neighborhood: initialData.neighborhood ?? "",
             city: initialData.city ?? "",
             state: initialData.state ?? "",
-            ibge: initialData.ibge ?? "",
 
-            // Plan
-            planId: initialData.planId ?? "",
+            planId: (initialData as any).planId ?? "",
         } : {
             name: "",
             slug: "",
             tradeName: "",
-            document: "", // derived from cnpj usually, but schema has documentSchema
-            // Wait, documentSchema has document, documentType.
-            // Company model has cnpj (String?).
-            // company-schema merges documentSchema.
-            // We need to map company.cnpj to form.document if needed, or just use cnpj.
-            // The schema likely expects 'document' if it uses documentSchema.
-            // Let's check company-schema.ts again.
-            // It merges documentSchema. documentSchema likely has 'document'.
-            // But Prisma Company has 'cnpj'.
-            // We need to map this correctly.
-            // For now, let's fix the null issue.
-
-            document: "",
+            document: "", 
             documentType: "CNPJ",
             stateRegistration: "",
             email: "",
@@ -99,7 +80,6 @@ export function CompanyForm({ initialData, mode }: CompanyFormProps) {
             enableCommissionControl: true,
             active: true,
 
-            // Address defaults
             zip: "",
             street: "",
             number: "",
@@ -111,10 +91,11 @@ export function CompanyForm({ initialData, mode }: CompanyFormProps) {
 
             planId: "",
             logoUrl: "",
-        },
+            logoBase64: "",
+        }) as any,
     })
 
-    async function onSubmit(data: CompanyFormValues) {
+    async function onSubmit(data: import("zod").infer<typeof companySchema>) {
         startTransition(async () => {
             const result = mode === "create"
                 ? await createCompany(data)
@@ -142,15 +123,89 @@ export function CompanyForm({ initialData, mode }: CompanyFormProps) {
         }
     }
 
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0]
+        if (file) {
+            if (file.size > 150 * 1024) {
+                alert("O tamanho da imagem não pode ultrapassar 150 KB.");
+                e.target.value = "";
+                return;
+            }
+            const reader = new FileReader()
+            reader.onloadend = () => {
+                const base64String = reader.result as string
+                setPreview(base64String)
+                form.setValue("logoBase64", base64String, { shouldDirty: true })
+            }
+            reader.readAsDataURL(file)
+        }
+    }
+
+    const country = form.watch("country") || "Brasil";
+    const isBrazil = country.toLowerCase() === 'brasil' || country.toLowerCase() === 'brazil';
+
+    const handlePhoneChange = (fieldName: any) => (e: React.ChangeEvent<HTMLInputElement>) => {
+        let value = e.target.value;
+        if (isBrazil) {
+            value = value.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
+            if (value.length > 11) value = value.slice(0, 11);
+            
+            // Format to (XX) XXXXX-XXXX
+            value = value.replace(/^(\d{2})(\d)/g, '($1) $2');
+            value = value.replace(/(\d)(\d{4})$/, '$1-$2');
+        }
+        form.setValue(fieldName, value, { shouldValidate: true });
+    };
+
     return (
         <Card className="border-border/50 bg-card/40 backdrop-blur-sm">
             <CardContent className="pt-6">
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
 
+                        {/* Logo Upload Section */}
+                        <div className="flex flex-col items-center space-y-4">
+                            <div className="relative h-32 w-32">
+                                <div className="h-32 w-32 rounded-full overflow-hidden border-4 border-muted bg-muted flex items-center justify-center relative shadow-sm">
+                                    {preview ? (
+                                        <img src={preview} alt="Logo Preview" className="h-full w-full object-cover" />
+                                    ) : (
+                                        <span className="text-4xl text-muted-foreground">🏢</span>
+                                    )}
+                                </div>
+                                <Button
+                                    type="button"
+                                    variant="secondary"
+                                    size="icon"
+                                    className="absolute bottom-0 right-0 rounded-full"
+                                    onClick={() => fileInputRef.current?.click()}
+                                >
+                                    <Camera className="h-4 w-4" />
+                                </Button>
+                            </div>
+                            <Input
+                                type="file"
+                                accept="image/*"
+                                className="hidden"
+                                ref={fileInputRef}
+                                onChange={handleFileChange}
+                            />
+                            <FormField
+                                control={form.control}
+                                name="logoBase64"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                        </div>
+
                         {/* Basic Info */}
                         <div className="space-y-4">
-                            <h3 className="text-lg font-medium">{t("basicInfo")}</h3>
+                            <h3 className="text-lg font-medium flex items-center gap-2">
+                                <Building2 className="w-5 h-5 text-primary" /> {t("basicInfo")}
+                            </h3>
                             <div className="space-y-6">
                                 <DocumentForm
                                     legalNameField="name"
@@ -159,9 +214,19 @@ export function CompanyForm({ initialData, mode }: CompanyFormProps) {
                             </div>
                         </div>
 
+                        {/* Address */}
+                        <div className="border-t pt-6">
+                            <h3 className="text-lg font-medium mb-4 flex items-center gap-2">
+                                <MapPin className="w-5 h-5 text-primary" /> {tCommon("address")}
+                            </h3>
+                            <AddressForm />
+                        </div>
+
                         {/* Contact Info */}
                         <div className="space-y-4 border-t pt-6">
-                            <h3 className="text-lg font-medium">{t("contactInfo")}</h3>
+                            <h3 className="text-lg font-medium flex items-center gap-2">
+                                <Phone className="w-5 h-5 text-primary" /> {t("contactInfo")}
+                            </h3>
                             <div className="grid gap-6 md:grid-cols-2">
                                 <FormField
                                     control={form.control}
@@ -196,7 +261,30 @@ export function CompanyForm({ initialData, mode }: CompanyFormProps) {
                                         <FormItem>
                                             <FormLabel>{t("phone")}</FormLabel>
                                             <FormControl>
-                                                <Input {...field} />
+                                                <Input 
+                                                    {...field} 
+                                                    value={field.value || ""}
+                                                    onChange={handlePhoneChange('phone')} 
+                                                    placeholder={isBrazil ? "(00) 0000-0000" : ""}
+                                                />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                                <FormField
+                                    control={form.control}
+                                    name="mobile"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>Celular</FormLabel>
+                                            <FormControl>
+                                                <Input 
+                                                    {...field} 
+                                                    value={field.value || ""}
+                                                    onChange={handlePhoneChange('mobile')} 
+                                                    placeholder={isBrazil ? "(00) 00000-0000" : ""}
+                                                />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
@@ -209,7 +297,12 @@ export function CompanyForm({ initialData, mode }: CompanyFormProps) {
                                         <FormItem>
                                             <FormLabel>WhatsApp</FormLabel>
                                             <FormControl>
-                                                <Input {...field} />
+                                                <Input 
+                                                    {...field} 
+                                                    value={field.value || ""}
+                                                    onChange={handlePhoneChange('whatsapp')} 
+                                                    placeholder={isBrazil ? "(00) 00000-0000" : ""}
+                                                />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
@@ -232,15 +325,11 @@ export function CompanyForm({ initialData, mode }: CompanyFormProps) {
                             </div>
                         </div>
 
-                        {/* Address */}
-                        <div className="border-t pt-6">
-                            <h3 className="text-lg font-medium mb-4">{tCommon("address")}</h3>
-                            <AddressForm />
-                        </div>
-
                         {/* Configurations */}
                         <div className="space-y-4 border-t pt-6">
-                            <h3 className="text-lg font-medium">{t("settings")}</h3>
+                            <h3 className="text-lg font-medium flex items-center gap-2">
+                                <Settings className="w-5 h-5 text-primary" /> {t("settings")}
+                            </h3>
                             <div className="grid gap-6 md:grid-cols-2">
                                 <FormField
                                     control={form.control}

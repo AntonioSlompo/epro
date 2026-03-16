@@ -25,6 +25,7 @@ interface DocumentFormProps {
     tradeNameField?: string;
     documentField?: string;
     stateRegistrationField?: string;
+    allowedDocumentTypes?: ('CNPJ' | 'CPF')[];
     onLegalNameChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -33,9 +34,10 @@ export function DocumentForm({
     tradeNameField = 'tradeName',
     documentField = 'document',
     stateRegistrationField = 'stateRegistration',
+    allowedDocumentTypes = ['CNPJ', 'CPF'],
     onLegalNameChange
 }: DocumentFormProps) {
-    const { control, setValue, watch } = useFormContext();
+    const { control, setValue, watch } = useFormContext<any>();
     const t = useTranslations("DocumentComponent");
     const [isLoading, startTransition] = useTransition();
 
@@ -67,14 +69,14 @@ export function DocumentForm({
                     setValue(tradeNameField, result.data.tradeName);
 
                     // Populate Address
-                    if (result.data.address) {
-                        setValue('zip', formatCEP(result.data.address.zip));
-                        setValue('street', result.data.address.street);
-                        setValue('number', result.data.address.number);
-                        setValue('complement', result.data.address.complement);
-                        setValue('neighborhood', result.data.address.neighborhood);
-                        setValue('city', result.data.address.city);
-                        setValue('state', result.data.address.state);
+                    if (result.data) {
+                        if (result.data.zip) setValue('zip', formatCEP(result.data.zip));
+                        if (result.data.street) setValue('street', result.data.street);
+                        if (result.data.number) setValue('number', result.data.number);
+                        if (result.data.complement) setValue('complement', result.data.complement);
+                        if (result.data.neighborhood) setValue('neighborhood', result.data.neighborhood);
+                        if (result.data.city) setValue('city', result.data.city);
+                        if (result.data.state) setValue('state', result.data.state);
                     }
                 } else {
                     console.error(result.error);
@@ -98,6 +100,7 @@ export function DocumentForm({
                                     setValue(documentField, ''); // Clear document on type switch
                                 }}
                                 defaultValue={field.value}
+                                disabled={allowedDocumentTypes.length <= 1}
                             >
                                 <FormControl>
                                     <SelectTrigger>
@@ -105,8 +108,8 @@ export function DocumentForm({
                                     </SelectTrigger>
                                 </FormControl>
                                 <SelectContent>
-                                    <SelectItem value="CNPJ">CNPJ</SelectItem>
-                                    <SelectItem value="CPF">CPF</SelectItem>
+                                    {allowedDocumentTypes.includes('CNPJ') && <SelectItem value="CNPJ">CNPJ</SelectItem>}
+                                    {allowedDocumentTypes.includes('CPF') && <SelectItem value="CPF">CPF</SelectItem>}
                                 </SelectContent>
                             </Select>
                             <FormMessage />

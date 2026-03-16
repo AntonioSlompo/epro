@@ -18,6 +18,13 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent } from "@/components/ui/card"
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select"
 import { createUser, updateUser } from "@/actions/user-actions"
 import { UserFormValues, userSchema } from "@/schemas/user-schema"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar" // Need to create/verify Avatar component
@@ -32,6 +39,7 @@ interface UserFormProps {
 export function UserForm({ initialData, mode }: UserFormProps) {
     const router = useRouter()
     const t = useTranslations("Users.form")
+    const tRole = useTranslations("Users.roles")
     const tCommon = useTranslations("Common")
     const [isPending, startTransition] = useTransition()
     const [error, setError] = useState<string | null>(null)
@@ -45,6 +53,7 @@ export function UserForm({ initialData, mode }: UserFormProps) {
             email: initialData?.email || "",
             password: "", // Always empty by default
             image: initialData?.image || "",
+            role: (initialData?.role || "AUXILIAR") as "SUPER_ADMIN" | "DIRETOR" | "GERENTE" | "ANALISTA" | "AUXILIAR",
             active: initialData?.active ?? true,
         },
     })
@@ -169,6 +178,31 @@ export function UserForm({ initialData, mode }: UserFormProps) {
                                         <FormControl>
                                             <Input type="password" placeholder={t("passwordPlaceholder")} {...field} />
                                         </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+
+                            <FormField
+                                control={form.control}
+                                name="role"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>{t("roleLabel")}</FormLabel>
+                                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                            <FormControl>
+                                                <SelectTrigger>
+                                                    <SelectValue placeholder="" />
+                                                </SelectTrigger>
+                                            </FormControl>
+                                            <SelectContent>
+                                                <SelectItem value="SUPER_ADMIN">{tRole("SUPER_ADMIN")}</SelectItem>
+                                                <SelectItem value="DIRETOR">{tRole("DIRETOR")}</SelectItem>
+                                                <SelectItem value="GERENTE">{tRole("GERENTE")}</SelectItem>
+                                                <SelectItem value="ANALISTA">{tRole("ANALISTA")}</SelectItem>
+                                                <SelectItem value="AUXILIAR">{tRole("AUXILIAR")}</SelectItem>
+                                            </SelectContent>
+                                        </Select>
                                         <FormMessage />
                                     </FormItem>
                                 )}

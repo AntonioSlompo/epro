@@ -35,8 +35,8 @@
         "nav": {
             "dashboard": "Tablero",
             "users": "Usuarios",
-            "suppliers": "Proveedores",
             "companies": "Empresas",
+            "owner": "Propietario",
             "clients": "Clientes",
             "finance": "Finanzas",
             "playground": "Playground",
@@ -44,7 +44,14 @@
             "addressDemo": "Prueba Dirección",
             "moneyDemo": "Prueba Monetaria",
             "fileUploadDemo": "Prueba Subida",
+            "entities": "Entidades",
+            "technicians": "Técnicos",
+            "products": "Productos/Servicios",
+            "vehicles": "Vehículos",
             "settings": "Configuración"
+        },
+        "tenantSelector": {
+            "selectCompany": "Seleccionar Empresa"
         },
         "stats": {
             "activeUsers": "Usuarios Activos",
@@ -125,12 +132,35 @@
     "Users": {
         "title": "Usuarios",
         "description": "Administrar usuarios y acceso al sistema.",
+        "roles": {
+            "SUPER_ADMIN": "Súper Administrador",
+            "DIRETOR": "Director",
+            "GERENTE": "Gerente",
+            "ANALISTA": "Analista",
+            "AUXILIAR": "Auxiliar"
+        },
         "addUser": "Agregar Usuario",
         "createTitle": "Crear Usuario",
         "createDesc": "Agregar un nuevo usuario al sistema.",
         "editTitle": "Editar Usuario",
         "editDesc": "Editar detalles para",
+        "manageCompanies": "Vínculo de Empresas",
+        "companies": {
+            "title": "Empresas Vinculadas",
+            "description": "Gestione a qué empresas puede acceder este usuario.",
+            "searchLabel": "Buscar Empresa",
+            "searchPlaceholder": "Escriba el nombre o CNPJ...",
+            "linkButton": "Vincular",
+            "unlinkButton": "Desvincular",
+            "currentCompanies": "Empresas Actuales",
+            "noCompaniesFound": "No se encontraron empresas en la búsqueda.",
+            "noLinkedCompanies": "No hay empresas vinculadas a este usuario.",
+            "alreadyLinked": "La empresa ya está vinculada.",
+            "linkSuccess": "Empresa vinculada exitosamente.",
+            "unlinkSuccess": "Empresa desvinculada exitosamente."
+        },
         "form": {
+            "roleLabel": "Nivel de Acceso",
             "nameLabel": "Nombre",
             "namePlaceholder": "Nombre Completo",
             "emailLabel": "Correo electrónico",
@@ -140,32 +170,38 @@
             "passwordHint": "(Dejar en blanco para mantener actual)",
             "activeLabel": "Usuario Activo",
             "activeDesc": "Este usuario puede iniciar sesión en el sistema.",
+            "companiesLabel": "Empresas Vinculadas",
+            "companiesDesc": "Seleccione a qué empresas puede acceder este usuario.",
             "createPayload": "Crear Usuario"
         }
     },
-    "Suppliers": {
-        "title": "Proveedores",
-        "description": "Administrar sus proveedores y detalles.",
-        "addSupplier": "Agregar Proveedor",
-        "createTitle": "Crear Proveedor",
-        "createDesc": "Agregar un nuevo proveedor al sistema.",
-        "editTitle": "Editar Proveedor",
+    "Entities": {
+        "title": "Entidades",
+        "description": "Administra tus clientes y proveedores.",
+        "addEntity": "Agregar Entidad",
+        "createTitle": "Crear Entidad",
+        "createDesc": "Agrega un nuevo cliente o proveedor al sistema.",
+        "editTitle": "Editar Entidad",
         "editDesc": "Editar detalles para",
+        "idCopied": "ID copiado",
         "form": {
-            "nameLabel": "Nombre",
-            "namePlaceholder": "Nombre del Proveedor",
-            "emailLabel": "Correo electrónico",
-            "emailPlaceholder": "email@ejemplo.com",
-            "phoneLabel": "Teléfono",
-            "phonePlaceholder": "(555) 555-5555",
-            "addressLabel": "Dirección",
-            "addressPlaceholder": "Calle Principal 123",
-            "cityLabel": "Ciudad",
-            "cityPlaceholder": "Ciudad",
-            "zipLabel": "Código Postal",
-            "zipPlaceholder": "12345",
-            "createPayload": "Crear Proveedor"
-        }
+            "entityType": "Tipo de Entidad",
+            "isCustomer": "Cliente",
+            "isCustomerDesc": "Marque si esta entidad compra sus servicios.",
+            "isSupplier": "Proveedor",
+            "isSupplierDesc": "Marque si esta entidad provee productos o servicios a su empresa.",
+            "fiscalData": "Datos Fiscales",
+            "documentTypeLabel": "Tipo de Persona",
+            "contactData": "Contacto",
+            "addressData": "Dirección",
+            "bankingData": "Datos Bancarios",
+            "financialData": "Datos Financieros",
+            "createSuccess": "Entidad creada",
+            "updateSuccess": "Entidad actualizada",
+            "deleteSuccess": "Entidad eliminada"
+        },
+        "deleteConfirm": "¿Está seguro de que desea eliminar esta entidad?",
+        "deleteSuccess": "¡Entidad eliminada con éxito!"
     },
     "AddressComponent": {
         "zipLabel": "Código Postal",
@@ -206,11 +242,44 @@
         "addressDataSection": "Datos de Dirección",
         "submitButton": "Enviar Formulario"
     },
+    "Technicians": {
+        "title": "Técnicos",
+        "description": "Gestione el equipo técnico de su empresa.",
+        "addTechnician": "Nuevo Técnico",
+        "editTechnician": "Editar Técnico",
+        "titleNew": "Nuevo Técnico",
+        "descriptionNew": "Registre un nuevo técnico en su equipo.",
+        "titleEdit": "Editar Técnico",
+        "descriptionEdit": "Modifique los datos del técnico seleccionado.",
+        "name": "Nombre",
+        "department": "Departamento",
+        "specialties": "Especialidades",
+        "form": {
+            "identification": "Identificación",
+            "contact": "Contacto",
+            "professional": "Datos Profesionales",
+            "department": "Departamento",
+            "specialties": "Especialidades",
+            "systemAccess": "Acceso al Sistema",
+            "linkUserLabel": "Vincular a Usuario Existente",
+            "selectUser": "Seleccione un Usuario",
+            "noUserLinked": "Ningún usuario vinculado",
+            "internalNotes": "Notas Internas",
+            "notesPlaceholder": "Información adicional sobre el técnico...",
+            "systemAccessDesc": "Vincule un usuario para que este técnico pueda acceder e interactuar con las órdenes de servicio. Si se deja en blanco, no tendrá acceso al sistema.",
+            "active": "Activo",
+            "createSuccess": "¡Técnico registrado con éxito!",
+            "updateSuccess": "¡Técnico actualizado con éxito!"
+        },
+        "deleteConfirm": "¿Está seguro de que desea eliminar este técnico?",
+        "deleteSuccess": "¡Técnico eliminado con éxito!"
+    },
     "Companies": {
         "title": "Empresas",
         "description": "Gestionar empresas del sistema (inquilinos).",
         "newCompany": "Nueva Empresa",
         "name": "Razón Social",
+        "tradeName": "Nombre Fantasía",
         "status": "Estado",
         "form": {
             "basicInfo": "Información Básica",
@@ -255,5 +324,35 @@
         "noFilesError": "Seleccione al menos un archivo.",
         "uploadSuccess": "Archivos listos para enviar",
         "submit": "Enviar Archivos"
+    },
+    "Products": {
+        "title": "Productos / Servicios",
+        "description": "Gestione sus artículos de venta, servicios y suscripciones.",
+        "addProduct": "Nuevo Producto/Servicio",
+        "titleNew": "Nuevo Producto/Servicio",
+        "descriptionNew": "Registre un nuevo producto, servicio o paquete.",
+        "titleEdit": "Editar Producto/Servicio",
+        "descriptionEdit": "Cambie los detalles del producto o servicio.",
+        "idCopied": "¡ID copiado!",
+        "form": {
+            "createSuccess": "¡Producto/Servicio creado con éxito!",
+            "updateSuccess": "¡Producto/Servicio actualizado con éxito!"
+        }
+    },
+    "Vehicles": {
+        "title": "Vehículos",
+        "description": "Gestione la flota de vehículos de su empresa.",
+        "addVehicle": "Nuevo Vehículo",
+        "titleNew": "Nuevo Vehículo",
+        "descriptionNew": "Registre un nuevo vehículo de su flota.",
+        "titleEdit": "Editar Vehículo",
+        "descriptionEdit": "Cambie los detalles del vehículo seleccionado.",
+        "idCopied": "¡ID copiado!",
+        "deleteConfirm": "¿Está seguro de que desea eliminar este vehículo?",
+        "deleteSuccess": "¡Vehículo eliminado con éxito!",
+        "form": {
+            "createSuccess": "¡Vehículo creado con éxito!",
+            "updateSuccess": "¡Vehículo actualizado con éxito!"
+        }
     }
 }

@@ -46,8 +46,12 @@ export function LoginForm({ onClose }: LoginFormProps) {
                 const result = await login(data)
                 console.log("Login result:", result);
                 if (result.success) {
-                    console.log("Redirecting to dashboard...");
-                    router.push("/dashboard")
+                    console.log("Login successful. Role:", result.role);
+                    if (result.role === 'SUPER_ADMIN') {
+                        router.push("/users")
+                    } else {
+                        router.push("/dashboard")
+                    }
                 } else {
                     console.log("Login failed with error:", result.error);
                     setError(result.error || "Authentication failed")

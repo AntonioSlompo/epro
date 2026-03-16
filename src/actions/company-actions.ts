@@ -4,6 +4,8 @@ import { prisma } from "@/lib/prisma"
 import { revalidatePath } from "next/cache"
 import { companySchema, CompanyFormValues } from "@/schemas/company-schema"
 import { Prisma } from "@prisma/client"
+import { getCurrentUser } from "@/actions/auth-actions"
+import { mapCompanyToSafe } from "@/lib/utils"
 
 export async function getCompanies(page = 1, pageSize = 10, search = "") {
     const skip = (page - 1) * pageSize;
@@ -33,10 +35,50 @@ export async function getCompanies(page = 1, pageSize = 10, search = "") {
 
         const totalPages = Math.ceil(total / pageSize);
 
-        return { data, totalPages, currentPage: page, total };
+        // Omit Uint8Array logoData for Client Components serialization and add base64
+        const safeData = data.map(mapCompanyToSafe);
+
+        return { data: safeData as any, totalPages, currentPage: page, total };
     } catch (error) {
         console.error("Error fetching companies:", error);
         throw new Error("Failed to fetch companies");
+    }
+}
+
+export async function getCompaniesList() {
+    try {
+        const companies = await prisma.company.findMany({
+            where: { active: true },
+            select: { id: true, name: true, tradeName: true },
+            orderBy: { name: 'asc' }
+        });
+        return companies;
+    } catch (error) {
+        console.error("Error fetching companies list:", error);
+        return [];
+    }
+}
+
+export async function searchCompaniesByNameOrCnpj(query: string) {
+    if (!query || query.length < 2) return [];
+
+    try {
+        const companies = await prisma.company.findMany({
+            where: {
+                active: true,
+                OR: [
+                    { name: { contains: query, mode: 'insensitive' } },
+                    { tradeName: { contains: query, mode: 'insensitive' } },
+                    { cnpj: { contains: query } }
+                ]
+            },
+            take: 20, // Limit to 20 for autocomplete
+            select: { id: true, name: true, cnpj: true, tradeName: true }
+        });
+        return companies;
+    } catch (error) {
+        console.error("Error searching companies:", error);
+        return [];
     }
 }
 
@@ -45,7 +87,10 @@ export async function getCompany(id: string) {
         const company = await prisma.company.findUnique({
             where: { id },
         });
-        return company;
+
+        if (!company) return null;
+
+        return mapCompanyToSafe(company);
     } catch (error) {
         console.error("Error fetching company:", error);
         return null; // Return null instead of throwing for better handling in UI
@@ -53,26 +98,41 @@ export async function getCompany(id: string) {
 }
 
 export async function createCompany(data: CompanyFormValues) {
+    const user = await getCurrentUser();
+    if (!user || user.role !== "SUPER_ADMIN") {
+        return { success: false, error: "Acesso não autorizado." };
+    }
+
     const validation = companySchema.safeParse(data);
     if (!validation.success) {
         return { success: false, error: validation.error.flatten() };
     }
 
     try {
-        // Map form fields to Prisma model fields. Exclude stateRegistration as it is not in Company model.
-        const { document, street, zip, stateRegistration, ...rest } = validation.data;
+        const { document, street, zip, stateRegistration, documentType, latitude, longitude, planId, logoBase64, ...rest } = validation.data;
+
+        let createData: any = {
+            ...rest,
+            cnpj: document,
+            address: street,
+            cep: zip,
+            planId: planId === "" ? null : planId,
+        };
+
+        if (logoBase64 && logoBase64.startsWith('data:image/')) {
+            const matches = logoBase64.match(/^data:(image\/\w+);base64,(.+)$/);
+            if (matches && matches.length === 3) {
+                createData.logoMimeType = matches[1];
+                createData.logoData = Buffer.from(matches[2], 'base64');
+            }
+        }
 
         const company = await prisma.company.create({
-            data: {
-                ...rest,
-                cnpj: document,
-                address: street,
-                cep: zip,
-                // Ensure unique constraints errors are caught
-            },
+            data: createData,
         });
+        const { logoData: _logoData, ...safeCompany } = company;
         revalidatePath('/companies');
-        return { success: true, data: company };
+        return { success: true, data: safeCompany };
     } catch (error: any) {
         console.error("Error creating company:", error);
         if (error.code === 'P2002') {
@@ -85,25 +145,47 @@ export async function createCompany(data: CompanyFormValues) {
 }
 
 export async function updateCompany(id: string, data: CompanyFormValues) {
+    const user = await getCurrentUser();
+    if (!user || user.role !== "SUPER_ADMIN") {
+        return { success: false, error: "Acesso não autorizado." };
+    }
+
     const validation = companySchema.safeParse(data);
     if (!validation.success) {
         return { success: false, error: validation.error.flatten() };
     }
 
     try {
-        const { id: _, document, street, zip, stateRegistration, ...rest } = validation.data; // Exclude ID and fields to map
+        const { id: _, document, street, zip, stateRegistration, documentType, latitude, longitude, planId, logoBase64, ...rest } = validation.data; // Exclude ID and fields not in Company model
+
+        let updateData: any = {
+            ...rest,
+            cnpj: document,
+            address: street,
+            cep: zip,
+            planId: planId === "" ? null : planId,
+        };
+
+        if (logoBase64 === "") {
+            updateData.logoData = null;
+            updateData.logoMimeType = null;
+            updateData.logoUrl = null;
+        } else if (logoBase64 && logoBase64.startsWith('data:image/')) {
+            const matches = logoBase64.match(/^data:(image\/\w+);base64,(.+)$/);
+            if (matches && matches.length === 3) {
+                updateData.logoMimeType = matches[1];
+                updateData.logoData = Buffer.from(matches[2], 'base64');
+                updateData.logoUrl = null;
+            }
+        }
 
         const company = await prisma.company.update({
             where: { id },
-            data: {
-                ...rest,
-                cnpj: document,
-                address: street,
-                cep: zip,
-            },
+            data: updateData,
         });
+        const { logoData: _logoData, ...safeCompany } = company;
         revalidatePath('/companies');
-        return { success: true, data: company };
+        return { success: true, data: safeCompany };
     } catch (error: any) {
         console.error("Error updating company:", error);
         if (error.code === 'P2002') {
@@ -116,6 +198,11 @@ export async function updateCompany(id: string, data: CompanyFormValues) {
 }
 
 export async function deleteCompany(id: string) {
+    const user = await getCurrentUser();
+    if (!user || user.role !== "SUPER_ADMIN") {
+        return { success: false, error: "Acesso não autorizado." };
+    }
+
     try {
         await prisma.company.delete({
             where: { id },

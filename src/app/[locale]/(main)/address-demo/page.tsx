@@ -9,7 +9,7 @@ import { AddressForm } from "@/components/common/address-form";
 import { addressSchema, AddressFormValues } from "@/schemas/address-schema";
 
 export default function AddressDemoPage() {
-    const form = useForm<AddressFormValues>({
+    const form = useForm({
         resolver: zodResolver(addressSchema),
         defaultValues: {
             zip: "",
@@ -21,7 +21,7 @@ export default function AddressDemoPage() {
             state: "",
             latitude: undefined,
             longitude: undefined,
-        },
+        } as any,
     });
 
     const onSubmit = (data: AddressFormValues) => {

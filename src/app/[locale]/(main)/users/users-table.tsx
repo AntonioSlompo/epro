@@ -23,11 +23,15 @@ interface UsersTableProps {
     data: User[]
     totalPages: number
     page: number
+    viewMode?: 'list' | 'card'
 }
 
-export function UsersTable({ data, totalPages, page }: UsersTableProps) {
+export function UsersTable({ data, totalPages, page, viewMode }: UsersTableProps) {
     const t = useTranslations("Common")
     const tUsers = useTranslations("Dashboard.nav") // Reuse or create specific Users namespace if needed
+    const tRole = useTranslations("Users.roles")
+    const tUserForm = useTranslations("Users.form")
+    const tUsersRoot = useTranslations("Users")
 
     const columns = useMemo<ColumnDef<User>[]>(() => [
         {
@@ -64,6 +68,15 @@ export function UsersTable({ data, totalPages, page }: UsersTableProps) {
         {
             accessorKey: "email",
             header: t("email"),
+        },
+        {
+            accessorKey: "role",
+            header: tUserForm("roleLabel"),
+            cell: ({ row }) => {
+                const role = row.getValue("role") as string;
+                // Safely translate the role or fallback to raw
+                return <Badge variant="outline">{role ? tRole(role as any) : ""}</Badge>
+            }
         },
         {
             accessorKey: "active",
@@ -105,6 +118,13 @@ export function UsersTable({ data, totalPages, page }: UsersTableProps) {
                                     <Pencil className="mr-2 h-4 w-4" /> {t("edit")}
                                 </Link>
                             </DropdownMenuItem>
+                            {user.role !== 'SUPER_ADMIN' && (
+                                <DropdownMenuItem asChild>
+                                    <Link href={`/users/${user.id}/companies`} className="flex items-center cursor-pointer">
+                                        <ArrowUpDown className="mr-2 h-4 w-4" /> {tUsersRoot("manageCompanies")}
+                                    </Link>
+                                </DropdownMenuItem>
+                            )}
                             <DropdownMenuItem onClick={handleDelete} className="text-destructive focus:text-destructive">
                                 <Trash className="mr-2 h-4 w-4" /> {t("delete")}
                             </DropdownMenuItem>
@@ -113,7 +133,75 @@ export function UsersTable({ data, totalPages, page }: UsersTableProps) {
                 )
             },
         },
-    ], [t])
+    ], [t, tRole, tUserForm, tUsersRoot])
 
-    return <DataTable columns={columns} data={data} totalPages={totalPages} page={page} />
+    const renderUserCard = (user: User) => {
+        const u = user as any;
+        const handleDelete = async () => {
+            if (confirm(t("confirmDelete"))) {
+                await deleteUser(u.id);
+            }
+        }
+        
+        return (
+            <div className="flex flex-col h-full rounded-xl border border-border/50 bg-card/60 backdrop-blur-sm p-5 hover:bg-card/80 transition-colors">
+                <div className="flex justify-between items-start mb-4">
+                    <div className="h-12 w-12 rounded-full overflow-hidden bg-muted border border-border shrink-0">
+                        {u.image ? (
+                            <img src={u.image} alt={u.name || "User"} className="h-full w-full object-cover" />
+                        ) : (
+                            <div className="h-full w-full flex items-center justify-center text-sm text-muted-foreground font-medium">
+                                {u.name?.charAt(0) || "U"}
+                            </div>
+                        )}
+                    </div>
+                    
+                    <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <Button variant="ghost" className="h-8 w-8 p-0">
+                                <span className="sr-only">Open menu</span>
+                                <MoreHorizontal className="h-4 w-4" />
+                            </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                            <DropdownMenuLabel>{t("actions")}</DropdownMenuLabel>
+                            <DropdownMenuItem onClick={() => navigator.clipboard.writeText(u.id)}>
+                                {t("copyId")}
+                            </DropdownMenuItem>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem asChild>
+                                <Link href={`/users/${u.id}/edit`} className="flex items-center cursor-pointer">
+                                    <Pencil className="mr-2 h-4 w-4" /> {t("edit")}
+                                </Link>
+                            </DropdownMenuItem>
+                            {u.role !== 'SUPER_ADMIN' && (
+                                <DropdownMenuItem asChild>
+                                    <Link href={`/users/${u.id}/companies`} className="flex items-center cursor-pointer">
+                                        <ArrowUpDown className="mr-2 h-4 w-4" /> {tUsersRoot("manageCompanies")}
+                                    </Link>
+                                </DropdownMenuItem>
+                            )}
+                            <DropdownMenuItem onClick={handleDelete} className="text-destructive focus:text-destructive">
+                                <Trash className="mr-2 h-4 w-4" /> {t("delete")}
+                            </DropdownMenuItem>
+                        </DropdownMenuContent>
+                     </DropdownMenu>
+                </div>
+                
+                <div className="flex flex-col flex-1 gap-1">
+                    <h3 className="font-semibold text-lg truncate" title={u.name || ""}>{u.name || "Sem Nome"}</h3>
+                    <p className="text-sm text-muted-foreground truncate mb-3" title={u.email}>{u.email}</p>
+                    
+                    <div className="mt-auto flex flex-wrap gap-2 pt-2">
+                        <Badge variant="outline">{u.role ? tRole(u.role) : ""}</Badge>
+                        <Badge variant={u.active ? "default" : "secondary"}>
+                            {u.active ? t("status.active") : t("status.inactive")}
+                        </Badge>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
+    return <DataTable columns={columns} data={data} totalPages={totalPages} page={page} renderCard={renderUserCard} viewMode={viewMode} />
 }

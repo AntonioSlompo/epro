@@ -4,8 +4,8 @@ import { isValidCNPJ, isValidCPF } from "@/lib/validators";
 export const documentSchema = z.object({
     documentType: z.enum(["CPF", "CNPJ"]),
     document: z.string().superRefine((val, ctx) => {
-        const clean = val.replace(/\D/g, '');
-        const type = ctx.path[0] === 'document' ? (clean.length > 11 ? 'CNPJ' : 'CPF') : 'UNKNOWN';
+        const clean = (val || '').replace(/\D/g, '');
+        const type = clean.length > 11 ? 'CNPJ' : 'CPF';
         // Logic to check against documentType field if available in parent schema, 
         // but here we validate based on the value itself or rely on the form state.
 

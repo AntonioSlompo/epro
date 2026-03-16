@@ -7,6 +7,7 @@ import { getMessages } from 'next-intl/server';
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { DensityProvider } from "@/context/density-context";
+import { Toaster } from "@/components/ui/sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -55,6 +56,7 @@ export default async function RootLayout({
             <DensityProvider>
               {children}
             </DensityProvider>
+            <Toaster />
           </ThemeProvider>
         </NextIntlClientProvider>
       </body>

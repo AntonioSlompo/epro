@@ -35,6 +35,36 @@ export const useCompanyColumns = () => {
                     </Button>
                 )
             },
+            cell: ({ row }) => {
+                const company = row.original as any;
+                const logo = company.logoUrl || company.logoBase64;
+                return (
+                    <div className="flex items-center gap-3">
+                        <div className="h-8 w-8 rounded-full overflow-hidden bg-muted border flex items-center justify-center shrink-0">
+                            {logo ? (
+                                <img src={logo} alt={company.name} className="h-full w-full object-cover" />
+                            ) : (
+                                <span className="text-xs text-muted-foreground uppercase">{company.name.substring(0, 2)}</span>
+                            )}
+                        </div>
+                        <span className="font-medium truncate max-w-[200px]" title={company.name}>{company.name}</span>
+                    </div>
+                )
+            }
+        },
+        {
+            accessorKey: "tradeName",
+            header: ({ column }) => {
+                return (
+                    <Button
+                        variant="ghost"
+                        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    >
+                        {t("tradeName")}
+                        <ArrowUpDown className="ml-2 h-4 w-4" />
+                    </Button>
+                )
+            },
         },
         {
             accessorKey: "cnpj",

@@ -9,6 +9,7 @@ import { UsersTable } from "./users-table"
 import { getTranslations } from "next-intl/server"
 
 import { SearchInput } from "@/components/ui/search-input"
+import { DataViewToggle } from "@/components/ui/data-view-toggle"
 
 export default async function UsersPage(props: {
     searchParams: Promise<{ [key: string]: string | string[] | undefined }>
@@ -16,6 +17,7 @@ export default async function UsersPage(props: {
     const searchParams = await props.searchParams
     const search = typeof searchParams.search === 'string' ? searchParams.search : ''
     const page = typeof searchParams.page === 'string' ? Number(searchParams.page) : 1
+    const view = typeof searchParams.view === 'string' ? searchParams.view : 'list'
     const { users, totalPages } = await getUsers({ page, limit: 10, search })
     const t = await getTranslations("Users")
 
@@ -26,6 +28,7 @@ export default async function UsersPage(props: {
                 description={t("description")}
             >
                 <SearchInput />
+                <DataViewToggle />
                 <Button asChild className="gap-2">
                     <Link href="/users/new">
                         <Plus className="h-4 w-4" />
@@ -35,7 +38,7 @@ export default async function UsersPage(props: {
             </PageHeader>
 
             <div className="flex-1 min-h-0">
-                <UsersTable data={users} totalPages={totalPages} page={page} />
+                <UsersTable data={users} totalPages={totalPages} page={page} viewMode={view as any} />
             </div>
         </div>
     )

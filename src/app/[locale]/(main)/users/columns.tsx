@@ -17,7 +17,11 @@ import { deleteUser } from "@/actions/user-actions"
 import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
-export const columns: ColumnDef<User>[] = [
+type UserWithCompanies = User & {
+    companies?: { id: string, name: string }[]
+};
+
+export const columns: ColumnDef<UserWithCompanies>[] = [
     {
         id: "avatar",
         cell: ({ row }) => {
@@ -52,6 +56,35 @@ export const columns: ColumnDef<User>[] = [
     {
         accessorKey: "email",
         header: "Email",
+    },
+    {
+        accessorKey: "role",
+        header: "Role",
+        cell: ({ row }) => {
+            const role = row.getValue("role") as string;
+            // eslint-disable-next-line react-hooks/rules-of-hooks
+            const tRole = require("next-intl").useTranslations("Users.roles");
+            return <Badge variant="outline">{tRole(role)}</Badge>
+        }
+    },
+    {
+        accessorKey: "companies",
+        header: "Companies",
+        cell: ({ row }) => {
+            const companies = row.original.companies || [];
+            if (companies.length === 0) return <span className="text-muted-foreground text-xs">None</span>;
+            
+            return (
+                <div className="flex flex-wrap gap-1 max-w-[200px]">
+                    {companies.slice(0, 2).map((c: any) => (
+                        <Badge key={c.id} variant="secondary" className="text-[10px] px-1.5 py-0">{c.name}</Badge>
+                    ))}
+                    {companies.length > 2 && (
+                        <Badge variant="secondary" className="text-[10px] px-1.5 py-0">+{companies.length - 2}</Badge>
+                    )}
+                </div>
+            )
+        }
     },
     {
         accessorKey: "active",
@@ -93,6 +126,13 @@ export const columns: ColumnDef<User>[] = [
                                 <Pencil className="mr-2 h-4 w-4" /> Edit
                             </Link>
                         </DropdownMenuItem>
+                        {user.role !== 'SUPER_ADMIN' && (
+                            <DropdownMenuItem asChild>
+                                <Link href={`/users/${user.id}/companies`} className="flex items-center cursor-pointer">
+                                    <ArrowUpDown className="mr-2 h-4 w-4" /> {/* Or another icon */} Manage Companies
+                                </Link>
+                            </DropdownMenuItem>
+                        )}
                         <DropdownMenuItem onClick={handleDelete} className="text-destructive focus:text-destructive">
                             <Trash className="mr-2 h-4 w-4" /> Delete
                         </DropdownMenuItem>

@@ -35,15 +35,22 @@
         "nav": {
             "dashboard": "Dashboard",
             "users": "Usuários",
-            "suppliers": "Fornecedores",
             "companies": "Empresas",
+            "owner": "Proprietário",
             "finance": "Financeiro",
             "playground": "Playground",
             "documentDemo": "Teste Documentos",
             "addressDemo": "Teste Endereço",
             "moneyDemo": "Teste Monetário",
             "fileUploadDemo": "Teste Upload",
+            "entities": "Entidades",
+            "technicians": "Técnicos",
+            "products": "Produtos/Serviços",
+            "vehicles": "Veículos",
             "settings": "Configurações"
+        },
+        "tenantSelector": {
+            "selectCompany": "Selecione a Empresa"
         },
         "stats": {
             "activeUsers": "Usuários Ativos",
@@ -124,12 +131,35 @@
     "Users": {
         "title": "Usuários",
         "description": "Gerencie usuários e acesso ao sistema.",
+        "roles": {
+            "SUPER_ADMIN": "Super Administrador",
+            "DIRETOR": "Diretor",
+            "GERENTE": "Gerente",
+            "ANALISTA": "Analista",
+            "AUXILIAR": "Auxiliar"
+        },
         "addUser": "Adicionar Usuário",
         "createTitle": "Criar Usuário",
         "createDesc": "Adicione um novo usuário ao sistema.",
         "editTitle": "Editar Usuário",
         "editDesc": "Editar detalhes para",
+        "manageCompanies": "Vínculo de Empresas",
+        "companies": {
+            "title": "Empresas Vinculadas",
+            "description": "Gerencie quais empresas o usuário pode acessar.",
+            "searchLabel": "Buscar Empresa",
+            "searchPlaceholder": "Digite o nome ou CNPJ...",
+            "linkButton": "Vincular",
+            "unlinkButton": "Desvincular",
+            "currentCompanies": "Empresas Atuais",
+            "noCompaniesFound": "Nenhuma empresa encontrada na busca.",
+            "noLinkedCompanies": "Nenhuma empresa vinculada a este usuário.",
+            "alreadyLinked": "Empresa já está vinculada.",
+            "linkSuccess": "Empresa vinculada com sucesso.",
+            "unlinkSuccess": "Empresa desvinculada com sucesso."
+        },
         "form": {
+            "roleLabel": "Nível de Acesso",
             "nameLabel": "Nome",
             "namePlaceholder": "Nome Completo",
             "emailLabel": "E-mail",
@@ -139,32 +169,38 @@
             "passwordHint": "(Deixe em branco para manter a atual)",
             "activeLabel": "Usuário Ativo",
             "activeDesc": "Este usuário pode fazer login no sistema.",
+            "companiesLabel": "Empresas Vinculadas",
+            "companiesDesc": "Selecione quais empresas este usuário pode acessar.",
             "createPayload": "Criar Usuário"
         }
     },
-    "Suppliers": {
-        "title": "Fornecedores",
-        "description": "Gerencie seus fornecedores e detalhes.",
-        "addSupplier": "Adicionar Fornecedor",
-        "createTitle": "Criar Fornecedor",
-        "createDesc": "Adicione um novo fornecedor ao sistema.",
-        "editTitle": "Editar Fornecedor",
+    "Entities": {
+        "title": "Entidades",
+        "description": "Gerencie seus clientes e fornecedores.",
+        "addEntity": "Adicionar",
+        "createTitle": "Criar Entidade",
+        "createDesc": "Adicione um novo cliente ou fornecedor ao sistema.",
+        "editTitle": "Editar Entidade",
         "editDesc": "Editar detalhes para",
+        "idCopied": "ID copiado",
         "form": {
-            "nameLabel": "Nome",
-            "namePlaceholder": "Nome do Fornecedor",
-            "emailLabel": "E-mail",
-            "emailPlaceholder": "email@exemplo.com",
-            "phoneLabel": "Telefone",
-            "phonePlaceholder": "(00) 00000-0000",
-            "addressLabel": "Endereço",
-            "addressPlaceholder": "Rua Exemplo, 123",
-            "cityLabel": "Cidade",
-            "cityPlaceholder": "Sua Cidade",
-            "zipLabel": "CEP",
-            "zipPlaceholder": "00000-000",
-            "createPayload": "Criar Fornecedor"
-        }
+            "entityType": "Tipo de Entidade",
+            "isCustomer": "Cliente",
+            "isCustomerDesc": "Marque se esta entidade compra seus serviços.",
+            "isSupplier": "Fornecedor",
+            "isSupplierDesc": "Marque se esta entidade fornece produtos ou serviços para sua empresa.",
+            "fiscalData": "Dados Fiscais",
+            "documentTypeLabel": "Tipo de Pessoa",
+            "contactData": "Contato",
+            "addressData": "Endereço",
+            "bankingData": "Dados Bancários",
+            "financialData": "Dados Financeiros",
+            "createSuccess": "Entidade criada",
+            "updateSuccess": "Entidade atualizada",
+            "deleteSuccess": "Entidade excluída"
+        },
+        "deleteConfirm": "Tem certeza que deseja excluir esta entidade?",
+        "deleteSuccess": "Entidade excluída com sucesso!"
     },
     "AddressComponent": {
         "zipLabel": "CEP",
@@ -205,11 +241,44 @@
         "addressDataSection": "Endereço",
         "submitButton": "Enviar Formulário"
     },
+    "Technicians": {
+        "title": "Técnicos",
+        "description": "Gerencie a equipe técnica da sua empresa.",
+        "addTechnician": "Novo Técnico",
+        "editTechnician": "Editar Técnico",
+        "titleNew": "Novo Técnico",
+        "descriptionNew": "Cadastre um novo técnico na sua equipe.",
+        "titleEdit": "Editar Técnico",
+        "descriptionEdit": "Altere os detalhes do técnico selecionado.",
+        "name": "Nome",
+        "department": "Setor/Departamento",
+        "specialties": "Especialidades",
+        "form": {
+            "identification": "Identificação",
+            "contact": "Contato",
+            "professional": "Dados Profissionais",
+            "department": "Setor/Departamento",
+            "specialties": "Especialidades",
+            "systemAccess": "Acesso ao Sistema",
+            "linkUserLabel": "Vincular a Usuário Existente",
+            "selectUser": "Selecione um Usuário",
+            "noUserLinked": "Nenhum usuário vinculado",
+            "internalNotes": "Observações Internas",
+            "notesPlaceholder": "Informações adicionais sobre o técnico...",
+            "systemAccessDesc": "Vincule um usuário para que este técnico possa acessar e interagir com as ordens de serviço. Se deixar em branco, não terá acesso ao sistema.",
+            "active": "Ativo",
+            "createSuccess": "Técnico cadastrado com sucesso!",
+            "updateSuccess": "Técnico atualizado com sucesso!"
+        },
+        "deleteConfirm": "Tem certeza que deseja excluir este técnico?",
+        "deleteSuccess": "Técnico excluído com sucesso!"
+    },
     "Companies": {
         "title": "Empresas",
         "description": "Gerencie as empresas (tenants) do sistema.",
         "newCompany": "Nova Empresa",
         "name": "Razão Social",
+        "tradeName": "Nome Fantasia",
         "status": "Status",
         "form": {
             "basicInfo": "Informações Básicas",
@@ -254,5 +323,35 @@
         "noFilesError": "Selecione pelo menos um arquivo.",
         "uploadSuccess": "Arquivos prontos para envio",
         "submit": "Enviar Arquivos"
+    },
+    "Products": {
+        "title": "Produtos / Serviços",
+        "description": "Gerencie seus itens de venda, serviços e assinaturas.",
+        "addProduct": "Novo Produto/Serviço",
+        "titleNew": "Novo Produto/Serviço",
+        "descriptionNew": "Cadastre um novo produto, serviço ou pacote.",
+        "titleEdit": "Editar Produto/Serviço",
+        "descriptionEdit": "Altere os detalhes do produto ou serviço.",
+        "idCopied": "ID copiado!",
+        "form": {
+            "createSuccess": "Produto/Serviço criado com sucesso!",
+            "updateSuccess": "Produto/Serviço atualizado com sucesso!"
+        }
+    },
+    "Vehicles": {
+        "title": "Veículos",
+        "description": "Gerencie a frota de veículos da sua empresa.",
+        "addVehicle": "Novo Veículo",
+        "titleNew": "Novo Veículo",
+        "descriptionNew": "Cadastre um novo veículo da sua frota.",
+        "titleEdit": "Editar Veículo",
+        "descriptionEdit": "Altere os detalhes do veículo selecionado.",
+        "idCopied": "ID copiado!",
+        "deleteConfirm": "Tem certeza que deseja excluir este veículo?",
+        "deleteSuccess": "Veículo excluído com sucesso!",
+        "form": {
+            "createSuccess": "Veículo criado com sucesso!",
+            "updateSuccess": "Veículo atualizado com sucesso!"
+        }
     }
 }

@@ -1,7 +1,5 @@
-
 import { PageHeader } from "@/components/ui/page-header"
 import { UserForm } from "@/components/users/user-form"
-
 import { getTranslations } from "next-intl/server"
 
 export default async function NewUserPage() {

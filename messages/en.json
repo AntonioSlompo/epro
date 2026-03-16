@@ -35,15 +35,22 @@
         "nav": {
             "dashboard": "Dashboard",
             "users": "Users",
-            "suppliers": "Suppliers",
             "companies": "Companies",
+            "owner": "Owner",
             "finance": "Finance",
             "playground": "Playground",
             "documentDemo": "Document Test",
             "addressDemo": "Address Test",
             "moneyDemo": "Money Test",
             "fileUploadDemo": "Upload Test",
+            "entities": "Entities",
+            "technicians": "Technicians",
+            "products": "Products/Services",
+            "vehicles": "Vehicles",
             "settings": "Settings"
+        },
+        "tenantSelector": {
+            "selectCompany": "Select Company"
         },
         "stats": {
             "activeUsers": "Active Users",
@@ -124,12 +131,35 @@
     "Users": {
         "title": "Users",
         "description": "Manage system users and access.",
+        "roles": {
+            "SUPER_ADMIN": "Super Admin",
+            "DIRETOR": "Director",
+            "GERENTE": "Manager",
+            "ANALISTA": "Analyst",
+            "AUXILIAR": "Assistant"
+        },
         "addUser": "Add User",
         "createTitle": "Create User",
         "createDesc": "Add a new user to the system.",
         "editTitle": "Edit User",
         "editDesc": "Edit details for",
+        "manageCompanies": "Manage Companies",
+        "companies": {
+            "title": "Linked Companies",
+            "description": "Manage which companies this user can access.",
+            "searchLabel": "Search Company",
+            "searchPlaceholder": "Type the name or CNPJ...",
+            "linkButton": "Link",
+            "unlinkButton": "Unlink",
+            "currentCompanies": "Current Companies",
+            "noCompaniesFound": "No companies found in search.",
+            "noLinkedCompanies": "No companies linked to this user.",
+            "alreadyLinked": "Company is already linked.",
+            "linkSuccess": "Company linked successfully.",
+            "unlinkSuccess": "Company unlinked successfully."
+        },
         "form": {
+            "roleLabel": "Access Level",
             "nameLabel": "Name",
             "namePlaceholder": "Full Name",
             "emailLabel": "Email",
@@ -139,32 +169,38 @@
             "passwordHint": "(Leave blank to keep current)",
             "activeLabel": "Active User",
             "activeDesc": "This user can log in to the system.",
+            "companiesLabel": "Linked Companies",
+            "companiesDesc": "Select which companies this user can access.",
             "createPayload": "Create User"
         }
     },
-    "Suppliers": {
-        "title": "Suppliers",
-        "description": "Manage your suppliers and their details.",
-        "addSupplier": "Add Supplier",
-        "createTitle": "Create Supplier",
-        "createDesc": "Add a new supplier to the system.",
-        "editTitle": "Edit Supplier",
+    "Entities": {
+        "title": "Entities",
+        "description": "Manage your customers and suppliers.",
+        "addEntity": "Add Entity",
+        "createTitle": "Create Entity",
+        "createDesc": "Add a new customer or supplier to the system.",
+        "editTitle": "Edit Entity",
         "editDesc": "Edit details for",
+        "idCopied": "ID copied",
         "form": {
-            "nameLabel": "Name",
-            "namePlaceholder": "Supplier Name",
-            "emailLabel": "Email",
-            "emailPlaceholder": "email@example.com",
-            "phoneLabel": "Phone",
-            "phonePlaceholder": "(555) 555-5555",
-            "addressLabel": "Address",
-            "addressPlaceholder": "123 Main St",
-            "cityLabel": "City",
-            "cityPlaceholder": "City",
-            "zipLabel": "Zip Code",
-            "zipPlaceholder": "12345",
-            "createPayload": "Create Supplier"
-        }
+            "entityType": "Entity Type",
+            "isCustomer": "Customer",
+            "isCustomerDesc": "Check if this entity purchases your services.",
+            "isSupplier": "Supplier",
+            "isSupplierDesc": "Check if this entity supplies products or services to your company.",
+            "fiscalData": "Fiscal Data",
+            "documentTypeLabel": "Person Type",
+            "contactData": "Contact",
+            "addressData": "Address",
+            "bankingData": "Banking Data",
+            "financialData": "Financial Data",
+            "createSuccess": "Entity created",
+            "updateSuccess": "Entity updated",
+            "deleteSuccess": "Entity deleted"
+        },
+        "deleteConfirm": "Are you sure you want to delete this entity?",
+        "deleteSuccess": "Entity deleted successfully!"
     },
     "AddressComponent": {
         "zipLabel": "Zip Code",
@@ -205,11 +241,44 @@
         "addressDataSection": "Address Data",
         "submitButton": "Submit Form"
     },
+    "Technicians": {
+        "title": "Technicians",
+        "description": "Manage your company's technical team.",
+        "addTechnician": "New Technician",
+        "editTechnician": "Edit Technician",
+        "titleNew": "New Technician",
+        "descriptionNew": "Register a new technician on your team.",
+        "titleEdit": "Edit Technician",
+        "descriptionEdit": "Update the selected technician's details.",
+        "name": "Name",
+        "department": "Department",
+        "specialties": "Specialties",
+        "form": {
+            "identification": "Identification",
+            "contact": "Contact",
+            "professional": "Professional Data",
+            "department": "Department",
+            "specialties": "Specialties",
+            "systemAccess": "System Access",
+            "linkUserLabel": "Link to Existing User",
+            "selectUser": "Select a User",
+            "noUserLinked": "No user linked",
+            "internalNotes": "Internal Notes",
+            "notesPlaceholder": "Additional information about the technician...",
+            "systemAccessDesc": "Link a user so this technician can access and interact with service orders. If left blank, they will not have system access.",
+            "active": "Active",
+            "createSuccess": "Technician created successfully!",
+            "updateSuccess": "Technician updated successfully!"
+        },
+        "deleteConfirm": "Are you sure you want to delete this technician?",
+        "deleteSuccess": "Technician deleted successfully!"
+    },
     "Companies": {
         "title": "Companies",
         "description": "Manage system companies (tenants).",
         "newCompany": "New Company",
         "name": "Legal Name",
+        "tradeName": "Trade Name",
         "status": "Status",
         "form": {
             "basicInfo": "Basic Information",
@@ -254,5 +323,35 @@
         "noFilesError": "Please select at least one file.",
         "uploadSuccess": "Files ready for upload",
         "submit": "Upload Files"
+    },
+    "Products": {
+        "title": "Products / Services",
+        "description": "Manage your sales items, services, and subscriptions.",
+        "addProduct": "New Product/Service",
+        "titleNew": "New Product/Service",
+        "descriptionNew": "Register a new product, service, or bundle.",
+        "titleEdit": "Edit Product/Service",
+        "descriptionEdit": "Change product or service details.",
+        "idCopied": "ID copied!",
+        "form": {
+            "createSuccess": "Product/Service created successfully!",
+            "updateSuccess": "Product/Service updated successfully!"
+        }
+    },
+    "Vehicles": {
+        "title": "Vehicles",
+        "description": "Manage your company's vehicle fleet.",
+        "addVehicle": "New Vehicle",
+        "titleNew": "New Vehicle",
+        "descriptionNew": "Register a new vehicle in your fleet.",
+        "titleEdit": "Edit Vehicle",
+        "descriptionEdit": "Change selected vehicle details.",
+        "idCopied": "ID copied!",
+        "deleteConfirm": "Are you sure you want to delete this vehicle?",
+        "deleteSuccess": "Vehicle deleted successfully!",
+        "form": {
+            "createSuccess": "Vehicle created successfully!",
+            "updateSuccess": "Vehicle updated successfully!"
+        }
     }
 }

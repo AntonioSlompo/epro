@@ -41,9 +41,12 @@ export function AddressForm() {
     const street = watch('street');
     const city = watch('city');
     const state = watch('state'); // UF
+    const neighborhood = watch('neighborhood');
+    const country = watch('country') || 'Brasil';
 
     // Create a composite address string for geocoding
-    const fullAddress = `${street || ''}, ${number || ''}, ${city || ''}, ${state || ''}, Brazil`;
+    const addressParts = [street, number, city, state, country].filter(Boolean);
+    const fullAddress = addressParts.length >= 3 ? addressParts.join(', ') : '';
     const [debouncedAddress] = useDebounce(fullAddress, 1000);
 
     // Effect to update coordinates when address changes manually
@@ -54,14 +57,34 @@ export function AddressForm() {
         if (!street || !city) return;
 
         async function updateCoordinates() {
-            const coords = await fetchCoordinatesByAddress(debouncedAddress);
+            // First attempt with full address
+            let coords = await fetchCoordinatesByAddress(debouncedAddress);
+            
+            // If failed and we have a number, try without the number
+            if (!coords && number) {
+                 const fallbackAddress = [street, city, state, country].filter(Boolean).join(', ');
+                 coords = await fetchCoordinatesByAddress(fallbackAddress);
+            }
+
+            // If still failed, try neighborhood
+            if (!coords && neighborhood) {
+                 const fallbackAddress = [neighborhood, city, state, country].filter(Boolean).join(', ');
+                 coords = await fetchCoordinatesByAddress(fallbackAddress);
+            }
+
+            // If ALL fails, at least pinpoint the city
+            if (!coords) {
+                 const fallbackAddress = [city, state, country].filter(Boolean).join(', ');
+                 coords = await fetchCoordinatesByAddress(fallbackAddress);
+            }
+
             if (coords) {
                 setValue('latitude', coords.latitude);
                 setValue('longitude', coords.longitude);
             }
         }
         updateCoordinates();
-    }, [debouncedAddress, setValue, street, city]);
+    }, [debouncedAddress, setValue, street, city, number, country, neighborhood]);
 
     // We can use t('address') if it exists, for now hardcoding labels/placeholders based on typical usage or creating generic ones
     // Integrating specific logic for masking
@@ -221,6 +244,20 @@ export function AddressForm() {
                             <FormLabel>{t("stateLabel")}</FormLabel>
                             <FormControl>
                                 <Input {...field} placeholder={t("statePlaceholder")} maxLength={2} />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+
+                <FormField
+                    control={control}
+                    name="country"
+                    render={({ field }) => (
+                        <FormItem className="col-span-12 md:col-span-12">
+                            <FormLabel>País</FormLabel>
+                            <FormControl>
+                                <Input {...field} placeholder="País" value={field.value || "Brasil"} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>

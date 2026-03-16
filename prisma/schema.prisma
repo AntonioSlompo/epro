@@ -7,6 +7,14 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Role {
+  SUPER_ADMIN
+  DIRETOR
+  GERENTE
+  ANALISTA
+  AUXILIAR
+}
+
 model User {
   id        String   @id @default(cuid())
   email     String   @unique
@@ -14,34 +22,91 @@ model User {
   password  String?  // Make nullable for now to avoid issues with existing users if any, or force reset. Plan: String
   image     String?  // Base64 string
   active    Boolean  @default(true)
+  role      Role     @default(AUXILIAR)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  
+  companies Company[]
+  technician Technician?
 }
 
-model Supplier {
-  id                String   @id @default(cuid())
-  name              String   // Razão Social (Legal Name)
-  tradeName         String?  // Nome Fantasia
-  documentType      String   @default("CNPJ") // CPF or CNPJ
-  document          String   @unique // The actual number
-  stateRegistration String?
-  email             String?
-  phone             String?
-  active            Boolean  @default(true)
+model Entity {
+  id                        String   @id @default(cuid())
+  companyId                 String
+  company                   Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
   
-  // Address Fields
-  zip               String?
-  street            String?
-  number            String?
-  complement        String?
-  neighborhood      String?
-  city              String?
-  state             String?
-  latitude          Float?
-  longitude         Float?
+  isCustomer                Boolean  @default(false)
+  isSupplier                Boolean  @default(false)
+  active                    Boolean  @default(true)
 
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
+  // Fiscal Data
+  documentType              String   @default("CNPJ") // CPF or CNPJ
+  document                  String   // The actual number
+  name                      String   // Razão Social or Nome
+  tradeName                 String?  // Nome Fantasia or Apelido
+  stateRegistration         String?
+  municipalRegistration     String?
+  birthDateOrFoundation     DateTime?
+
+  // Contact Data
+  email                     String?
+  phone                     String?
+  mobile                    String?
+  website                   String?
+
+  // Address Data
+  zip                       String?
+  street                    String?
+  number                    String?
+  complement                String?
+  neighborhood              String?
+  city                      String?
+  state                     String?
+  latitude                  Float?
+  longitude                 Float?
+  referencePoint            String?
+  operatingHours            String?
+
+  // Banking Data
+  bankName                  String?
+  agency                    String?
+  account                   String?
+  accountType               String?
+  pixKey                    String?
+
+  // Financial Data
+  creditLimit               Decimal?
+  standardPaymentCondition  String?
+  responsibleConsultant     String?
+
+  createdAt                 DateTime @default(now())
+  updatedAt                 DateTime @updatedAt
+
+  @@unique([companyId, document])
+}
+
+model Technician {
+  id              String   @id @default(cuid())
+  companyId       String
+  company         Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  
+  userId          String?  @unique // Optional link to a user account (1:1 per technician)
+  user            User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  
+  name            String
+  document        String?  // CPF ou RG
+  email           String?
+  phone           String?
+  mobile          String?
+  department      String?  // Setor ou Departamento
+  specialties     String?  // Especialidades/Habilidades (texto livre ou tags)
+  notes           String?  // Observações
+  active          Boolean  @default(true)
+  
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([companyId])
 }
 
 model Plan {
@@ -98,4 +163,223 @@ model Company {
   enableCommissionControl Boolean   @default(true)
   portalConfig            Json?     // store portal preferences
   portalMode              String    @default("LISTING") // LISTING, CATALOG
+
+  users                   User[]
+  entities                Entity[]
+  products                Product[]
+  vehicles                Vehicle[]
+  technicians             Technician[]
+}
+
+model Owner {
+  id                    String    @id @default(cuid())
+  name                  String    // Razão Social
+  tradeName             String?   // Nome Fantasia
+  cnpj                  String    @unique
+  stateRegistration     String?
+  municipalRegistration String?
+  
+  email                 String?
+  phone                 String?
+  mobile                String?
+  website               String?
+  
+  // Address
+  zip                   String?
+  street                String?
+  number                String?
+  complement            String?
+  neighborhood          String?
+  city                  String?
+  state                 String?
+  country               String?   @default("Brasil")
+  latitude              Float?
+  longitude             Float?
+  
+  // Banking
+  bankName              String?
+  agency                String?
+  account               String?
+  accountType           String?
+  pixKey                String?
+  
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+}
+
+enum ProductType {
+  PHYSICAL
+  SERVICE_ONETIME
+  SERVICE_RECURRING
+}
+
+enum ProductCategory {
+  MONITORING
+  MAINTENANCE
+  INSTALLATION
+  SOFTWARE_LICENSE
+  EQUIPMENT
+}
+
+enum ProductStatus {
+  ACTIVE
+  INACTIVE
+  DISCONTINUED
+}
+
+enum Periodicity {
+  MONTHLY
+  QUARTERLY
+  SEMIANNUALLY
+  ANNUALLY
+}
+
+enum BillingType {
+  PREPAID
+  POSTPAID
+}
+
+enum AutoAdjustIndex {
+  IGPM
+  IPCA
+  MANUAL
+}
+
+enum FunnelStage {
+  PROSPECTING
+  QUALIFICATION
+  PROPOSAL
+  INSPECTION
+  NEGOTIATION
+  CLOSING
+}
+
+enum UnitOfMeasure {
+  UN
+  MT
+  KG
+  KIT
+  HR
+  OTHER
+}
+
+model Product {
+  id                        String   @id @default(cuid())
+  companyId                 String
+  company                   Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  
+  // 1. Identificação Geral
+  name                      String
+  sku                       String
+  type                      ProductType
+  category                  ProductCategory
+  status                    ProductStatus @default(ACTIVE)
+  description               String?
+  image1Url                 String?
+  image2Url                 String?
+  image3Url                 String?
+
+  // 2. Configurações de Recorrência
+  isRecurring               Boolean @default(false)
+  periodicity               Periodicity?
+  billingType               BillingType?
+  autoAdjustIndex           AutoAdjustIndex?
+  autoAdjustBaseMonth       Int?     // 1 to 12
+  subscriptionPrice         Decimal?
+  setupFee                  Decimal?
+  defaultContractPeriod     Int?     // in months
+
+  // 3. Integração com CRM
+  crmFunnelStage            FunnelStage?
+  requiresTechnicalInspection Boolean @default(false)
+  inspectionChecklistId     String?
+  leadScoreWeight           Float?
+
+  // 4. Venda e Custos
+  suggestedSellingPrice     Decimal?
+  averageCost               Decimal?
+  targetProfitMargin        Float?   // percentage
+  salesCommission           Decimal? // percentage or fixed
+  recurringCommission       Decimal? // percentage or fixed
+
+  // 5. Dados Fiscais
+  ncm                       String?
+  nfsCode                   String?
+  taxes                     Json?    // { iss, pis, cofins, csll, icms }
+  taxRuleType               String?
+
+  // 6. Informações Técnicas e de Estoque
+  brand                     String?
+  model                     String?
+  unitOfMeasure             UnitOfMeasure?
+  minStock                  Int?
+  maxStock                  Int?
+  warehouseLocation         String?
+  warrantyMonths            Int?
+
+  // 7. Kits/Pacotes
+  isBundle                  Boolean @default(false)
+  bundleItems               Json?    // List of product IDs and quantities
+  bundleDiscount            Decimal? // Percentage
+
+  createdAt                 DateTime @default(now())
+  updatedAt                 DateTime @updatedAt
+
+  @@unique([companyId, sku])
+}
+
+enum VehicleType {
+  CAR
+  MOTORCYCLE
+  TRUCK
+  VAN
+  OTHER
+}
+
+enum VehicleStatus {
+  AVAILABLE
+  IN_USE
+  MAINTENANCE
+  INACTIVE
+}
+
+enum FuelType {
+  GASOLINE
+  ALCOHOL
+  FLEX
+  DIESEL
+  ELECTRIC
+  GNV
+}
+
+model Vehicle {
+  id                String   @id @default(cuid())
+  companyId         String
+  company           Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  
+  // Identificação Principal
+  plate             String
+  brand             String
+  model             String
+  yearManufacture   Int?
+  yearModel         Int?
+  color             String?
+  
+  // Documentação e Controle
+  renavam           String?
+  chassis           String?
+  fleetNumber       String?
+  
+  // Classificação
+  type              VehicleType
+  status            VehicleStatus @default(AVAILABLE)
+  fuelType          FuelType?
+  
+  // Condição
+  currentMileage    Int?
+
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@unique([companyId, plate])
 }

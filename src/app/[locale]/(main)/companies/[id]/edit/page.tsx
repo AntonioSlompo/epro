@@ -3,8 +3,15 @@ import { PageHeader } from "@/components/ui/page-header"
 import { getTranslations } from "next-intl/server"
 import { getCompany } from "@/actions/company-actions"
 import { notFound } from "next/navigation"
+import { getCurrentUser } from "@/actions/auth-actions"
+import { redirect } from "next/navigation"
 
 export default async function EditCompanyPage({ params }: { params: Promise<{ id: string }> }) {
+    const user = await getCurrentUser();
+    if (!user || user.role !== "SUPER_ADMIN") {
+        redirect("/pt/dashboard");
+    }
+
     const { id } = await params;
     const company = await getCompany(id);
     const t = await getTranslations("Companies.edit")
