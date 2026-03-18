@@ -16,6 +16,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Loader2, Search } from 'lucide-react';
+import { toast } from 'sonner';
 
 const LocationMap = dynamic(() => import('./location-map'), {
     ssr: false,
@@ -127,7 +128,7 @@ export function AddressForm() {
                 // Clear errors if any
                 trigger(['street', 'neighborhood', 'city', 'state']);
             } else {
-                // Could set an error on the zip field
+                toast.error(result.error || t("error") || "Erro ao buscar CEP");
                 console.error(result.error);
             }
         });
@@ -146,6 +147,7 @@ export function AddressForm() {
                                 <FormControl>
                                     <Input
                                         {...field}
+                                        value={field.value || ""}
                                         onChange={handleCepChange}
                                         placeholder={t("zipPlaceholder")}
                                         maxLength={locale === 'pt' ? 9 : 20}
@@ -173,7 +175,7 @@ export function AddressForm() {
                         <FormItem className="col-span-12 md:col-span-9">
                             <FormLabel>{t("streetLabel")}</FormLabel>
                             <FormControl>
-                                <Input {...field} placeholder={t("streetPlaceholder")} />
+                                <Input {...field} value={field.value || ""} placeholder={t("streetPlaceholder")} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -187,7 +189,7 @@ export function AddressForm() {
                         <FormItem className="col-span-12 md:col-span-2">
                             <FormLabel>{t("numberLabel")}</FormLabel>
                             <FormControl>
-                                <Input {...field} placeholder={t("numberPlaceholder")} />
+                                <Input {...field} value={field.value || ""} placeholder={t("numberPlaceholder")} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -201,7 +203,7 @@ export function AddressForm() {
                         <FormItem className="col-span-12 md:col-span-3">
                             <FormLabel>{t("complementLabel")}</FormLabel>
                             <FormControl>
-                                <Input {...field} placeholder={t("complementPlaceholder")} />
+                                <Input {...field} value={field.value || ""} placeholder={t("complementPlaceholder")} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -215,7 +217,7 @@ export function AddressForm() {
                         <FormItem className="col-span-12 md:col-span-7">
                             <FormLabel>{t("neighborhoodLabel")}</FormLabel>
                             <FormControl>
-                                <Input {...field} placeholder={t("neighborhoodPlaceholder")} />
+                                <Input {...field} value={field.value || ""} placeholder={t("neighborhoodPlaceholder")} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -229,7 +231,7 @@ export function AddressForm() {
                         <FormItem className="col-span-12 md:col-span-10">
                             <FormLabel>{t("cityLabel")}</FormLabel>
                             <FormControl>
-                                <Input {...field} placeholder={t("cityPlaceholder")} />
+                                <Input {...field} value={field.value || ""} placeholder={t("cityPlaceholder")} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -243,7 +245,7 @@ export function AddressForm() {
                         <FormItem className="col-span-12 md:col-span-2">
                             <FormLabel>{t("stateLabel")}</FormLabel>
                             <FormControl>
-                                <Input {...field} placeholder={t("statePlaceholder")} maxLength={2} />
+                                <Input {...field} value={field.value || ""} placeholder={t("statePlaceholder")} maxLength={2} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>

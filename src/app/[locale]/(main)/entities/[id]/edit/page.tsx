@@ -4,7 +4,8 @@ import { getTranslations } from "next-intl/server";
 import { redirect } from "@/i18n/routing";
 import { PageHeader } from "@/components/ui/page-header";
 
-export default async function EditEntityPage({ params }: { params: { id: string, locale: string } }) {
+export default async function EditEntityPage(props: { params: Promise<{ id: string, locale: string }> }) {
+    const params = await props.params;
     const t = await getTranslations("Entities");
     const { success, entity } = await getEntity(params.id);
 

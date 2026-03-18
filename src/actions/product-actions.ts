@@ -3,6 +3,7 @@
 import { prisma } from "@/lib/prisma";
 import { getTenant } from "./auth-actions";
 import { revalidatePath } from "next/cache";
+import { serializePrisma } from "@/lib/utils";
 
 export async function getProducts({ 
     page = 1, 
@@ -44,7 +45,7 @@ export async function getProducts({
 
         return { 
             success: true, 
-            products, 
+            products: serializePrisma(products), 
             totalPages: Math.ceil(total / limit) 
         };
     } catch (error) {
@@ -64,7 +65,7 @@ export async function getProduct(id: string) {
                 companyId: tenantId,
             }
         });
-        return { success: true, product };
+        return { success: true, product: serializePrisma(product) };
     } catch (error) {
         console.error("Error fetching product:", error);
         return { success: false, error: "Failed to fetch product." };

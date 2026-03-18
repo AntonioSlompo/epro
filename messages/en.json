@@ -47,6 +47,7 @@
             "technicians": "Technicians",
             "products": "Products/Services",
             "vehicles": "Vehicles",
+            "tools": "Tools/Devices",
             "settings": "Settings"
         },
         "tenantSelector": {
@@ -353,5 +354,41 @@
             "createSuccess": "Vehicle created successfully!",
             "updateSuccess": "Vehicle updated successfully!"
         }
+    },
+    "Tools": {
+        "title": "Tools / Devices",
+        "description": "Manage your company's tools and devices inventory.",
+        "addTool": "New Tool",
+        "editTool": "Edit Tool",
+        "titleNew": "New Tool",
+        "descriptionNew": "Register a new tool or device in your inventory.",
+        "titleEdit": "Edit Tool",
+        "descriptionEdit": "Change the details of the selected tool.",
+        "name": "Name/Description",
+        "serialNumber": "Serial Number / Asset",
+        "category": "Category",
+        "status": "Status",
+        "form": {
+            "identification": "Identification",
+            "details": "Equipment Details",
+            "observations": "Observations",
+            "brand": "Brand",
+            "model": "Model",
+            "serialNumber": "Serial Number / Asset",
+            "category": "Category",
+            "status": "Availability Status",
+            "statusAvailable": "Available",
+            "statusInUse": "In Use",
+            "statusMaintenance": "Maintenance",
+            "statusLost": "Lost",
+            "statusDamaged": "Damaged",
+            "internalNotes": "Internal Notes",
+            "notesPlaceholder": "Previous damage, included accessories, last review date...",
+            "active": "Active",
+            "createSuccess": "Tool registered successfully!",
+            "updateSuccess": "Tool updated successfully!"
+        },
+        "deleteConfirm": "Are you sure you want to delete this tool?",
+        "deleteSuccess": "Tool deleted successfully!"
     }
 }

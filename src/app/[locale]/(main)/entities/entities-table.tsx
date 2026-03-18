@@ -3,21 +3,21 @@
 import { useTranslations } from "next-intl";
 import { DataTable } from "@/components/ui/data-table";
 import { columns } from "./columns";
-
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { MoreHorizontal, Pencil, Copy, User, Users, Trash2 } from "lucide-react";
+import { MoreVertical, Pencil, Copy, User, Users, Building2, Trash2 } from "lucide-react";
 import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
-    DropdownMenuLabel,
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "@/i18n/routing";
 import { toast } from "sonner";
 import { deleteEntity } from "@/actions/entity-actions";
+import { formatDocument } from "@/lib/validators";
 
 interface EntitiesTableProps {
     data: any[];
@@ -39,71 +39,86 @@ export function EntitiesTable({ data, totalPages, page, viewMode }: EntitiesTabl
         else if (isSupplier) typeLabel = "Fornecedor";
         else typeLabel = "N/D";
 
+        const IconComp = isCustomer && isSupplier ? Building2 : isCustomer ? User : Users;
+
         return (
-            <div className="flex flex-col h-full rounded-xl border border-border/50 bg-card/60 backdrop-blur-sm p-5 hover:bg-card/80 transition-colors">
-                <div className="flex justify-between items-start mb-4">
-                    <div className="h-12 w-12 rounded-full overflow-hidden bg-primary/10 border border-primary/20 shrink-0 flex items-center justify-center">
-                        {isCustomer ? <User className="h-6 w-6 text-primary" /> : <Users className="h-6 w-6 text-primary" />}
-                    </div>
-                    
-                    <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" className="h-8 w-8 p-0">
-                                <span className="sr-only">{t("actions")}</span>
-                                <MoreHorizontal className="h-4 w-4" />
-                            </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end">
-                            <DropdownMenuLabel>{t("actions")}</DropdownMenuLabel>
-                            <DropdownMenuItem 
-                                onClick={() => {
-                                    navigator.clipboard.writeText(entity.id);
-                                    toast.success(tEnt("idCopied"));
-                                }}
-                            >
-                                <Copy className="mr-2 h-4 w-4" /> {t("copyId")}
-                            </DropdownMenuItem>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem asChild>
-                                <Link href={`/entities/${entity.id}/edit`} className="flex items-center cursor-pointer">
-                                    <Pencil className="mr-2 h-4 w-4" /> {t("edit")}
-                                </Link>
-                            </DropdownMenuItem>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem 
-                                className="text-destructive focus:text-destructive"
-                                onClick={async () => {
-                                    if (confirm(tEnt("deleteConfirm") || "Tem certeza que deseja excluir?")) {
-                                        const result = await deleteEntity(entity.id);
-                                        if (result.success) {
-                                            toast.success(tEnt("deleteSuccess") || "Excluído com sucesso!");
-                                        } else {
-                                            toast.error(result.error || t("error"));
+            <Card className="overflow-hidden flex flex-col hover:border-primary/50 transition-colors">
+                <CardContent className="p-0 flex flex-col h-full">
+                    {/* Header */}
+                    <div className="p-4 flex gap-4 items-start border-b bg-muted/20">
+                        <div className="h-12 w-12 rounded-lg overflow-hidden bg-background border flex justify-center items-center shrink-0">
+                            <IconComp className="w-6 h-6 text-primary" />
+                        </div>
+                        <div className="flex-1 min-w-0 pt-1">
+                            <h3 className="font-semibold truncate" title={entity.name}>{entity.name}</h3>
+                            {entity.tradeName && (
+                                <p className="text-sm text-muted-foreground truncate">{entity.tradeName}</p>
+                            )}
+                        </div>
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <Button variant="ghost" size="icon" className="-mr-2 -mt-2 h-8 w-8 text-muted-foreground">
+                                    <MoreVertical className="h-4 w-4" />
+                                </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                                <DropdownMenuItem onClick={() => { navigator.clipboard.writeText(entity.id); toast.success(tEnt("idCopied")); }}>
+                                    <Copy className="mr-2 h-4 w-4" /> {t("copyId")}
+                                </DropdownMenuItem>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuItem asChild>
+                                    <Link href={`/entities/${entity.id}/edit`} className="flex items-center cursor-pointer">
+                                        <Pencil className="mr-2 h-4 w-4" /> {t("edit")}
+                                    </Link>
+                                </DropdownMenuItem>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuItem
+                                    className="text-destructive focus:text-destructive"
+                                    onClick={async () => {
+                                        if (confirm(tEnt("deleteConfirm") || "Tem certeza que deseja excluir?")) {
+                                            const result = await deleteEntity(entity.id);
+                                            if (result.success) {
+                                                toast.success(tEnt("deleteSuccess") || "Excluído com sucesso!");
+                                            } else {
+                                                toast.error(result.error || t("error"));
+                                            }
                                         }
-                                    }
-                                }}
-                            >
-                                <Trash2 className="mr-2 h-4 w-4" /> {t("delete")}
-                            </DropdownMenuItem>
-                        </DropdownMenuContent>
-                     </DropdownMenu>
-                </div>
-                
-                <div className="flex flex-col flex-1 gap-1">
-                    <h3 className="font-semibold text-lg truncate" title={entity.name}>{entity.name}</h3>
-                    <p className="text-sm text-muted-foreground truncate mb-1" title={entity.document}>{entity.document}</p>
-                    {entity.tradeName && (
-                        <p className="text-xs text-muted-foreground truncate mb-2" title={entity.tradeName}>{entity.tradeName}</p>
-                    )}
-                    
-                    <div className="mt-auto flex flex-wrap gap-2 pt-2">
-                        <Badge variant="outline">{typeLabel}</Badge>
-                        <Badge variant={entity.active ? "default" : "secondary"}>
-                            {entity.active ? "Ativo" : "Inativo"}
-                        </Badge>
+                                    }}
+                                >
+                                    <Trash2 className="mr-2 h-4 w-4" /> {t("delete")}
+                                </DropdownMenuItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
                     </div>
-                </div>
-            </div>
+
+                    {/* Body */}
+                    <div className="p-4 flex-1 flex flex-col gap-3 text-sm">
+                        <div className="grid grid-cols-1 gap-2">
+                            {entity.document && (
+                                <div className="flex items-center text-muted-foreground gap-2">
+                                    <span className="font-medium text-xs uppercase tracking-wider">Doc.:</span>
+                                    <span className="truncate">{formatDocument(entity.document)}</span>
+                                </div>
+                            )}
+                            {entity.email && (
+                                <div className="flex items-center text-muted-foreground gap-2">
+                                    <span className="font-medium text-xs uppercase tracking-wider">Email:</span>
+                                    <span className="truncate">{entity.email}</span>
+                                </div>
+                            )}
+                        </div>
+
+                        <div className="mt-auto pt-4 flex flex-wrap gap-2 justify-between items-center">
+                            <Badge variant={entity.active ? "default" : "secondary"} className="font-normal text-xs">
+                                {entity.active ? t("active") : t("inactive")}
+                            </Badge>
+                            <Badge variant="outline" className="font-normal text-xs">
+                                {typeLabel}
+                            </Badge>
+                        </div>
+                    </div>
+                </CardContent>
+            </Card>
         );
     };
 

@@ -19,3 +19,12 @@ export function mapCompanyToSafe(company: any) {
         logoBase64
     };
 }
+
+/**
+ * Serializes Prisma objects (handling Decimals and Dates) so they can be passed 
+ * from Server Components/Actions to Client Components.
+ */
+export function serializePrisma<T>(data: T): T {
+    if (!data) return data;
+    return JSON.parse(JSON.stringify(data));
+}

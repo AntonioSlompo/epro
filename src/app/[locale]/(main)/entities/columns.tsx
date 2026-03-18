@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { toast } from "sonner";
 import { deleteEntity } from "@/actions/entity-actions";
+import { formatDocument } from "@/lib/validators";
 
 export type EntityColumn = {
     id: string;
@@ -88,6 +89,7 @@ export const columns: ColumnDef<EntityColumn>[] = [
     {
         accessorKey: "document",
         header: "Documento",
+        cell: ({ row }) => formatDocument(row.getValue("document")),
     },
     {
         accessorKey: "type",

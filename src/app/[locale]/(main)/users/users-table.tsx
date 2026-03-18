@@ -142,23 +142,27 @@ export function UsersTable({ data, totalPages, page, viewMode }: UsersTableProps
                 await deleteUser(u.id);
             }
         }
-        
+
         return (
-            <div className="flex flex-col h-full rounded-xl border border-border/50 bg-card/60 backdrop-blur-sm p-5 hover:bg-card/80 transition-colors">
-                <div className="flex justify-between items-start mb-4">
-                    <div className="h-12 w-12 rounded-full overflow-hidden bg-muted border border-border shrink-0">
+            <div className="overflow-hidden flex flex-col rounded-lg border hover:border-primary/50 transition-colors bg-card">
+                {/* Header */}
+                <div className="p-4 flex gap-4 items-start border-b bg-muted/20">
+                    <div className="h-12 w-12 rounded-lg overflow-hidden bg-background border flex justify-center items-center shrink-0">
                         {u.image ? (
                             <img src={u.image} alt={u.name || "User"} className="h-full w-full object-cover" />
                         ) : (
-                            <div className="h-full w-full flex items-center justify-center text-sm text-muted-foreground font-medium">
-                                {u.name?.charAt(0) || "U"}
-                            </div>
+                            <span className="text-lg font-semibold text-muted-foreground uppercase">
+                                {u.name?.substring(0, 2) || "??"}
+                            </span>
                         )}
                     </div>
-                    
+                    <div className="flex-1 min-w-0 pt-1">
+                        <h3 className="font-semibold truncate" title={u.name || ""}>{u.name || "Sem Nome"}</h3>
+                        <p className="text-sm text-muted-foreground truncate">{u.email}</p>
+                    </div>
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" className="h-8 w-8 p-0">
+                            <Button variant="ghost" className="h-8 w-8 p-0 -mr-2 -mt-2">
                                 <span className="sr-only">Open menu</span>
                                 <MoreHorizontal className="h-4 w-4" />
                             </Button>
@@ -185,17 +189,23 @@ export function UsersTable({ data, totalPages, page, viewMode }: UsersTableProps
                                 <Trash className="mr-2 h-4 w-4" /> {t("delete")}
                             </DropdownMenuItem>
                         </DropdownMenuContent>
-                     </DropdownMenu>
+                    </DropdownMenu>
                 </div>
-                
-                <div className="flex flex-col flex-1 gap-1">
-                    <h3 className="font-semibold text-lg truncate" title={u.name || ""}>{u.name || "Sem Nome"}</h3>
-                    <p className="text-sm text-muted-foreground truncate mb-3" title={u.email}>{u.email}</p>
-                    
-                    <div className="mt-auto flex flex-wrap gap-2 pt-2">
-                        <Badge variant="outline">{u.role ? tRole(u.role) : ""}</Badge>
-                        <Badge variant={u.active ? "default" : "secondary"}>
+
+                {/* Body */}
+                <div className="p-4 flex-1 flex flex-col gap-3 text-sm">
+                    <div className="grid grid-cols-1 gap-2">
+                        <div className="flex items-center text-muted-foreground gap-2">
+                            <span className="font-medium text-xs uppercase tracking-wider">Nível:</span>
+                            <span>{u.role ? tRole(u.role) : ""}</span>
+                        </div>
+                    </div>
+                    <div className="mt-auto pt-4 flex flex-wrap gap-2 justify-between items-center">
+                        <Badge variant={u.active ? "default" : "secondary"} className="font-normal text-xs">
                             {u.active ? t("status.active") : t("status.inactive")}
+                        </Badge>
+                        <Badge variant="outline" className="font-normal text-xs">
+                            {u.role ? tRole(u.role) : ""}
                         </Badge>
                     </div>
                 </div>

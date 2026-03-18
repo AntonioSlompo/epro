@@ -5,7 +5,7 @@ import { Company } from "@prisma/client"
 import { useCompanyColumns } from "./columns"
 import { useTranslations } from "next-intl"
 import { Button } from "@/components/ui/button"
-import { MoreHorizontal, Pencil, Trash, Building2 } from "lucide-react"
+import { MoreVertical, Pencil, Trash, Building2 } from "lucide-react"
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -14,6 +14,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { Card, CardContent } from "@/components/ui/card"
 import { Link } from "@/i18n/routing"
 import { deleteCompany } from "@/actions/company-actions"
 import { Badge } from "@/components/ui/badge"
@@ -36,55 +37,77 @@ export function CompaniesTable({ data, totalPages, page, viewMode }: CompaniesTa
                 await deleteCompany(company.id);
             }
         }
-        
+
         return (
-            <div className="flex flex-col h-full rounded-xl border border-border/50 bg-card/60 backdrop-blur-sm p-5 hover:bg-card/80 transition-colors">
-                <div className="flex justify-between items-start mb-4">
-                    <div className="h-12 w-12 rounded-full overflow-hidden bg-primary/10 border border-primary/20 shrink-0 flex items-center justify-center">
-                        {company.logoUrl || (company as any).logoBase64 ? (
-                            <img src={company.logoUrl || (company as any).logoBase64} alt={company.tradeName || company.name || "Company"} className="h-full w-full object-cover" />
-                        ) : (
-                            <Building2 className="h-6 w-6 text-primary" />
-                        )}
+            <Card className="overflow-hidden flex flex-col hover:border-primary/50 transition-colors">
+                <CardContent className="p-0 flex flex-col h-full">
+                    {/* Header */}
+                    <div className="p-4 flex gap-4 items-start border-b bg-muted/20">
+                        <div className="h-12 w-12 rounded-lg overflow-hidden bg-background border flex justify-center items-center shrink-0">
+                            {company.logoUrl || (company as any).logoBase64 ? (
+                                <img src={company.logoUrl || (company as any).logoBase64} alt={company.tradeName || company.name || "Company"} className="h-full w-full object-cover" />
+                            ) : (
+                                <Building2 className="h-6 w-6 text-primary" />
+                            )}
+                        </div>
+                        <div className="flex-1 min-w-0 pt-1">
+                            <h3 className="font-semibold truncate" title={company.tradeName || company.name}>
+                                {company.tradeName || company.name}
+                            </h3>
+                            {company.name && company.tradeName && (
+                                <p className="text-sm text-muted-foreground truncate">{company.name}</p>
+                            )}
+                        </div>
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <Button variant="ghost" size="icon" className="-mr-2 -mt-2 h-8 w-8 text-muted-foreground">
+                                    <span className="sr-only">Open menu</span>
+                                    <MoreVertical className="h-4 w-4" />
+                                </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                                <DropdownMenuLabel>{tCommon("actions")}</DropdownMenuLabel>
+                                <DropdownMenuItem onClick={() => navigator.clipboard.writeText(company.id)}>
+                                    {tCommon("copyId")}
+                                </DropdownMenuItem>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuItem asChild>
+                                    <Link href={`/companies/${company.id}/edit`} className="flex items-center cursor-pointer">
+                                        <Pencil className="mr-2 h-4 w-4" /> {tCommon("edit")}
+                                    </Link>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem onClick={handleDelete} className="text-destructive focus:text-destructive">
+                                    <Trash className="mr-2 h-4 w-4" /> {tCommon("delete")}
+                                </DropdownMenuItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
                     </div>
-                    
-                    <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" className="h-8 w-8 p-0">
-                                <span className="sr-only">Open menu</span>
-                                <MoreHorizontal className="h-4 w-4" />
-                            </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end">
-                            <DropdownMenuLabel>{tCommon("actions")}</DropdownMenuLabel>
-                            <DropdownMenuItem onClick={() => navigator.clipboard.writeText(company.id)}>
-                                {tCommon("copyId")}
-                            </DropdownMenuItem>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem asChild>
-                                <Link href={`/companies/${company.id}/edit`} className="flex items-center cursor-pointer">
-                                    <Pencil className="mr-2 h-4 w-4" /> {tCommon("edit")}
-                                </Link>
-                            </DropdownMenuItem>
-                            <DropdownMenuItem onClick={handleDelete} className="text-destructive focus:text-destructive">
-                                <Trash className="mr-2 h-4 w-4" /> {tCommon("delete")}
-                            </DropdownMenuItem>
-                        </DropdownMenuContent>
-                     </DropdownMenu>
-                </div>
-                
-                <div className="flex flex-col flex-1 gap-1">
-                    <h3 className="font-semibold text-lg truncate" title={company.tradeName || company.name}>{company.tradeName || company.name}</h3>
-                    <p className="text-sm text-muted-foreground truncate mb-1" title={company.email || ""}>{company.email || "Sem e-mail"}</p>
-                    <p className="text-xs text-muted-foreground truncate mb-3" title={company.cnpj || ""}>CNPJ: {company.cnpj || "Não informado"}</p>
-                    
-                    <div className="mt-auto flex flex-wrap gap-2 pt-2">
-                        <Badge variant={company.active ? "default" : "secondary"}>
-                            {company.active ? tCommon("status.active") : tCommon("status.inactive")}
-                        </Badge>
+
+                    {/* Body */}
+                    <div className="p-4 flex-1 flex flex-col gap-3 text-sm">
+                        <div className="grid grid-cols-1 gap-2">
+                            {company.email && (
+                                <div className="flex items-center text-muted-foreground gap-2">
+                                    <span className="font-medium text-xs uppercase tracking-wider">Email:</span>
+                                    <span className="truncate">{company.email}</span>
+                                </div>
+                            )}
+                            {company.cnpj && (
+                                <div className="flex items-center text-muted-foreground gap-2">
+                                    <span className="font-medium text-xs uppercase tracking-wider">CNPJ:</span>
+                                    <span className="truncate">{company.cnpj}</span>
+                                </div>
+                            )}
+                        </div>
+
+                        <div className="mt-auto pt-4 flex flex-wrap gap-2 justify-between items-center">
+                            <Badge variant={company.active ? "default" : "secondary"} className="font-normal text-xs">
+                                {company.active ? tCommon("status.active") : tCommon("status.inactive")}
+                            </Badge>
+                        </div>
                     </div>
-                </div>
-            </div>
+                </CardContent>
+            </Card>
         )
     }
 

@@ -5,7 +5,7 @@ import { revalidatePath } from "next/cache"
 import { companySchema, CompanyFormValues } from "@/schemas/company-schema"
 import { Prisma } from "@prisma/client"
 import { getCurrentUser } from "@/actions/auth-actions"
-import { mapCompanyToSafe } from "@/lib/utils"
+import { mapCompanyToSafe, serializePrisma } from "@/lib/utils"
 
 export async function getCompanies(page = 1, pageSize = 10, search = "") {
     const skip = (page - 1) * pageSize;
@@ -36,7 +36,7 @@ export async function getCompanies(page = 1, pageSize = 10, search = "") {
         const totalPages = Math.ceil(total / pageSize);
 
         // Omit Uint8Array logoData for Client Components serialization and add base64
-        const safeData = data.map(mapCompanyToSafe);
+        const safeData = serializePrisma(data.map(mapCompanyToSafe));
 
         return { data: safeData as any, totalPages, currentPage: page, total };
     } catch (error) {
@@ -90,7 +90,7 @@ export async function getCompany(id: string) {
 
         if (!company) return null;
 
-        return mapCompanyToSafe(company);
+        return serializePrisma(mapCompanyToSafe(company));
     } catch (error) {
         console.error("Error fetching company:", error);
         return null; // Return null instead of throwing for better handling in UI

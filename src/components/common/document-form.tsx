@@ -127,6 +127,7 @@ export function DocumentForm({
                                 <FormControl>
                                     <Input
                                         {...field}
+                                        value={field.value || ""}
                                         onChange={handleDocumentChange}
                                         placeholder={documentType === 'CNPJ' ? '00.000.000/0000-00' : '000.000.000-00'}
                                     />
@@ -154,7 +155,7 @@ export function DocumentForm({
                         <FormItem className="col-span-12 md:col-span-4">
                             <FormLabel>{t('stateRegistrationLabel')}</FormLabel>
                             <FormControl>
-                                <Input {...field} placeholder={t('stateRegistrationPlaceholder')} />
+                                <Input {...field} value={field.value || ""} placeholder={t('stateRegistrationPlaceholder')} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -170,7 +171,7 @@ export function DocumentForm({
                         <FormItem>
                             <FormLabel>{t('legalNameLabel')}</FormLabel>
                             <FormControl>
-                                <Input {...field} placeholder={t('legalNamePlaceholder')} />
+                                <Input {...field} value={field.value || ""} placeholder={t('legalNamePlaceholder')} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -184,7 +185,7 @@ export function DocumentForm({
                         <FormItem>
                             <FormLabel>{t('tradeNameLabel')}</FormLabel>
                             <FormControl>
-                                <Input {...field} placeholder={t('tradeNamePlaceholder')} />
+                                <Input {...field} value={field.value || ""} placeholder={t('tradeNamePlaceholder')} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>

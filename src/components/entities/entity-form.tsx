@@ -28,6 +28,7 @@ import { MoneyInput } from "@/components/ui/money-input";
 import { Users, FileText, MapPin, Phone, Landmark, Coins } from "lucide-react";
 import { DocumentForm } from "@/components/common/document-form";
 import { AddressForm } from "@/components/common/address-form";
+import { formatPhone, formatMobile } from "@/lib/validators";
 
 interface EntityFormProps {
     initialData?: any;
@@ -43,7 +44,32 @@ export function EntityForm({ initialData }: EntityFormProps) {
 
     const form = useForm<z.input<typeof entitySchema>>({
         resolver: zodResolver(entitySchema),
-        defaultValues: initialData || {
+        defaultValues: initialData ? {
+            ...initialData,
+            tradeName: initialData.tradeName || "",
+            stateRegistration: initialData.stateRegistration || "",
+            municipalRegistration: initialData.municipalRegistration || "",
+            email: initialData.email || "",
+            phone: initialData.phone || "",
+            mobile: initialData.mobile || "",
+            website: initialData.website || "",
+            zip: initialData.zip || "",
+            street: initialData.street || "",
+            number: initialData.number || "",
+            complement: initialData.complement || "",
+            neighborhood: initialData.neighborhood || "",
+            city: initialData.city || "",
+            state: initialData.state || "",
+            referencePoint: initialData.referencePoint || "",
+            operatingHours: initialData.operatingHours || "",
+            bankName: initialData.bankName || "",
+            agency: initialData.agency || "",
+            account: initialData.account || "",
+            accountType: initialData.accountType || "",
+            pixKey: initialData.pixKey || "",
+            standardPaymentCondition: initialData.standardPaymentCondition || "",
+            responsibleConsultant: initialData.responsibleConsultant || "",
+        } : {
             isCustomer: false,
             isSupplier: false,
             active: true,
@@ -253,7 +279,7 @@ export function EntityForm({ initialData }: EntityFormProps) {
                                     <FormItem className="md:col-span-2">
                                         <FormLabel>Ponto de Referência</FormLabel>
                                         <FormControl>
-                                            <Input placeholder="Ex: Perto do mercado X" {...field} />
+                                            <Input placeholder="Ex: Perto do mercado X" {...field} value={field.value || ""} />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
@@ -267,7 +293,7 @@ export function EntityForm({ initialData }: EntityFormProps) {
                                         <FormItem className="md:col-span-2">
                                             <FormLabel>Horário de Funcionamento</FormLabel>
                                             <FormControl>
-                                                <Input placeholder="Ex: Segunda à Sexta, 08:00 as 18:00" {...field} />
+                                                <Input placeholder="Ex: Segunda à Sexta, 08:00 as 18:00" {...field} value={field.value || ""} />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
@@ -294,7 +320,7 @@ export function EntityForm({ initialData }: EntityFormProps) {
                                 <FormItem>
                                     <FormLabel>{t("email")}</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="email@exemplo.com" {...field} />
+                                        <Input placeholder="email@exemplo.com" {...field} value={field.value || ""} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -307,7 +333,12 @@ export function EntityForm({ initialData }: EntityFormProps) {
                                 <FormItem>
                                     <FormLabel>{t("phone")}</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="(00) 0000-0000" {...field} />
+                                        <Input 
+                                            placeholder="(00) 0000-0000" 
+                                            {...field} 
+                                            value={field.value || ""} 
+                                            onChange={(e) => field.onChange(formatPhone(e.target.value))}
+                                        />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -320,7 +351,12 @@ export function EntityForm({ initialData }: EntityFormProps) {
                                 <FormItem>
                                     <FormLabel>Celular</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="(00) 00000-0000" {...field} />
+                                        <Input 
+                                            placeholder="(00) 00000-0000" 
+                                            {...field} 
+                                            value={field.value || ""} 
+                                            onChange={(e) => field.onChange(formatMobile(e.target.value))}
+                                        />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -333,7 +369,7 @@ export function EntityForm({ initialData }: EntityFormProps) {
                                 <FormItem>
                                     <FormLabel>Website</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="https://..." {...field} />
+                                        <Input placeholder="https://..." {...field} value={field.value || ""} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -358,7 +394,7 @@ export function EntityForm({ initialData }: EntityFormProps) {
                                 <FormItem>
                                     <FormLabel>Banco</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="Ex: Itaú, Nubank" {...field} />
+                                        <Input placeholder="Ex: Itaú, Nubank" {...field} value={field.value || ""} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -371,7 +407,7 @@ export function EntityForm({ initialData }: EntityFormProps) {
                                 <FormItem>
                                     <FormLabel>Chave PIX</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="Chave do recebedor" {...field} />
+                                        <Input placeholder="Chave do recebedor" {...field} value={field.value || ""} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -384,7 +420,7 @@ export function EntityForm({ initialData }: EntityFormProps) {
                                 <FormItem>
                                     <FormLabel>Agência (com dígito)</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="Ex: 0001" {...field} />
+                                        <Input placeholder="Ex: 0001" {...field} value={field.value || ""} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -397,7 +433,7 @@ export function EntityForm({ initialData }: EntityFormProps) {
                                 <FormItem>
                                     <FormLabel>Conta Corrente (com dígito)</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="Ex: 12345-6" {...field} />
+                                        <Input placeholder="Ex: 12345-6" {...field} value={field.value || ""} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -440,7 +476,7 @@ export function EntityForm({ initialData }: EntityFormProps) {
                                     <FormItem className="md:col-span-2">
                                         <FormLabel>Condição de Pagamento Padrão</FormLabel>
                                         <FormControl>
-                                            <Input placeholder="Ex: 30 dias, 30/60/90" {...field} />
+                                            <Input placeholder="Ex: 30 dias, 30/60/90" {...field} value={field.value || ""} />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
@@ -453,7 +489,7 @@ export function EntityForm({ initialData }: EntityFormProps) {
                                     <FormItem className="md:col-span-2">
                                         <FormLabel>Vendedor/Consultor Responsável</FormLabel>
                                         <FormControl>
-                                            <Input placeholder="Nome do contato comercial" {...field} />
+                                            <Input placeholder="Nome do contato comercial" {...field} value={field.value || ""} />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>

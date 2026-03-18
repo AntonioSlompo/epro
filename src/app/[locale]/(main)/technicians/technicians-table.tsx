@@ -5,7 +5,7 @@ import { DataTable } from "@/components/ui/data-table"
 import { useTechnicianColumns } from "./columns"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { MoreVertical, Pencil, Trash2, Mail, Phone, Briefcase } from "lucide-react"
+import { MoreVertical, Pencil, Trash2, Mail, Phone, Briefcase, Wrench } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
     DropdownMenu,
@@ -54,9 +54,10 @@ export function TechniciansTable({ data, totalPages, page, viewMode = 'list' }: 
                 {data.map((tech) => (
                     <Card key={tech.id} className="overflow-hidden flex flex-col hover:border-primary/50 transition-colors">
                         <CardContent className="p-0 flex flex-col h-full">
+                            {/* Header */}
                             <div className="p-4 flex gap-4 items-start border-b bg-muted/20">
-                                <div className="h-12 w-12 rounded-full overflow-hidden bg-background border flex justify-center items-center shrink-0">
-                                    <span className="text-lg font-semibold text-muted-foreground uppercase">{tech.name.substring(0, 2)}</span>
+                                <div className="h-12 w-12 rounded-lg overflow-hidden bg-background border flex justify-center items-center shrink-0">
+                                    <Wrench className="w-6 h-6 text-primary" />
                                 </div>
                                 <div className="flex-1 min-w-0 pt-1">
                                     <h3 className="font-semibold truncate" title={tech.name}>{tech.name}</h3>
@@ -85,7 +86,8 @@ export function TechniciansTable({ data, totalPages, page, viewMode = 'list' }: 
                                     </DropdownMenuContent>
                                 </DropdownMenu>
                             </div>
-                            
+
+                            {/* Body */}
                             <div className="p-4 flex-1 flex flex-col gap-3 text-sm">
                                 <div className="grid grid-cols-1 gap-2">
                                     {tech.email && (
@@ -100,15 +102,21 @@ export function TechniciansTable({ data, totalPages, page, viewMode = 'list' }: 
                                             <span>{tech.mobile || tech.phone}</span>
                                         </div>
                                     )}
+                                    {tech.specialties && (
+                                        <div className="flex items-center text-muted-foreground gap-2">
+                                            <span className="font-medium text-xs uppercase tracking-wider">Esp.:</span>
+                                            <span className="truncate">{tech.specialties}</span>
+                                        </div>
+                                    )}
                                 </div>
-                                
+
                                 <div className="mt-auto pt-4 flex flex-wrap gap-2 justify-between items-center">
                                     <Badge variant={tech.active ? "default" : "secondary"} className="font-normal text-xs">
                                         {tech.active ? t("status.active") : t("status.inactive")}
                                     </Badge>
                                     {tech.user && (
                                         <Badge variant="outline" className="font-normal text-xs bg-primary/5 border-primary/20 text-primary">
-                                            Vinculado a Usuário
+                                            Vinculado
                                         </Badge>
                                     )}
                                 </div>
@@ -117,7 +125,7 @@ export function TechniciansTable({ data, totalPages, page, viewMode = 'list' }: 
                     </Card>
                 ))}
             </div>
-            
+
             {/* Pagination for Card View */}
             {totalPages > 1 && (
                 <div className="pt-4 flex items-center justify-between">
@@ -125,20 +133,10 @@ export function TechniciansTable({ data, totalPages, page, viewMode = 'list' }: 
                         Página {page} de {totalPages}
                     </p>
                     <div className="flex space-x-2">
-                        <Button 
-                            variant="outline" 
-                            size="sm" 
-                            disabled={page <= 1}
-                            asChild
-                        >
+                        <Button variant="outline" size="sm" disabled={page <= 1} asChild>
                             <Link href={`/technicians?page=${page - 1}${viewMode ? `&view=${viewMode}` : ''}`}>Anterior</Link>
                         </Button>
-                        <Button 
-                            variant="outline" 
-                            size="sm" 
-                            disabled={page >= totalPages}
-                            asChild
-                        >
+                        <Button variant="outline" size="sm" disabled={page >= totalPages} asChild>
                             <Link href={`/technicians?page=${page + 1}${viewMode ? `&view=${viewMode}` : ''}`}>Próxima</Link>
                         </Button>
                     </div>

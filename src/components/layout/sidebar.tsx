@@ -19,7 +19,9 @@ import {
     LayoutGrid,
     Car,
     Wrench,
-    Store
+    Store,
+    Hammer,
+    Package
 } from "lucide-react"
 import {
     DropdownMenu,
@@ -68,9 +70,11 @@ export function Sidebar({ user, currentTenantId }: SidebarProps) {
         { href: "/dashboard", icon: LayoutDashboard, label: t('dashboard') },
         { href: "/users", icon: Users, label: t('users') },
         { href: "/entities", icon: Store, label: t('entities') },
+        { href: "/storage-locations", icon: Package, label: t('storageLocations') },
         { href: "/technicians", icon: Wrench, label: t('technicians') },
         { href: "/products", icon: LayoutGrid, label: t('products') },
         { href: "/vehicles", icon: Car, label: t('vehicles') },
+        { href: "/tools", icon: Hammer, label: t('tools') },
         { href: "/companies", icon: Building2, label: t('companies') },
         { href: "/owner", icon: Crown, label: t('owner') },
         { href: "/finance", icon: DollarSign, label: t('finance') },
@@ -88,7 +92,7 @@ export function Sidebar({ user, currentTenantId }: SidebarProps) {
     ]
 
     const navItems = user?.role === 'SUPER_ADMIN' 
-        ? allNavItems.filter(item => ['/users', '/companies', '/owner', '/technicians', '/settings'].includes(item.href || ''))
+        ? allNavItems.filter(item => ['/users', '/companies', '/owner', '/settings'].includes(item.href || ''))
         : allNavItems.filter(item => item.href !== '/owner' && item.href !== '/companies');
 
     return (

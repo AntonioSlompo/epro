@@ -47,6 +47,8 @@
             "technicians": "Técnicos",
             "products": "Produtos/Serviços",
             "vehicles": "Veículos",
+            "tools": "Ferramentas/Disp.",
+            "storageLocations": "Locais de Estoque",
             "settings": "Configurações"
         },
         "tenantSelector": {
@@ -255,6 +257,7 @@
         "specialties": "Especialidades",
         "form": {
             "identification": "Identificação",
+            "details": "Detalhes Profissionais",
             "contact": "Contato",
             "professional": "Dados Profissionais",
             "department": "Setor/Departamento",
@@ -352,6 +355,71 @@
         "form": {
             "createSuccess": "Veículo criado com sucesso!",
             "updateSuccess": "Veículo atualizado com sucesso!"
+        }
+    },
+    "Tools": {
+        "title": "Ferramentas / Dispositivos",
+        "description": "Gerencie o inventário de ferramentas e dispositivos da sua empresa.",
+        "addTool": "Nova Ferramenta",
+        "editTool": "Editar Ferramenta",
+        "titleNew": "Nova Ferramenta",
+        "descriptionNew": "Cadastre uma nova ferramenta ou dispositivo no seu inventário.",
+        "titleEdit": "Editar Ferramenta",
+        "descriptionEdit": "Altere os detalhes da ferramenta selecionada.",
+        "name": "Nome/Descrição",
+        "serialNumber": "Nº Série / Patrimônio",
+        "category": "Categoria",
+        "status": "Status",
+        "form": {
+            "identification": "Identificação",
+            "details": "Detalhes do Equipamento",
+            "observations": "Observações",
+            "brand": "Marca",
+            "model": "Modelo",
+            "serialNumber": "Nº Série / Patrimônio",
+            "category": "Categoria",
+            "status": "Status de Disponibilidade",
+            "statusAvailable": "Disponível",
+            "statusInUse": "Em Uso",
+            "statusMaintenance": "Manutenção",
+            "statusLost": "Extraviado",
+            "statusDamaged": "Danificado",
+            "internalNotes": "Observações Internas",
+            "notesPlaceholder": "Danos prévios, acessórios inclusos, data da última revisão...",
+            "active": "Ativo",
+            "createSuccess": "Ferramenta cadastrada com sucesso!",
+            "updateSuccess": "Ferramenta atualizada com sucesso!"
+        },
+        "deleteConfirm": "Tem certeza que deseja excluir esta ferramenta?",
+        "deleteSuccess": "Ferramenta excluída com sucesso!"
+    },
+    "StorageLocations": {
+        "title": "Locais de Estoque",
+        "description": "Gerencie os pontos de armazenamento da sua empresa.",
+        "addLocation": "Novo Local",
+        "titleNew": "Novo Local de Estoque",
+        "descriptionNew": "Cadastre um novo ponto de armazenamento.",
+        "titleEdit": "Editar Local de Estoque",
+        "descriptionEdit": "Altere os detalhes do local selecionado.",
+        "idCopied": "ID copiado!",
+        "deleteConfirm": "Tem certeza que deseja excluir este local?",
+        "deleteSuccess": "Local excluído com sucesso!",
+        "form": {
+            "basicInfo": "Informações Básicas",
+            "locationType": "Tipo do Local",
+            "status": "Status",
+            "address": "Endereço do Local",
+            "vehicle": "Veículo Vinculado",
+            "selectVehicle": "Selecione um Veículo...",
+            "searchVehicle": "Pesquisar placa ou modelo...",
+            "fixed": "Fixo",
+            "mobile": "Móvel",
+            "virtual": "Virtual",
+            "active": "Ativo",
+            "inactive": "Inativo",
+            "blocked": "Bloqueado para Movimentação",
+            "createSuccess": "Local de estoque criado com sucesso!",
+            "updateSuccess": "Local de estoque atualizado com sucesso!"
         }
     }
 }

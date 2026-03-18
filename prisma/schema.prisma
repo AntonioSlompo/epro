@@ -169,6 +169,8 @@ model Company {
   products                Product[]
   vehicles                Vehicle[]
   technicians             Technician[]
+  tools                   Tool[]
+  storageLocations        StorageLocation[]
 }
 
 model Owner {
@@ -382,4 +384,76 @@ model Vehicle {
   updatedAt         DateTime @updatedAt
 
   @@unique([companyId, plate])
+  
+  storageLocation   StorageLocation?
+}
+
+enum ToolStatus {
+  AVAILABLE
+  IN_USE
+  MAINTENANCE
+  LOST
+  DAMAGED
+}
+
+model Tool {
+  id              String   @id @default(cuid())
+  companyId       String
+  company         Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  
+  name            String
+  serialNumber    String?  
+  brand           String?
+  model           String?
+  category        String?
+  status          ToolStatus @default(AVAILABLE)
+  notes           String?  
+  active          Boolean  @default(true)
+  
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([companyId])
+}
+
+enum StorageLocationType {
+  FIXED
+  MOBILE
+  VIRTUAL
+}
+
+enum StorageLocationStatus {
+  ACTIVE
+  INACTIVE
+  BLOCKED_MOVEMENT
+}
+
+model StorageLocation {
+  id              String                @id @default(cuid())
+  companyId       String
+  company         Company               @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  
+  name            String
+  type            StorageLocationType
+  status          StorageLocationStatus @default(ACTIVE)
+  
+  // Conditional: For FIXED type
+  zip             String?
+  street          String?
+  number          String?
+  complement      String?
+  neighborhood    String?
+  city            String?
+  state           String?
+  latitude        Float?
+  longitude       Float?
+  
+  // Conditional: For MOBILE type
+  vehicleId       String?               @unique
+  vehicle         Vehicle?              @relation(fields: [vehicleId], references: [id], onDelete: SetNull)
+  
+  createdAt       DateTime              @default(now())
+  updatedAt       DateTime              @updatedAt
+
+  @@index([companyId])
 }

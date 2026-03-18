@@ -48,6 +48,7 @@
             "technicians": "Técnicos",
             "products": "Productos/Servicios",
             "vehicles": "Vehículos",
+            "tools": "Herramientas/Disp.",
             "settings": "Configuración"
         },
         "tenantSelector": {
@@ -68,11 +69,11 @@
             "commercial": "Comercial y Contratos",
             "financial": "Financiero",
             "hr": "Recursos Humanos y Escalas",
-            "operationalDesc": "Gestión completa de unidades, control de acceso, monitoreo de eventos y rondas en tiempo real.",
-            "maintenanceDesc": "Gestión integral de Órdenes de Servicio (O.S.), control de activos en comodato y automatización de mantenimientos preventivos.",
-            "commercialDesc": "Gestión de ingresos recurrentes (SaaS), control de contratos con ajustes automáticos (IGP-M/IPCA) y CRM especializado con embudo de ventas e inspecciones técnicas.",
+            "operationalDesc": "Gestão completa de unidades, controle de acesso, monitoramento de eventos e rondas em tempo real.",
+            "maintenanceDesc": "Gestão integral de Órdenes de Servicio (O.S.), controle de ativos em comodato e automação de manutenções preventivas.",
+            "commercialDesc": "Gestão de ingresos recurrentes (SaaS), controle de contratos com ajustes automáticos (IGP-M/IPCA) e CRM especializado com embudo de ventas e inspecciones técnicas.",
             "financialDesc": "Facturación recurrente integrada a contratos, emisión automática de facturas, flujo de caja y gestión de morosidad con bloqueo automático.",
-            "hrDesc": "Gestión completa de escalas complejas (12x36), asignación de puestos y control de validez de entrenamientos y certificaciones (NRs)."
+            "hrDesc": "Gestión completa de escalas complexas (12x36), asignación de puestos y control de validez de entrenamientos y certificaciones (NRs)."
         }
     },
     "UserMenu": {
@@ -354,5 +355,41 @@
             "createSuccess": "¡Vehículo creado con éxito!",
             "updateSuccess": "¡Vehículo actualizado con éxito!"
         }
+    },
+    "Tools": {
+        "title": "Herramientas / Dispositivos",
+        "description": "Gestione el inventario de herramientas y dispositivos de su empresa.",
+        "addTool": "Nueva Herramienta",
+        "editTool": "Editar Herramienta",
+        "titleNew": "Nueva Herramienta",
+        "descriptionNew": "Registre una nueva herramienta o dispositivo en su inventario.",
+        "titleEdit": "Editar Herramienta",
+        "descriptionEdit": "Cambie los detalles de la herramienta seleccionada.",
+        "name": "Nombre/Descripción",
+        "serialNumber": "Nº Serie / Patrimonio",
+        "category": "Categoría",
+        "status": "Estado",
+        "form": {
+            "identification": "Identificación",
+            "details": "Detalles del Equipo",
+            "observations": "Observaciones",
+            "brand": "Marca",
+            "model": "Modelo",
+            "serialNumber": "Nº Serie / Patrimonio",
+            "category": "Categoría",
+            "status": "Estado de Disponibilidad",
+            "statusAvailable": "Disponible",
+            "statusInUse": "En Uso",
+            "statusMaintenance": "Mantenimiento",
+            "statusLost": "Extraviado",
+            "statusDamaged": "Dañado",
+            "internalNotes": "Notas Internas",
+            "notesPlaceholder": "Daños previos, accesorios incluidos, fecha de última revisión...",
+            "active": "Activo",
+            "createSuccess": "¡Herramienta registrada con éxito!",
+            "updateSuccess": "¡Herramienta actualizada con éxito!"
+        },
+        "deleteConfirm": "¿Está seguro de que desea eliminar esta herramienta?",
+        "deleteSuccess": "¡Herramienta eliminada con éxito!"
     }
 }

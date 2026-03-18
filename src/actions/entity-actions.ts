@@ -3,6 +3,7 @@
 import { prisma } from "@/lib/prisma";
 import { getCurrentUser, getTenant } from "./auth-actions";
 import { revalidatePath } from "next/cache";
+import { serializePrisma } from "@/lib/utils";
 
 export async function getEntities({ 
     page = 1, 
@@ -45,7 +46,7 @@ export async function getEntities({
 
         return { 
             success: true, 
-            entities, 
+            entities: serializePrisma(entities), 
             totalPages: Math.ceil(total / limit) 
         };
     } catch (error) {
@@ -65,7 +66,7 @@ export async function getEntity(id: string) {
                 companyId: tenantId,
             }
         });
-        return { success: true, entity };
+        return { success: true, entity: serializePrisma(entity) };
     } catch (error) {
         console.error("Error fetching entity:", error);
         return { success: false, error: "Failed to fetch entity." };
