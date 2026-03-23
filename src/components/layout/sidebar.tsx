@@ -69,21 +69,22 @@ export function Sidebar({ user, currentTenantId }: SidebarProps) {
     }
 
     const allNavItems = [
-        { href: "/dashboard", icon: LayoutDashboard, label: t('dashboard') },
-        { href: "/users", icon: Users, label: t('users') },
-        { href: "/entities", icon: Store, label: t('entities') },
-        { href: "/contracts", icon: FileText, label: t('contracts') },
-        { href: "/storage-locations", icon: Package, label: t('storageLocations') },
-        { href: "/inventory", icon: Box, label: t('inventory') },
-        { href: "/technicians", icon: Wrench, label: t('technicians') },
-        { href: "/products", icon: LayoutGrid, label: t('products') },
-        { href: "/vehicles", icon: Car, label: t('vehicles') },
-        { href: "/tools", icon: Hammer, label: t('tools') },
-        { href: "/companies", icon: Building2, label: t('companies') },
-        { href: "/owner", icon: Crown, label: t('owner') },
+        { href: "/dashboard", icon: LayoutDashboard, label: t('dashboard'), allowedContexts: ['all'] },
+        { href: "/users", icon: Users, label: t('users'), allowedContexts: ['hr'] },
+        { href: "/entities", icon: Store, label: t('entities'), allowedContexts: ['commercial'] },
+        { href: "/contracts", icon: FileText, label: t('contracts'), allowedContexts: ['commercial'] },
+        { href: "/storage-locations", icon: Package, label: t('storageLocations'), allowedContexts: ['operational', 'maintenance'] },
+        { href: "/inventory", icon: Box, label: t('inventory'), allowedContexts: ['operational', 'maintenance'] },
+        { href: "/technicians", icon: Wrench, label: t('technicians'), allowedContexts: ['maintenance', 'hr'] },
+        { href: "/products", icon: LayoutGrid, label: t('products'), allowedContexts: ['commercial', 'operational', 'maintenance'] },
+        { href: "/vehicles", icon: Car, label: t('vehicles'), allowedContexts: ['operational', 'maintenance'] },
+        { href: "/tools", icon: Hammer, label: t('tools'), allowedContexts: ['maintenance'] },
+        { href: "/companies", icon: Building2, label: t('companies'), allowedContexts: ['all'] },
+        { href: "/owner", icon: Crown, label: t('owner'), allowedContexts: ['all'] },
         {
             label: t('finance'),
             icon: DollarSign,
+            allowedContexts: ['financial'],
             children: [
                 { href: "/banks", label: t('banks') },
                 { href: "/bank-accounts", label: t('bankAccounts') },
@@ -92,6 +93,7 @@ export function Sidebar({ user, currentTenantId }: SidebarProps) {
         {
             label: t('playground'),
             icon: FlaskConical,
+            allowedContexts: ['all'],
             children: [
                 { href: "/document-demo", label: t('documentDemo') },
                 { href: "/address-demo", label: t('addressDemo') },
@@ -99,12 +101,16 @@ export function Sidebar({ user, currentTenantId }: SidebarProps) {
                 { href: "/file-upload-demo", label: t('fileUploadDemo') },
             ]
         },
-        { href: "/settings", icon: Settings, label: t('settings') },
+        { href: "/settings", icon: Settings, label: t('settings'), allowedContexts: ['all'] },
     ]
 
     const navItems = user?.role === 'SUPER_ADMIN' 
         ? allNavItems.filter(item => ['/users', '/companies', '/owner', '/settings'].includes(item.href || ''))
-        : allNavItems.filter(item => item.href !== '/owner' && item.href !== '/companies');
+        : allNavItems.filter(item => 
+            item.href !== '/owner' && 
+            item.href !== '/companies' &&
+            (item.allowedContexts.includes('all') || item.allowedContexts.includes(selectedContext.id))
+        );
 
     return (
         <>

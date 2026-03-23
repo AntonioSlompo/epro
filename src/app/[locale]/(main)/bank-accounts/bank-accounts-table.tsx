@@ -78,6 +78,11 @@ export function BankAccountsTable({ data, totalPages, page, viewMode = 'list' }:
                                     </DropdownMenuTrigger>
                                     <DropdownMenuContent align="end">
                                         <DropdownMenuItem asChild>
+                                            <Link href={`/bank-accounts/${account.id}`} className="cursor-pointer">
+                                                <Landmark className="mr-2 h-4 w-4" /> {transT("title") || "Movimentações"}
+                                            </Link>
+                                        </DropdownMenuItem>
+                                        <DropdownMenuItem asChild>
                                             <Link href={`/bank-accounts/${account.id}/edit`} className="cursor-pointer">
                                                 <Pencil className="mr-2 h-4 w-4" /> {t("edit")}
                                             </Link>

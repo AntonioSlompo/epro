@@ -61,10 +61,12 @@ export async function getInventoryBalances({
 
 export async function getInventoryTransactions({ 
     page = 1, 
-    limit = 10 
+    limit = 10,
+    search = ""
 }: { 
     page?: number, 
-    limit?: number 
+    limit?: number,
+    search?: string
 } = {}) {
     const tenantId = await getTenant();
     if (!tenantId) return { success: false, error: "Unauthorized", transactions: [], totalPages: 0 };
@@ -72,9 +74,20 @@ export async function getInventoryTransactions({
     try {
         const skip = (page - 1) * limit;
 
+        const where: any = { companyId: tenantId };
+
+        if (search) {
+            where.OR = [
+                { product: { name: { contains: search, mode: 'insensitive' } } },
+                { notes: { contains: search, mode: 'insensitive' } },
+                { sourceLocation: { name: { contains: search, mode: 'insensitive' } } },
+                { destinationLocation: { name: { contains: search, mode: 'insensitive' } } },
+            ];
+        }
+
         const [transactions, total] = await Promise.all([
             prisma.inventoryTransaction.findMany({
-                where: { companyId: tenantId },
+                where,
                 include: {
                     product: true,
                     sourceLocation: true,
@@ -87,7 +100,7 @@ export async function getInventoryTransactions({
                 skip,
                 take: limit
             }),
-            prisma.inventoryTransaction.count({ where: { companyId: tenantId } })
+            prisma.inventoryTransaction.count({ where })
         ]);
 
         return { 

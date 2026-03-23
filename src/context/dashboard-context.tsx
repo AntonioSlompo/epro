@@ -5,6 +5,7 @@ import { Shield, Wrench, FileText, DollarSign, Users, LucideIcon } from "lucide-
 import { useTranslations } from "next-intl"
 
 export interface DashboardContextType {
+    id: string
     title: string
     description?: string
     icon: LucideIcon
@@ -31,6 +32,7 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
 
     const contexts: DashboardContextType[] = [
         {
+            id: 'operational',
             title: t('operational'),
             description: t('operationalDesc'),
             icon: Shield,
@@ -44,6 +46,7 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
             hoverShadow: "hover:shadow-[0_0_20px_-5px_rgba(59,130,246,0.5)]"
         },
         {
+            id: 'maintenance',
             title: t('maintenance'),
             description: t('maintenanceDesc'),
             icon: Wrench,
@@ -57,6 +60,7 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
             hoverShadow: "hover:shadow-[0_0_20px_-5px_rgba(249,115,22,0.5)]"
         },
         {
+            id: 'commercial',
             title: t('commercial'),
             description: t('commercialDesc'),
             icon: FileText,
@@ -70,6 +74,7 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
             hoverShadow: "hover:shadow-[0_0_20px_-5px_rgba(168,85,247,0.5)]"
         },
         {
+            id: 'financial',
             title: t('financial'),
             description: t('financialDesc'),
             icon: DollarSign,
@@ -83,6 +88,7 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
             hoverShadow: "hover:shadow-[0_0_20px_-5px_rgba(34,197,94,0.5)]"
         },
         {
+            id: 'hr',
             title: t('hr'),
             description: t('hrDesc'),
             icon: Users,

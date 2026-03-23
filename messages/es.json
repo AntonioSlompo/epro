@@ -53,6 +53,7 @@
             "banks": "Bancos",
             "bankAccounts": "Cuentas Bancarias",
             "inventory": "Control de Inventario",
+            "storageLocations": "Ubicaciones de Almacenamiento",
             "settings": "Configuración"
         },
         "tenantSelector": {
@@ -512,10 +513,8 @@
     "Inventory": {
         "title": "Control de Inventario",
         "description": "Monitoree y gestione los niveles de stock de sus productos.",
-        "tabs": {
-            "balances": "Saldos de Stock",
-            "history": "Historial de Movimientos"
-        },
+        "balances": "Saldos de Stock",
+        "transactions": "Historial de Movimientos",
         "newMove": "Nuevo Movimiento",
         "moveProduct": "Mover Producto",
         "descriptionMove": "Registre una nueva transacción de inventario.",
@@ -548,7 +547,28 @@
             "basicInfo": "Información Básica",
             "details": "Detalles",
             "createSuccess": "¡Movimiento de inventario registrado con éxito!",
-            "cancel": "Cancelar"
+            "updateSuccess": "¡Ajuste de saldo realizado!",
+            "cancel": "Cancelar",
+            "insufficientStock": "Saldo insuficiente en el lugar de origen."
+        }
+    },
+    "Banks": {
+        "title": "Bancos",
+        "description": "Gestione los bancos registrados en el sistema.",
+        "addBank": "Nuevo Banco",
+        "titleNew": "Nuevo Banco",
+        "descriptionNew": "Registre un nuevo banco en el sistema.",
+        "deleteConfirm": "¿Está seguro de que desea eliminar este banco?",
+        "deleteSuccess": "¡Banco eliminado con éxito!",
+        "form": {
+            "identification": "Identificación",
+            "code": "Código",
+            "name": "Nombre",
+            "nickname": "Apodo",
+            "active": "Activo",
+            "logoTitle": "Logotipo",
+            "createSuccess": "¡Banco registrado con éxito!",
+            "updateSuccess": "¡Banco actualizado con éxito!"
         }
     }
 }

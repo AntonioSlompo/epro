@@ -589,5 +589,24 @@
             "cancel": "Cancelar",
             "insufficientStock": "Saldo insuficiente no local de origem."
         }
+    },
+    "Banks": {
+        "title": "Bancos",
+        "description": "Gerencie os bancos registrados no sistema.",
+        "addBank": "Novo Banco",
+        "titleNew": "Novo Banco",
+        "descriptionNew": "Cadastre um novo banco no sistema.",
+        "deleteConfirm": "Tem certeza que deseja excluir este banco?",
+        "deleteSuccess": "Banco excluído com sucesso!",
+        "form": {
+            "identification": "Identificação",
+            "code": "Código",
+            "name": "Nome",
+            "nickname": "Apelido",
+            "active": "Ativo",
+            "logoTitle": "Logotipo",
+            "createSuccess": "Banco cadastrado com sucesso!",
+            "updateSuccess": "Banco atualizado com sucesso!"
+        }
     }
 }

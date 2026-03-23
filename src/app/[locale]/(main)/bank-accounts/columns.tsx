@@ -144,7 +144,7 @@ export const useBankAccountColumns = () => {
                             <DropdownMenuLabel>{tCommon("actions")}</DropdownMenuLabel>
                             <DropdownMenuItem asChild>
                                 <Link href={`/bank-accounts/${account.id}`} className="flex items-center cursor-pointer">
-                                    <Landmark className="mr-2 h-4 w-4" /> {tCommon("details") || "Detalhes"}
+                                    <Landmark className="mr-2 h-4 w-4" /> {transT("title") || "Movimentações"}
                                 </Link>
                             </DropdownMenuItem>
                             <DropdownMenuItem asChild>
