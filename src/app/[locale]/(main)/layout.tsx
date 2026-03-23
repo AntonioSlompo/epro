@@ -17,7 +17,7 @@ export default async function DashboardLayout({
                 {/* Background Grid for Dashboard (Optional to keep consistent or reduce noise) */}
                 <div className="fixed inset-0 z-0 h-full w-full bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:4rem_4rem] pointer-events-none" />
 
-                <Topbar user={user} />
+                <Topbar user={user} currentTenantId={currentTenantId} />
 
                 <div className="flex-1 flex overflow-hidden relative z-10">
                     <Sidebar user={user} currentTenantId={currentTenantId} />

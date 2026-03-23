@@ -2,7 +2,8 @@
 
 import { prisma } from "@/lib/prisma";
 import { loginSchema, LoginFormValues } from "@/schemas/auth-schema";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
+import { revalidatePath } from "next/cache";
 import { redirect } from "@/i18n/routing";
 import { User } from "@prisma/client";
 import { mapCompanyToSafe } from "@/lib/utils";
@@ -88,17 +89,25 @@ export async function getCurrentUser() {
 
 export async function setTenant(companyId: string) {
     const cookieStore = await cookies();
-    // In production, you might want to verify that the current user actually has access to this company before setting the cookie.
-    cookieStore.set('tenant_id', companyId, { httpOnly: true, secure: process.env.NODE_ENV === 'production' });
+    cookieStore.set('tenant_id', companyId, { httpOnly: true, secure: process.env.NODE_ENV === 'production', path: '/' });
+    
+    const pathname = (await headers()).get('referer');
+    if (pathname) {
+        revalidatePath(pathname);
+    }
+    revalidatePath('/', 'layout');
 }
 
 export async function getTenant() {
     const cookieStore = await cookies();
     let tenantId = cookieStore.get('tenant_id')?.value;
 
-    if (!tenantId) {
-        const user = await getCurrentUser();
-        if (user && user.companies && user.companies.length > 0) {
+    const user = await getCurrentUser();
+    if (!user) return null;
+
+    // If no tenant cookie, or cookie invalid for this user, default to first company
+    if (!tenantId || !user.companies.some((c: any) => c.id === tenantId)) {
+        if (user.companies && user.companies.length > 0) {
             return user.companies[0].id;
         }
     }

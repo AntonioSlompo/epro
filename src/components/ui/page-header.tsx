@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Button } from "./button";
 
 interface PageHeaderProps {
-    title: string;
+    title: React.ReactNode;
     description?: string;
     children?: React.ReactNode;
     backHref?: string;

@@ -1,0 +1,22 @@
+import CurrencyInput, { CurrencyInputProps } from "react-currency-input-field"
+
+interface QuantityInputProps extends Omit<CurrencyInputProps, "className"> {
+    className?: string
+}
+
+export function QuantityInput({
+    className,
+    ...props
+}: QuantityInputProps) {
+    return (
+        <CurrencyInput
+            decimalsLimit={4}
+            decimalScale={4}
+            groupSeparator="."
+            decimalSeparator=","
+            allowNegativeValue={false}
+            className={`flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm ${className}`}
+            {...props}
+        />
+    )
+}

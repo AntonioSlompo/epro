@@ -14,8 +14,8 @@ export const productSchema = z.object({
   // 1. Identificação Geral
   name: z.string().min(1, "O nome é obrigatório"),
   sku: z.string().min(1, "O Código/SKU é obrigatório"),
-  type: z.nativeEnum(ProductType, { required_error: "O tipo é obrigatório" }),
-  category: z.nativeEnum(ProductCategory, { required_error: "A categoria é obrigatória" }),
+  type: z.nativeEnum(ProductType, { error: "O tipo é obrigatório" }),
+  category: z.nativeEnum(ProductCategory, { error: "A categoria é obrigatória" }),
   status: z.nativeEnum(ProductStatus).default("ACTIVE"),
   description: z.string().optional().nullable(),
   image1Url: z.string().optional().nullable(),
@@ -55,7 +55,7 @@ export const productSchema = z.object({
   nfsCode: z.string().optional().nullable(),
   taxRuleType: z.string().optional().nullable(),
   // For JSON field, we can represent it as string initially or an object
-  taxes: z.record(z.any()).optional().nullable(),
+  taxes: z.record(z.string(), z.any()).optional().nullable(),
 
   // 6. Informações Técnicas e de Estoque
   brand: z.string().optional().nullable(),

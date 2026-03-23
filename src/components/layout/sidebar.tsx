@@ -21,7 +21,9 @@ import {
     Wrench,
     Store,
     Hammer,
-    Package
+    Package,
+    Box,
+    FileText
 } from "lucide-react"
 import {
     DropdownMenu,
@@ -70,14 +72,23 @@ export function Sidebar({ user, currentTenantId }: SidebarProps) {
         { href: "/dashboard", icon: LayoutDashboard, label: t('dashboard') },
         { href: "/users", icon: Users, label: t('users') },
         { href: "/entities", icon: Store, label: t('entities') },
+        { href: "/contracts", icon: FileText, label: t('contracts') },
         { href: "/storage-locations", icon: Package, label: t('storageLocations') },
+        { href: "/inventory", icon: Box, label: t('inventory') },
         { href: "/technicians", icon: Wrench, label: t('technicians') },
         { href: "/products", icon: LayoutGrid, label: t('products') },
         { href: "/vehicles", icon: Car, label: t('vehicles') },
         { href: "/tools", icon: Hammer, label: t('tools') },
         { href: "/companies", icon: Building2, label: t('companies') },
         { href: "/owner", icon: Crown, label: t('owner') },
-        { href: "/finance", icon: DollarSign, label: t('finance') },
+        {
+            label: t('finance'),
+            icon: DollarSign,
+            children: [
+                { href: "/banks", label: t('banks') },
+                { href: "/bank-accounts", label: t('bankAccounts') },
+            ]
+        },
         {
             label: t('playground'),
             icon: FlaskConical,
@@ -116,6 +127,13 @@ export function Sidebar({ user, currentTenantId }: SidebarProps) {
                 <div className="flex flex-col h-full pt-4">
 
 
+
+                    {/* Tenant Selector for Companies */}
+                    {user && user.role !== 'SUPER_ADMIN' && user.companies && user.companies.length > 0 && (
+                        <div className="px-3 mb-4 md:hidden">
+                            <TenantSelector companies={user.companies} currentTenantId={currentTenantId} isCollapsed={isCollapsed} />
+                        </div>
+                    )}
 
                     {/* Context Switcher - Hidden on Dashboard with transition */}
                     {user?.role !== 'SUPER_ADMIN' && (

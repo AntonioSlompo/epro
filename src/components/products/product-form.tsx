@@ -723,15 +723,13 @@ export function ProductForm({ initialData }: ProductFormProps) {
                     </CardContent>
                 </Card>
 
-                <div className="flex justify-end items-center pt-4">
-                    <div>
-                        <Button type="button" variant="outline" className="mr-4" onClick={() => router.push("/products")}>
-                            {t("cancel")}
-                        </Button>
-                        <Button type="submit" disabled={isPending}>
-                            {isPending ? t("saving") : t("save")}
-                        </Button>
-                    </div>
+                <div className="flex justify-end gap-4 pt-4">
+                    <Button type="button" variant="outline" onClick={() => router.back()} disabled={isPending}>
+                        {t("cancel")}
+                    </Button>
+                    <Button type="submit" disabled={isPending}>
+                        {isPending ? t("saving") : t("save")}
+                    </Button>
                 </div>
             </form>
         </Form>

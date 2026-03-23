@@ -153,7 +153,7 @@ export async function upsertStorageLocation(data: z.infer<typeof storageLocation
     } catch (error) {
         console.error("Error upserting storage location:", error);
         if (error instanceof z.ZodError) {
-            return { success: false, error: "Dados inválidos: " + error.errors[0].message };
+            return { success: false, error: "Dados inválidos: " + error.issues[0].message };
         }
         return { success: false, error: "Erro ao salvar local de estoque" };
     }

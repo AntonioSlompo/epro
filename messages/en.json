@@ -44,10 +44,14 @@
             "moneyDemo": "Money Test",
             "fileUploadDemo": "Upload Test",
             "entities": "Entities",
+            "contracts": "Contracts Management",
             "technicians": "Technicians",
             "products": "Products/Services",
             "vehicles": "Vehicles",
             "tools": "Tools/Devices",
+            "banks": "Banks",
+            "bankAccounts": "Bank Accounts",
+            "inventory": "Inventory Control",
             "settings": "Settings"
         },
         "tenantSelector": {
@@ -106,6 +110,7 @@
         "edit": "Edit",
         "delete": "Delete",
         "save": "Save",
+        "details": "View Details",
         "cancel": "Cancel",
         "create": "Create",
         "saving": "Saving...",
@@ -127,7 +132,8 @@
             "inactive": "Inactive"
         },
         "success": "Success",
-        "error": "Error"
+        "error": "Error",
+        "loading": "Loading"
     },
     "Users": {
         "title": "Users",
@@ -390,5 +396,161 @@
         },
         "deleteConfirm": "Are you sure you want to delete this tool?",
         "deleteSuccess": "Tool deleted successfully!"
+    },
+    "BankAccounts": {
+        "title": "Bank Accounts",
+        "description": "Manage your company's bank accounts.",
+        "addAccount": "New Account",
+        "editAccount": "Edit Account",
+        "titleNew": "New Bank Account",
+        "descriptionNew": "Register a new bank account.",
+        "titleEdit": "Edit Bank Account",
+        "descriptionEdit": "Change the details of the selected account.",
+        "idCopied": "ID copied!",
+        "deleteConfirm": "Are you sure you want to delete this account?",
+        "deleteSuccess": "Bank account deleted successfully!",
+        "form": {
+            "identification": "Identification",
+            "bank": "Bank",
+            "selectBank": "Select a Bank...",
+            "agency": "Agency",
+            "type": "Account Type",
+            "number": "Account Number",
+            "limit": "Limit",
+            "dates": "Dates",
+            "openingDate": "Opening Date",
+            "closingDate": "Closing Date",
+            "active": "Active",
+            "createSuccess": "Bank account created successfully!",
+            "updateSuccess": "Bank account updated successfully!"
+        }
+    },
+    "BankTransactions": {
+        "title": "Transactions",
+        "addTransaction": "Add Transaction",
+        "editTransaction": "Edit Transaction",
+        "deleteTransaction": "Delete Transaction",
+        "date": "Date",
+        "description": "Description",
+        "amount": "Amount",
+        "type": "Type",
+        "credit": "Credit",
+        "debit": "Debit",
+        "category": "Category",
+        "reference": "Reference/Doc",
+        "paymentMethod": "Payment Method",
+        "paymentMethods": {
+            "PIX": "PIX",
+            "TED": "Wire Transfer (TED)",
+            "DOC": "DOC",
+            "BOLETO": "Boleto/Invoice",
+            "CREDIT_CARD": "Credit Card",
+            "DEBIT_CARD": "Debit Card",
+            "CASH": "Cash",
+            "OTHER": "Other"
+        },
+        "status": "Reconciled",
+        "balance": "Current Balance",
+        "totalAvailable": "Total Available",
+        "pending": "Pending",
+        "reconciled": "Reconciled",
+        "confirmDelete": "Are you sure you want to delete this transaction?",
+        "createSuccess": "Transaction created successfully!",
+        "updateSuccess": "Transaction updated successfully!",
+        "deleteSuccess": "Transaction deleted successfully!",
+        "filters": {
+            "all": "All",
+            "last7days": "Last 7 days",
+            "last30days": "Last 30 days",
+            "thisMonth": "This Month",
+            "custom": "Custom"
+        }
+    },
+    "Contracts": {
+        "title": "Contracts Management",
+        "description": "Manage service provision contracts and subscriptions.",
+        "addContract": "New Contract",
+        "createTitle": "Create Contract",
+        "createDesc": "Register a new service contract or subscription.",
+        "editTitle": "Edit Contract",
+        "editDesc": "Edit contract details",
+        "contractNumber": "Contract Number",
+        "customer": "Customer",
+        "selectCustomer": "Select Customer",
+        "status": "Status",
+        "startDate": "Start Date",
+        "endDate": "End Date",
+        "billingDay": "Billing Day",
+        "billingDayDescription": "Day of the month for billing.",
+        "paymentCondition": "Payment Terms",
+        "notes": "Notes",
+        "notesPlaceholder": "Internal notes...",
+        "addItem": "Add Item",
+        "noItems": "No items added to the contract.",
+        "selectProduct": "Product/Service",
+        "quantity": "Quantity",
+        "unitPrice": "Unit Price",
+        "discount": "Discount",
+        "total": "Total",
+        "totalValue": "Total Contract Value",
+        "optional": "optional",
+        "descriptionPlaceholder": "Custom description (optional)",
+        "form": {
+            "basicInfo": "Basic Information",
+            "contractItems": "Contract Items",
+            "billingInfo": "Billing and Terms",
+            "createSuccess": "Contract created successfully!",
+            "updateSuccess": "Contract updated successfully!",
+            "deleteSuccess": "Contract deleted successfully!"
+        },
+        "statuses": {
+            "DRAFT": "Draft",
+            "ACTIVE": "Active",
+            "SUSPENDED": "Suspended",
+            "CANCELED": "Canceled",
+            "EXPIRED": "Expired"
+        }
+    },
+    "Inventory": {
+        "title": "Inventory Control",
+        "description": "Monitor and manage your product stock levels.",
+        "tabs": {
+            "balances": "Stock Balances",
+            "history": "Transaction History"
+        },
+        "newMove": "New Movement",
+        "moveProduct": "Move Product",
+        "descriptionMove": "Record a new inventory transaction.",
+        "product": "Product",
+        "selectProduct": "Select a product...",
+        "type": "Transaction Type",
+        "direction": "Direction",
+        "quantity": "Quantity",
+        "date": "Date",
+        "sourceLocation": "Source Location",
+        "destinationLocation": "Destination Location",
+        "selectLocation": "Select a location...",
+        "unitCost": "Unit Cost",
+        "document": "Reference Document",
+        "documentPlaceholder": "Invoice number, order ID...",
+        "notes": "Notes",
+        "types": {
+            "PURCHASE": "Purchase",
+            "SALE": "Sale",
+            "TRANSFER": "Transfer",
+            "ADJUSTMENT": "Adjustment",
+            "RETURN": "Return",
+            "CONSUMPTION": "Consumption"
+        },
+        "directions": {
+            "IN": "Entry",
+            "OUT": "Exit"
+        },
+        "form": {
+            "basicInfo": "Basic Information",
+            "details": "Details",
+            "createSuccess": "Inventory movement recorded successfully!",
+            "cancel": "Cancel"
+        }
     }
 }

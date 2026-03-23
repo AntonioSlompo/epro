@@ -45,10 +45,14 @@
             "moneyDemo": "Prueba Monetaria",
             "fileUploadDemo": "Prueba Subida",
             "entities": "Entidades",
+            "contracts": "Gestión de Contratos",
             "technicians": "Técnicos",
             "products": "Productos/Servicios",
             "vehicles": "Vehículos",
             "tools": "Herramientas/Disp.",
+            "banks": "Bancos",
+            "bankAccounts": "Cuentas Bancarias",
+            "inventory": "Control de Inventario",
             "settings": "Configuración"
         },
         "tenantSelector": {
@@ -65,7 +69,7 @@
         "systemHealth": "Estado del Sistema",
         "context": {
             "operational": "Operacional",
-            "maintenance": "Mantenimiento de Activos",
+            "maintenance": "Mantenimiento de Ativos",
             "commercial": "Comercial y Contratos",
             "financial": "Financiero",
             "hr": "Recursos Humanos y Escalas",
@@ -107,6 +111,7 @@
         "edit": "Editar",
         "delete": "Eliminar",
         "save": "Guardar",
+        "details": "Ver Detalles",
         "cancel": "Cancelar",
         "create": "Crear",
         "saving": "Guardando...",
@@ -128,7 +133,8 @@
             "inactive": "Inactivo"
         },
         "success": "Éxito",
-        "error": "Error"
+        "error": "Error",
+        "loading": "Cargando"
     },
     "Users": {
         "title": "Usuarios",
@@ -267,8 +273,8 @@
             "noUserLinked": "Ningún usuario vinculado",
             "internalNotes": "Notas Internas",
             "notesPlaceholder": "Información adicional sobre el técnico...",
-            "systemAccessDesc": "Vincule un usuario para que este técnico pueda acceder e interactuar con las órdenes de servicio. Si se deja en blanco, no tendrá acceso al sistema.",
-            "active": "Activo",
+            "systemAccessDesc": "Vincule um usuário para que este técnico possa acessar e interagir com as ordens de serviço. Si se deja en blanco, no tendrá acceso al sistema.",
+            "active": "Ativo",
             "createSuccess": "¡Técnico registrado con éxito!",
             "updateSuccess": "¡Técnico actualizado con éxito!"
         },
@@ -385,11 +391,164 @@
             "statusDamaged": "Dañado",
             "internalNotes": "Notas Internas",
             "notesPlaceholder": "Daños previos, accesorios incluidos, fecha de última revisión...",
-            "active": "Activo",
+            "active": "Ativo",
             "createSuccess": "¡Herramienta registrada con éxito!",
             "updateSuccess": "¡Herramienta actualizada con éxito!"
         },
         "deleteConfirm": "¿Está seguro de que desea eliminar esta herramienta?",
         "deleteSuccess": "¡Herramienta eliminada con éxito!"
+    },
+    "BankAccounts": {
+        "title": "Cuentas Bancarias",
+        "description": "Gestione las cuentas bancarias de su empresa.",
+        "addAccount": "Nueva Cuenta",
+        "editAccount": "Editar Cuenta",
+        "titleNew": "Nueva Cuenta Bancaria",
+        "descriptionNew": "Registre una nueva cuenta bancaria.",
+        "titleEdit": "Editar Cuenta Bancaria",
+        "descriptionEdit": "Altere los detalles de la cuenta seleccionada.",
+        "idCopied": "¡ID copiado!",
+        "deleteConfirm": "¿Está seguro de que desea eliminar esta cuenta?",
+        "deleteSuccess": "¡Cuenta bancaria eliminada con éxito!",
+        "form": {
+            "identification": "Identificación",
+            "bank": "Banco",
+            "selectBank": "Seleccione un Banco...",
+            "agency": "Agencia",
+            "type": "Tipo de Cuenta",
+            "number": "Número de Cuenta",
+            "limit": "Límite",
+            "dates": "Fechas",
+            "openingDate": "Fecha de Apertura",
+            "closingDate": "Fecha de Cierre",
+            "active": "Activo",
+            "createSuccess": "¡Cuenta bancaria creada con éxito!",
+            "updateSuccess": "¡Cuenta bancaria actualizada con éxito!"
+        }
+    },
+    "BankTransactions": {
+        "title": "Movimentaciones",
+        "addTransaction": "Agregar Movimiento",
+        "editTransaction": "Editar Movimiento",
+        "deleteTransaction": "Eliminar Movimiento",
+        "date": "Fecha",
+        "description": "Descripción",
+        "amount": "Monto",
+        "type": "Tipo",
+        "credit": "Crédito",
+        "debit": "Débito",
+        "category": "Categoría",
+        "reference": "Referencia/Doc",
+        "paymentMethod": "Forma de Pago",
+        "paymentMethods": {
+            "PIX": "PIX",
+            "TED": "Transferencia (TED)",
+            "DOC": "DOC",
+            "BOLETO": "Boleto",
+            "CREDIT_CARD": "Tarjeta de Crédito",
+            "DEBIT_CARD": "Tarjeta de Débito",
+            "CASH": "Efectivo",
+            "OTHER": "Otro"
+        },
+        "status": "Conciliado",
+        "balance": "Saldo Actual",
+        "totalAvailable": "Disponible Total",
+        "pending": "Pendiente",
+        "updateSuccess": "¡Movimiento actualizado con éxito!",
+        "deleteSuccess": "¡Movimiento eliminado con éxito!",
+        "filters": {
+            "all": "Todos",
+            "last7days": "Últimos 7 dias",
+            "last30days": "Últimos 30 dias",
+            "thisMonth": "Este Mes",
+            "custom": "Personalizado"
+        }
+    },
+    "Contracts": {
+        "title": "Gestión de Contratos",
+        "description": "Gestione contratos de prestación de servicios y suscripciones.",
+        "addContract": "Nuevo Contrato",
+        "createTitle": "Crear Contrato",
+        "createDesc": "Registre un nuevo contrato de servicio o suscripción.",
+        "editTitle": "Editar Contrato",
+        "editDesc": "Editar detalles del contrato",
+        "contractNumber": "Número de Contrato",
+        "customer": "Cliente",
+        "selectCustomer": "Seleccione el Cliente",
+        "status": "Estado",
+        "startDate": "Fecha de Inicio",
+        "endDate": "Fecha de Vencimiento",
+        "billingDay": "Día de Facturación",
+        "billingDayDescription": "Día del mes para la facturación.",
+        "paymentCondition": "Condición de Pago",
+        "notes": "Notas",
+        "notesPlaceholder": "Notas internas...",
+        "addItem": "Agregar Artículo",
+        "noItems": "No se han añadido artículos al contrato.",
+        "selectProduct": "Producto/Servicio",
+        "quantity": "Cantidad",
+        "unitPrice": "Precio Unitario",
+        "discount": "Descuento",
+        "total": "Total",
+        "totalValue": "Valor Total del Contrato",
+        "optional": "opcional",
+        "descriptionPlaceholder": "Descripción personalizada (opcional)",
+        "form": {
+            "basicInfo": "Información Básica",
+            "contractItems": "Artículos del Contrato",
+            "billingInfo": "Facturación y Plazos",
+            "createSuccess": "¡Contrato creado con éxito!",
+            "updateSuccess": "¡Contrato actualizado con éxito!",
+            "deleteSuccess": "¡Contrato eliminado con éxito!"
+        },
+        "statuses": {
+            "DRAFT": "Borrador",
+            "ACTIVE": "Ativo",
+            "SUSPENDED": "Suspendido",
+            "CANCELED": "Cancelado",
+            "EXPIRED": "Expirado"
+        }
+    },
+    "Inventory": {
+        "title": "Control de Inventario",
+        "description": "Monitoree y gestione los niveles de stock de sus productos.",
+        "tabs": {
+            "balances": "Saldos de Stock",
+            "history": "Historial de Movimientos"
+        },
+        "newMove": "Nuevo Movimiento",
+        "moveProduct": "Mover Producto",
+        "descriptionMove": "Registre una nueva transacción de inventario.",
+        "product": "Producto",
+        "selectProduct": "Seleccione un producto...",
+        "type": "Tipo de Transacción",
+        "direction": "Sentido",
+        "quantity": "Cantidad",
+        "date": "Fecha",
+        "sourceLocation": "Ubicación de Origen",
+        "destinationLocation": "Ubicación de Destino",
+        "selectLocation": "Seleccione una ubicación...",
+        "unitCost": "Costo Unitario",
+        "document": "Documento de Referencia",
+        "documentPlaceholder": "Nº factura, ID de pedido...",
+        "notes": "Notas",
+        "types": {
+            "PURCHASE": "Compra",
+            "SALE": "Venta",
+            "TRANSFER": "Transferencia",
+            "ADJUSTMENT": "Ajuste",
+            "RETURN": "Devolución",
+            "CONSUMPTION": "Consumo"
+        },
+        "directions": {
+            "IN": "Entrada",
+            "OUT": "Salida"
+        },
+        "form": {
+            "basicInfo": "Información Básica",
+            "details": "Detalles",
+            "createSuccess": "¡Movimiento de inventario registrado con éxito!",
+            "cancel": "Cancelar"
+        }
     }
 }

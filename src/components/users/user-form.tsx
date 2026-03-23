@@ -244,7 +244,7 @@ export function UserForm({ initialData, mode }: UserFormProps) {
                                 {tCommon("cancel")}
                             </Button>
                             <Button type="submit" disabled={isPending}>
-                                {isPending ? tCommon("saving") : mode === "create" ? t("createPayload") : tCommon("saveChanges")}
+                                {isPending ? tCommon("saving") : tCommon("save")}
                             </Button>
                         </div>
                     </form>

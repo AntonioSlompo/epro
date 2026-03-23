@@ -28,6 +28,7 @@ model User {
   
   companies Company[]
   technician Technician?
+  inventoryTransactions InventoryTransaction[]
 }
 
 model Entity {
@@ -81,6 +82,8 @@ model Entity {
 
   createdAt                 DateTime @default(now())
   updatedAt                 DateTime @updatedAt
+
+  contracts                 Contract[]
 
   @@unique([companyId, document])
 }
@@ -171,6 +174,12 @@ model Company {
   technicians             Technician[]
   tools                   Tool[]
   storageLocations        StorageLocation[]
+  banks                   Bank[]
+  bankAccounts            BankAccount[]
+  bankAccountTransactions BankAccountTransaction[]
+  contracts               Contract[]
+  inventoryBalances       InventoryBalance[]
+  inventoryTransactions   InventoryTransaction[]
 }
 
 model Owner {
@@ -327,6 +336,10 @@ model Product {
   createdAt                 DateTime @default(now())
   updatedAt                 DateTime @updatedAt
 
+  contractItems             ContractItem[]
+  inventoryBalances         InventoryBalance[]
+  inventoryTransactions     InventoryTransaction[]
+
   @@unique([companyId, sku])
 }
 
@@ -455,5 +468,219 @@ model StorageLocation {
   createdAt       DateTime              @default(now())
   updatedAt       DateTime              @updatedAt
 
+  inventoryBalances     InventoryBalance[]
+  sourceTransactions    InventoryTransaction[] @relation("SourceLocation")
+  destinationTransactions InventoryTransaction[] @relation("DestinationLocation")
+
   @@index([companyId])
 }
+
+model Bank {
+  id        String   @id @default(cuid())
+  companyId String
+  company   Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  
+  code      String   // Código Bancário (ex: 001, 237)
+  name      String   // Nome (ex: Banco do Brasil S.A.)
+  nickname  String?  // Apelido (ex: Banco do Brasil)
+  logo      String?  // Logo (Base64 or URL)
+  active    Boolean  @default(true)
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([companyId, code])
+  @@index([companyId])
+
+  bankAccounts BankAccount[]
+}
+
+model BankAccount {
+  id              String    @id @default(cuid())
+  companyId       String
+  company         Company   @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  
+  bankId          String
+  bank            Bank      @relation(fields: [bankId], references: [id], onDelete: Restrict)
+  
+  agency          String
+  type            String    // Corrente, Poupança, etc.
+  number          String
+  limit           Decimal   @default(0)
+  openingDate     DateTime?
+  closingDate     DateTime?
+  active          Boolean   @default(true)
+  
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  @@index([companyId])
+
+  bankAccountTransactions BankAccountTransaction[]
+}
+
+model BankAccountTransaction {
+  id              String    @id @default(cuid())
+  companyId       String
+  company         Company   @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  
+  bankAccountId   String
+  bankAccount     BankAccount @relation(fields: [bankAccountId], references: [id], onDelete: Cascade)
+  
+  date            DateTime
+  description     String
+  amount          Decimal
+  type            TransactionType // CREDIT or DEBIT
+  paymentMethod   String?   // PIX, TED, DOC, Boleto, etc.
+  category        String?   // Optional: Food, Rent, etc.
+  reference       String?   // Optional: Document number, NF, etc.
+  status          TransactionStatus @default(PENDING) // PENDING, RECONCILED
+  
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  @@index([companyId])
+  @@index([bankAccountId])
+}
+
+enum TransactionType {
+  CREDIT
+  DEBIT
+}
+
+enum TransactionStatus {
+  PENDING
+  RECONCILED
+}
+
+enum ContractStatus {
+  DRAFT
+  ACTIVE
+  SUSPENDED
+  CANCELED
+  EXPIRED
+}
+
+model Contract {
+  id                String         @id @default(cuid())
+  companyId         String
+  company           Company        @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  
+  customerId        String
+  customer          Entity         @relation(fields: [customerId], references: [id], onDelete: Restrict)
+  
+  contractNumber    String
+  status            ContractStatus @default(DRAFT)
+  
+  startDate         DateTime
+  endDate           DateTime?
+  
+  billingDay        Int
+  paymentCondition  String?
+  notes             String?
+  
+  items             ContractItem[]
+  
+  createdAt         DateTime       @default(now())
+  updatedAt         DateTime       @updatedAt
+
+  @@unique([companyId, contractNumber])
+  @@index([companyId])
+  @@index([customerId])
+}
+
+model ContractItem {
+  id            String   @id @default(cuid())
+  contractId    String
+  contract      Contract @relation(fields: [contractId], references: [id], onDelete: Cascade)
+  
+  productId     String
+  product       Product  @relation(fields: [productId], references: [id], onDelete: Restrict)
+  
+  quantity      Decimal
+  unitPrice     Decimal
+  discount      Decimal  @default(0)
+  total         Decimal
+  
+  description   String?  // Optional override for product description
+  
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([contractId])
+  @@index([productId])
+}
+
+enum TransactionDirection {
+  IN
+  OUT
+}
+
+enum InventoryTransactionType {
+  PURCHASE        // Entrada por Compra
+  SALE            // Saída por Venda
+  TRANSFER        // Transferência entre locais
+  ADJUSTMENT      // Ajuste Manual (Inventário)
+  RETURN          // Devolução
+  CONSUMPTION     // Consumo Interno / Uso em Serviço
+}
+
+model InventoryBalance {
+  id                String   @id @default(cuid())
+  companyId         String
+  company           Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  
+  productId         String
+  product           Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  
+  storageLocationId String
+  storageLocation   StorageLocation @relation(fields: [storageLocationId], references: [id], onDelete: Cascade)
+  
+  quantity          Decimal  @default(0)
+  minQuantity       Decimal?
+  maxQuantity       Decimal?
+  
+  updatedAt         DateTime @updatedAt
+
+  @@unique([companyId, productId, storageLocationId])
+  @@index([companyId])
+  @@index([productId])
+  @@index([storageLocationId])
+}
+
+model InventoryTransaction {
+  id                    String   @id @default(cuid())
+  companyId             String
+  company               Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  
+  productId             String
+  product               Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  
+  sourceLocationId      String?
+  sourceLocation        StorageLocation? @relation("SourceLocation", fields: [sourceLocationId], references: [id], onDelete: SetNull)
+  
+  destinationLocationId String?
+  destinationLocation   StorageLocation? @relation("DestinationLocation", fields: [destinationLocationId], references: [id], onDelete: SetNull)
+  
+  type                  InventoryTransactionType
+  direction             TransactionDirection
+  quantity              Decimal
+  unitCost              Decimal?
+  totalCost             Decimal?
+  
+  date                  DateTime @default(now())
+  document              String?  // NF-e, OS, etc.
+  notes                 String?
+  
+  userId                String?
+  user                  User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  @@index([companyId])
+  @@index([productId])
+  @@index([sourceLocationId])
+  @@index([destinationLocationId])
+}
+

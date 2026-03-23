@@ -318,17 +318,17 @@ export function TechnicianForm({ initialData }: TechnicianFormProps) {
                     </CardContent>
                 </Card>
 
-                <div className="flex items-center justify-end gap-4 pt-10">
+                <div className="flex justify-end gap-4 pt-4">
                     <Button
                         type="button"
-                        variant="ghost"
-                        onClick={() => router.push("/technicians")}
+                        variant="outline"
+                        onClick={() => router.back()}
                         disabled={isPending}
                     >
                         {t("cancel")}
                     </Button>
-                    <Button type="submit" disabled={isPending} className="px-8 font-semibold">
-                        {isPending ? t("saving") : (isEditing ? t("saveChanges") : t("create"))}
+                    <Button type="submit" disabled={isPending}>
+                        {isPending ? t("saving") : t("save")}
                     </Button>
                 </div>
             </form>
